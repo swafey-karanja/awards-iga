@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { X, Menu } from "lucide-react";
 import Button from "../ui/Button";
+import Image from "next/image";
+import Link from "next/link";
 
 // Navbar Component
 const Navbar = () => {
@@ -31,10 +33,20 @@ const Navbar = () => {
             : " border border-white/30"
         } `}
       >
-        <div className="px-8 py-6">
+        <div className="px-8 py-2">
           <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold">
-              <span className="text-white">creastie</span>
+            {/* Logo */}
+            <div className={`flex shrink-0 lg:mx-0 lg:grow-0 ml-4 `}>
+              <Link href="/" passHref className="inline-flex rounded-md">
+                <Image
+                  className="w-auto h-14 sm:h-16 md:h-20 lg:h-25"
+                  src="/Summit_Logo.png"
+                  alt="iGaming Afrika"
+                  width={160} // approximate width
+                  height={100} // approximate height
+                  loading="eager"
+                />
+              </Link>
             </div>
 
             {/* Desktop Navigation */}
@@ -51,7 +63,9 @@ const Navbar = () => {
             </div>
 
             <div className="hidden md:block">
-              <Button>Submit a Nomination</Button>
+              <Link href="/awards">
+                <Button>Submit a Nomination </Button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}

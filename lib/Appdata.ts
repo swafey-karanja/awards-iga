@@ -296,3 +296,22 @@ export const faqs: FAQItem[] = [
     answer: "No. We will not have online delegates.",
   },
 ];
+
+export const companyTypes = [
+  { value: "Affiliate", label: "Affiliate" },
+  { value: "Agency", label: "Agency" },
+  { value: "Broker", label: "Broker" },
+  { value: "Game-provider", label: "Game Provider" },
+  { value: "Media", label: "Media" },
+  { value: "Investor", label: "Investor" },
+  { value: "Legal", label: "Legal" },
+  { value: "non-gaming Supplier", label: "Non-gaming Supplier" },
+  { value: "Operator", label: "Operator" },
+  { value: "Regulator", label: "Regulator" },
+  { value: "Start-up", label: "Start Up" },
+  { value: "Supplier", label: "Supplier" },
+  { value: "Financial Institution", label: "Financial Institution" },
+  { value: "Payments", label: "Payments" },
+  { value: "Nonprofit", label: "Non Profit" },
+  { value: "Other", label: "Other" },
+];

@@ -54,7 +54,7 @@ const Timeline: React.FC = () => {
             {/* Timeline line */}
             <div className="absolute left-0 right-0 top-8 h-1 bg-gray-200"></div>
 
-            <div className="relative flex justify-between px-30">
+            <div className="relative flex justify-between px-20">
               {timelineData.map((item, index) => (
                 <div key={index} className="text-center w-72">
                   {/* Dot */}

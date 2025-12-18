@@ -9,13 +9,13 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-black/35 border-t border-white/10 py-16 px-6">
+    <footer className="bg-green-900/20 border-t border-white/10 py-16 px-6">
       <div className="container mx-auto">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div>
             <div className="text-2xl font-bold mb-4">
               <span className="text-white">creative</span>
-              <span className="text-orange-500">.</span>
+              <span className="text-green-500">.</span>
             </div>
             <p className="text-gray-400 mb-6">
               Empowering brands with creative digital solutions since 2010.
@@ -25,7 +25,7 @@ const Footer = () => {
                 <a
                   key={social}
                   href="#"
-                  className="w-10 h-10 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-orange-500 hover:border-orange-500 transition-colors"
+                  className="w-10 h-10 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-green-500 hover:border-green-500 transition-colors"
                 >
                   <Heart size={18} />
                 </a>
