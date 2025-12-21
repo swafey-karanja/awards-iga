@@ -10,26 +10,17 @@ interface StatItem {
 }
 
 interface HeroProps {
-  // Content configuration
   title?: string;
   highlightedText?: string;
   description?: string;
   buttonText?: string;
-
-  // Display toggles
   showButton?: boolean;
   showStats?: boolean;
   showDescription?: boolean;
-
-  // Background configuration
   backgroundImage?: string;
   backgroundOverlay?: boolean;
   overlayOpacity?: number;
-
-  // Stats configuration
   stats?: StatItem[];
-
-  // Custom classes
   containerClassName?: string;
   titleClassName?: string;
   isHomePage?: boolean;
@@ -75,10 +66,11 @@ const Hero: React.FC<HeroProps> = ({
   backgroundOverlay = true,
   overlayOpacity = 0.5,
   stats = [
-    { value: "15+", label: "Years Experience" },
-    { value: "25+", label: "Awards Won" },
-    { value: "10M+", label: "Active Users" },
-    { value: "12+", label: "Countries" },
+    { value: "3500+", label: "Delegates" },
+    { value: "100+", label: "Speakers" },
+    { value: "350+", label: "Affiliates" },
+    { value: "500+", label: "Operators" },
+    { value: "100+", label: "Exhibitors & Sponsors" },
   ],
   containerClassName = "",
   titleClassName = "",
@@ -87,8 +79,8 @@ const Hero: React.FC<HeroProps> = ({
   return (
     <section
       className={`relative ${
-        isHomePage ? "min-h-screen" : "min-h-[65vh]"
-      } flex items-center justify-center overflow-hidden pt-20`}
+        isHomePage ? "min-h-screen" : "min-h-[70vh]"
+      } flex items-center justify-center overflow-hidden pt-24 sm:pt-32`}
     >
       {/* Background Image */}
       {backgroundImage && (
@@ -111,11 +103,11 @@ const Hero: React.FC<HeroProps> = ({
         />
       )}
 
-      {/* Fallback background if no image */}
+      {/* Fallback background */}
       {!backgroundImage && <div className="absolute inset-0 z-0 bg-white/5" />}
 
       <div
-        className={`relative z-10 container mx-auto px-6 text-center ${containerClassName}`}
+        className={`relative z-10 container mx-auto px-4 sm:px-6 text-center ${containerClassName}`}
       >
         <motion.div
           initial="hidden"
@@ -124,7 +116,7 @@ const Hero: React.FC<HeroProps> = ({
         >
           <motion.h1
             variants={fadeInUp}
-            className={`text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight ${titleClassName}`}
+            className={`text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 leading-tight ${titleClassName}`}
           >
             {title}
             <br />
@@ -136,7 +128,7 @@ const Hero: React.FC<HeroProps> = ({
           {showDescription && (
             <motion.p
               variants={fadeInUp}
-              className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto"
+              className="text-base sm:text-lg md:text-xl text-white mb-8 sm:mb-12 max-w-3xl mx-auto px-4"
             >
               {description}
             </motion.p>
@@ -145,10 +137,12 @@ const Hero: React.FC<HeroProps> = ({
           {showButton && (
             <motion.div
               variants={fadeInUp}
-              className="flex flex-wrap justify-center mb-20"
+              className="flex justify-center mb-12 sm:mb-16 md:mb-20 px-4"
             >
-              <Button>
-                {buttonText} <ArrowDown className="inline ml-2" size={20} />
+              <Button className="text-sm sm:text-base">
+                <span className="hidden sm:inline">{buttonText}</span>
+                <span className="sm:hidden">Explore Awards</span>
+                <ArrowDown className="inline ml-2" size={20} />
               </Button>
             </motion.div>
           )}
@@ -157,18 +151,20 @@ const Hero: React.FC<HeroProps> = ({
           {showStats && stats && stats.length > 0 && (
             <motion.div
               variants={staggerContainer}
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 md:gap-6 max-w-5xl mx-auto px-4"
             >
-              {stats.map((stat: StatItem, index: number) => (
+              {stats.map((stat, index) => (
                 <motion.div
                   key={index}
                   variants={scaleIn}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-green-500/50 transition-all"
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-green-500/50 transition-all"
                 >
-                  <div className="text-4xl font-bold text-green-600 mb-2">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-1 sm:mb-2">
                     {stat.value}
                   </div>
-                  <div className="text-gray-400 text-sm">{stat.label}</div>
+                  <div className="text-white text-xs sm:text-sm leading-tight">
+                    {stat.label}
+                  </div>
                 </motion.div>
               ))}
             </motion.div>

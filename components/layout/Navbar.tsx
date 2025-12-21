@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Menu } from "lucide-react";
 import Button from "../ui/Button";
 import Image from "next/image";
 import Link from "next/link";
 
-// Navbar Component
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,86 +17,74 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = ["Home", "About Us", "Services", "Pages", "Contact Us"];
+  // const navLinks = ["Home", "About Us", "Services", "Pages", "Contact Us"];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 px-6 pt-6 backdrop-blur-2xl ${
-        isScrolled ? "" : " "
-      }`}
-    >
+    <nav className="fixed top-0 left-0 right-0 z-50 pt-4 sm:pt-6 backdrop-blur-2xl">
       <div
-        className={`container mx-auto transition-all duration-300 rounded-full ${
-          isScrolled
-            ? "bg-green-800/30 border border-white/30"
-            : " border border-white/30"
-        } `}
+        className={`container mx-auto transition-all duration-300 rounded-full border border-white/30 ${
+          isScrolled ? "bg-green-800/30" : ""
+        }`}
       >
-        <div className="px-8 py-2">
+        <div className="px-4 sm:px-8 py-2">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className={`flex shrink-0 lg:mx-0 lg:grow-0 ml-4 `}>
-              <Link href="/" passHref className="inline-flex rounded-md">
-                <Image
-                  className="w-auto h-14 sm:h-16 md:h-20 lg:h-25"
-                  src="/Summit_Logo.png"
-                  alt="iGaming Afrika"
-                  width={160} // approximate width
-                  height={100} // approximate height
-                  loading="eager"
-                />
-              </Link>
-            </div>
+            <Link href="/" className="shrink-0">
+              <Image
+                className="w-auto h-12 sm:h-16 md:h-20 lg:h-24"
+                src="/Summit_Logo.png"
+                alt="iGaming Afrika"
+                width={160}
+                height={100}
+                priority
+              />
+            </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link}
-                  href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="text-gray-300 hover:text-green-600 transition-colors text-xl font-medium"
-                >
-                  {link}
-                </a>
-              ))}
-            </div>
-
+            {/* Desktop CTA Button */}
             <div className="hidden md:block">
               <Link href="/awards">
-                <Button>Submit a Nomination </Button>
+                <Button>Submit a Nomination</Button>
               </Link>
             </div>
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden text-white"
+              className="md:hidden text-white p-2 hover:bg-white/10 rounded-full transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle mobile menu"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             >
-              {isMobileMenuOpen ? <X /> : <Menu />}
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
 
           {/* Mobile Menu */}
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="md:hidden mt-4 pb-4 border-t border-white/10 pt-4"
-            >
-              {navLinks.map((link) => (
-                <a
-                  key={link}
-                  href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="block py-2 text-gray-300 hover:text-white transition-colors text-sm"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link}
-                </a>
-              ))}
-              <Button className="w-full mt-4">Let&apos;s Talk</Button>
-            </motion.div>
-          )}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="md:hidden overflow-hidden"
+              >
+                <div className="mt-4 pb-4 border-t border-white/10 pt-4 space-y-2">
+                  {/* {navLinks.map((link) => (
+                    <a
+                      key={link}
+                      href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
+                      className="block py-2 px-2 text-gray-300 hover:text-white hover:bg-white/5 rounded transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {link}
+                    </a>
+                  ))} */}
+                  <Link href="/awards" className="block pt-2">
+                    <Button className="w-full">Submit a Nomination</Button>
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </nav>

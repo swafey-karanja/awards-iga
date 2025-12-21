@@ -1,6 +1,6 @@
-import { Heart } from "lucide-react";
+import Image from "next/image";
+import SocialMediaLinks from "../ui/SocilaMediaLinks";
 
-// Footer Component
 const Footer = () => {
   const footerLinks = {
     Company: ["About", "Services", "Work", "Careers"],
@@ -9,39 +9,37 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-green-900/20 border-t border-white/10 py-16 px-6">
-      <div className="container mx-auto">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
-          <div>
-            <div className="text-2xl font-bold mb-4">
-              <span className="text-white">creative</span>
-              <span className="text-green-500">.</span>
-            </div>
-            <p className="text-gray-400 mb-6">
-              Empowering brands with creative digital solutions since 2010.
+    <footer className="bg-green-900/20 border-t border-white/10 py-12 sm:py-16 px-4 sm:px-6">
+      <div className="container mx-auto flex flex-col items-center justify-center">
+        <div className="gap-8 sm:gap-10 mb-8 sm:mb-12">
+          {/* Logo and Description */}
+          <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-center text-center">
+            <Image
+              className="w-auto h-20 sm:h-40 mb-4"
+              src="/Summit_Logo.png"
+              alt="iGaming Afrika"
+              width={160}
+              height={100}
+              priority
+            />
+            <p className="text-gray-400 mb-6 text-sm sm:text-base">
+              Empowering iGaming Excellence in Africa.
             </p>
-            <div className="flex gap-4">
-              {["twitter", "instagram", "linkedin", "github"].map((social) => (
-                <a
-                  key={social}
-                  href="#"
-                  className="w-10 h-10 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-green-500 hover:border-green-500 transition-colors"
-                >
-                  <Heart size={18} />
-                </a>
-              ))}
-            </div>
+            <SocialMediaLinks />
           </div>
 
-          {Object.entries(footerLinks).map(([category, links]) => (
+          {/* Footer Links */}
+          {/* {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h3 className="font-bold text-white mb-4">{category}</h3>
+              <h3 className="font-bold text-white mb-3 sm:mb-4 text-base sm:text-lg">
+                {category}
+              </h3>
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-gray-400 hover:text-white transition-colors"
+                      className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base"
                     >
                       {link}
                     </a>
@@ -49,11 +47,15 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-          ))}
+          ))} */}
         </div>
 
-        <div className="pt-8 border-t border-white/10 text-center text-gray-400">
-          <p>&copy; 2025 Creative Agency. All rights reserved.</p>
+        {/* Copyright */}
+        <div className="w-full pt-6 sm:pt-8 border-t border-white/10 text-center text-gray-400 text-xs sm:text-sm">
+          <p>
+            &copy; {new Date().getFullYear()} iGaming Afrika Summit. All rights
+            reserved.
+          </p>
         </div>
       </div>
     </footer>

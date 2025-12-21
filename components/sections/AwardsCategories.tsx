@@ -7,6 +7,7 @@ import Modal from "../ui/Modal";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { awardsCategories } from "@/lib/Appdata";
+import Image from "next/image";
 
 interface AwardCategory {
   id: number;
@@ -25,7 +26,6 @@ const staggerContainer: Variants = {
   },
 };
 
-// Portfolio Section
 const AwardsCategories: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedAwardsCategory, setSelectedAwardsCategory] =
@@ -42,7 +42,7 @@ const AwardsCategories: React.FC = () => {
   };
 
   return (
-    <section id="work" className="py-16 px-6">
+    <section id="work" className="py-12 sm:py-16 px-4 sm:px-0">
       <div className="container mx-auto">
         <motion.div
           initial="hidden"
@@ -55,36 +55,42 @@ const AwardsCategories: React.FC = () => {
             subtitle="Explore the awards available at the iGaming Afrika Awards 2026"
           />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {awardsCategories.map(
-              (awardsCategory: AwardCategory, index: number) => (
-                <Card key={index} className="cursor-pointer">
-                  <div
-                    onClick={() => handleCardClick(awardsCategory)}
-                    className="space-y-4"
-                  >
-                    <div className="aspect-video bg-linear-to-br from-orange-500/10 to-purple-500/10 rounded-xl mb-6"></div>
-                    <h3 className="text-2xl font-bold mb-2 text-white">
-                      {awardsCategory.title}
-                    </h3>
-                    {/* <p className="text-gray-400 mb-4">
-                      {awardsCategory.description}
-                    </p> */}
-
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                      <span className="text-green-600 text-sm font-semibold flex items-center">
-                        View Details <ArrowRight className="ml-2" size={16} />
-                      </span>
-                    </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            {awardsCategories.map((awardsCategory: AwardCategory) => (
+              <Card
+                key={awardsCategory.id}
+                className="cursor-pointer"
+                hover={true}
+              >
+                <div
+                  onClick={() => handleCardClick(awardsCategory)}
+                  className="space-y-3 sm:space-y-4"
+                >
+                  <div className="aspect-video rounded-lg sm:rounded-xl mb-4 sm:mb-6 relative overflow-hidden flex items-center justify-center bg-linear-to-br from-green-500/10 to-purple-500/10">
+                    <Image
+                      src="/trophy.png"
+                      alt={`${awardsCategory.title} trophy`}
+                      className="w-full h-[70%] sm:h-[80%] object-contain opacity-80"
+                      width={200}
+                      height={200}
+                    />
                   </div>
-                </Card>
-              )
-            )}
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white line-clamp-2">
+                    {awardsCategory.title}
+                  </h3>
+
+                  <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10">
+                    <span className="text-green-600 text-xs sm:text-sm font-semibold flex items-center hover:text-green-500 transition-colors">
+                      View Details <ArrowRight className="ml-2" size={16} />
+                    </span>
+                  </div>
+                </div>
+              </Card>
+            ))}
           </div>
         </motion.div>
       </div>
 
-      {/* Portfolio Modal */}
       <AnimatePresence>
         {isModalOpen && (
           <Modal

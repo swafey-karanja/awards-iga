@@ -27,7 +27,7 @@ const fadeInUp: Variants = {
 // CTA Section
 const CTA: React.FC = () => {
   return (
-    <section className="py-16 px-6 bg-linear-to-br from-orange-500/10 to-purple-500/10">
+    <section className="py-16 px-6 bg-linear-to-br from-green-500/10 to-purple-500/10">
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial="hidden"
@@ -41,7 +41,7 @@ const CTA: React.FC = () => {
           >
             Empower Your Brand
             <br />
-            <span className="text-orange-500">With Creative Today</span>
+            <span className="text-green-500">With Creative Today</span>
           </motion.h2>
           <motion.p variants={fadeInUp} className="text-xl text-gray-400 mb-12">
             Let&apos;s create something amazing together. Start your journey to

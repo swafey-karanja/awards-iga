@@ -4,7 +4,7 @@ import React from "react";
 
 const AwardsPage = () => {
   return (
-    <div className="bg-green-900/30 text-white ">
+    <div className="bg-green-900/30 px-6 md:px-0">
       {/* Minimal hero with background */}
       <Hero
         showStats={false}

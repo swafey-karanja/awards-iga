@@ -2,29 +2,23 @@
 
 import { useState, ChangeEvent, FormEvent, JSX } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { SelectChangeEvent } from "@mui/material";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 import {
   FormData,
   FormErrors,
-  ParticipationType,
   TextInput,
   PhoneInput,
-  RadioGroupField,
-  MultiSelectField,
-  TextAreaField,
-  FileUploadField,
   PageHeader,
   NavigationButtons,
-} from "@/components/ui/MUltistepForm";
-import { companyTypes } from "@/lib/Appdata";
+  TextAreaField,
+  MultiSelectField,
+} from "@/components/ui/MultistepForm";
+import { awardsCategories } from "@/lib/Appdata";
+import { SelectChangeEvent } from "@mui/material";
+// import { companyTypes } from "@/lib/Appdata";
 // import { fetchCSRFToken } from "@/services/api";
 
-// Constants
-const participationTypes: ParticipationType[] = [
-  { id: "conference-speaker", label: "Conference Speaker" },
-  { id: "podcast-participation", label: "Podcast Participation" },
-];
+const TOTAL_PAGES = 2;
 
 export default function NominationForm(): JSX.Element {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -38,13 +32,20 @@ export default function NominationForm(): JSX.Element {
     linkedin: "",
     companyName: "",
     role: "",
-    websiteUrl: "",
     companyType: "",
-    participationType: [],
-    topicDescription: "",
-    talkTitle: "",
+    reasonForNomination: "",
+    award_category: [],
   });
 
+  // Derived state: Get award category names from IDs
+  const getAwardCategoryNames = (): string[] => {
+    return formData.award_category
+      .map((id) => {
+        const category = awardsCategories.find((cat) => cat.id === id);
+        return category?.title || "";
+      })
+      .filter(Boolean);
+  };
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
@@ -63,35 +64,50 @@ export default function NominationForm(): JSX.Element {
   };
 
   const handleMultiSelectChange =
-    (field: keyof FormData) =>
-    (event: SelectChangeEvent<string[]>): void => {
+    <K extends keyof FormData>(field: K) =>
+    (event: SelectChangeEvent<number[]>): void => {
+      const {
+        target: { value },
+      } = event;
+
       setFormData((prev) => ({
         ...prev,
         [field]:
-          typeof event.target.value === "string"
-            ? event.target.value.split(",")
-            : event.target.value,
+          typeof value === "string"
+            ? (value.split(",").map(Number) as FormData[K])
+            : (value as FormData[K]),
       }));
     };
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateLinkedIn = (url: string): boolean => {
+    const linkedInRegex =
+      /^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/[A-Za-z0-9_-]+\/?$/;
+    return linkedInRegex.test(url);
+  };
 
   const validatePage = (page: number): boolean => {
     switch (page) {
       case 1:
         return !!(
-          formData.firstName &&
-          formData.lastName &&
-          formData.email &&
-          formData.phone
+          formData.firstName.trim() &&
+          formData.lastName.trim() &&
+          formData.email.trim() &&
+          validateEmail(formData.email) &&
+          formData.phone.trim() &&
+          formData.companyName.trim() &&
+          formData.role.trim() &&
+          (!formData.linkedin || validateLinkedIn(formData.linkedin))
         );
       case 2:
         return !!(
-          formData.companyName &&
-          formData.role &&
-          formData.companyType
-        );
-      case 3:
-        return !!(
-          formData.participationType.length > 0 && formData.topicDescription
+          formData.companyType.trim() &&
+          formData.reasonForNomination.trim() &&
+          formData.award_category.length > 0
         );
       default:
         return false;
@@ -100,35 +116,61 @@ export default function NominationForm(): JSX.Element {
 
   const nextPage = (): void => {
     if (validatePage(currentPage)) {
-      setCurrentPage((prev) => prev + 1);
+      setCurrentPage((prev) => Math.min(prev + 1, TOTAL_PAGES));
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const prevPage = (): void => {
-    setCurrentPage((prev) => prev - 1);
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!formData.firstName.trim())
+    // Page 1 validations
+    if (!formData.firstName.trim()) {
       newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    if (!formData.role.trim()) newErrors.role = "Your role is required";
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-    if (!formData.companyName.trim())
-      newErrors.companyName = "Company name is required";
+    }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailRegex.test(formData.email)) {
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Last name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!validateEmail(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
-    const linkedInRegex =
-      /^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/[A-Za-z0-9_-]+\/?$/;
-    if (formData.linkedin && !linkedInRegex.test(formData.linkedin)) {
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    }
+
+    if (!formData.companyName.trim()) {
+      newErrors.companyName = "Your company name is required";
+    }
+
+    if (!formData.role.trim()) {
+      newErrors.role = "Your role is required";
+    }
+
+    if (formData.linkedin && !validateLinkedIn(formData.linkedin)) {
       newErrors.linkedin = "Please enter a valid LinkedIn profile URL";
+    }
+
+    // Page 2 validations
+    if (!formData.companyType.trim()) {
+      newErrors.companyType = "Nominated company name is required";
+    }
+
+    if (!formData.reasonForNomination.trim()) {
+      newErrors.reasonForNomination = "Reason for nomination is required";
+    }
+
+    if (formData.award_category.length === 0) {
+      newErrors.award_category = "Please select at least one award category";
     }
 
     setErrors(newErrors);
@@ -137,69 +179,102 @@ export default function NominationForm(): JSX.Element {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    if (!validateForm()) return;
+
+    if (!validateForm()) {
+      // Find first page with errors
+      const hasPage1Errors = !!(
+        errors.firstName ||
+        errors.lastName ||
+        errors.email ||
+        errors.phone ||
+        errors.companyName ||
+        errors.role ||
+        errors.linkedin
+      );
+
+      if (hasPage1Errors && currentPage !== 1) {
+        setCurrentPage(1);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
+
     setIsSubmitting(true);
 
-    if (!validatePage(3)) return;
+    try {
+      // Get award category names for submission
+      const awardCategoryNames = getAwardCategoryNames();
 
-    // try {
-    //   const { csrf_token } = await fetchCSRFToken();
-    //   console.log({ csrf_token });
+      // Combine first and last name
+      const fullName = `${formData.firstName.trim()} ${formData.lastName.trim()}`;
 
-    //   const response = await fetch(
-    //     `${process.env.NEXT_PUBLIC_API_URL}speakers/become-a-speaker/`,
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-CSRF-Token": csrf_token,
-    //       },
-    //       body: JSON.stringify(formData),
-    //     }
-    //   );
+      // Prepare submission data with category names instead of IDs
+      const submissionData = {
+        fullName,
+        email: formData.email,
+        phone: formData.phone,
+        linkedin: formData.linkedin,
+        companyName: formData.companyName,
+        role: formData.role,
+        nominatedCompany: formData.companyType,
+        reasonForNomination: formData.reasonForNomination,
+        award_category: awardCategoryNames,
+      };
 
-    //   let data: { message?: string } | null = null;
-    //   const text = await response.text();
+      // Log the data to see the distinction
+      console.log("Form submission data:", submissionData);
 
-    //   try {
-    //     data = text ? JSON.parse(text) : null;
-    //   } catch (jsonError) {
-    //     console.warn("Failed to parse JSON response:", jsonError);
-    //   }
+      // Uncomment when ready to connect to API
+      // const { csrf_token } = await fetchCSRFToken();
 
-    //   if (response.ok) {
-    //     toast.success("Application submitted successfully!", {
-    //       id: "submit-toast",
-    //     });
-    //     setTimeout(() => {
-    //       setFormData({
-    //         firstName: "",
-    //         lastName: "",
-    //         email: "",
-    //         phone: "",
-    //         linkedin: "",
-    //         companyName: "",
-    //         role: "",
-    //         websiteUrl: "",
-    //         companyType: "",
-    //         participationType: [],
-    //         topicDescription: "",
-    //         talkTitle: "",
-    //       });
+      // const response = await fetch(
+      //   `${process.env.NEXT_PUBLIC_API_URL}nominations/submit/`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "X-CSRF-Token": csrf_token,
+      //     },
+      //     body: JSON.stringify(submissionData),
+      //   }
+      // );
 
-    //       setCurrentPage(1);
-    //     }, 1500);
-    //   } else {
-    //     toast.error(data?.message || "Submission failed", {
-    //       id: "submit-toast",
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.error("Submission error:", error);
-    //   toast.error("Submission failed. Try Again", { id: "submit-toast" });
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+      // const data = await response.json();
+
+      // if (response.ok) {
+      //   toast.success("Nomination submitted successfully!", {
+      //     id: "submit-toast",
+      //   });
+      //
+      //   // Reset form after successful submission
+      //   setTimeout(() => {
+      //     setFormData({
+      //       firstName: "",
+      //       lastName: "",
+      //       email: "",
+      //       phone: "",
+      //       linkedin: "",
+      //       companyName: "",
+      //       role: "",
+      //       companyType: "",
+      //       reasonForNomination: "",
+      //       award_category: [],
+      //     });
+      //     setCurrentPage(1);
+      //   }, 1500);
+      // } else {
+      //   toast.error(data?.message || "Submission failed", {
+      //     id: "submit-toast",
+      //   });
+      // }
+    } catch (error) {
+      console.error("Submission error:", error);
+      // toast.error("Submission failed. Please try again.", {
+      //   id: "submit-toast",
+      // });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleNavigateHome = (): void => {
@@ -207,34 +282,56 @@ export default function NominationForm(): JSX.Element {
   };
 
   return (
-    <div className="py-8 md:py-15 px-4 container mx-auto">
+    <div className="py-8 md:py-15 container mx-auto">
       <div className="mb-8">
         <button
+          type="button"
           onClick={handleNavigateHome}
           className="flex items-center text-green-600 hover:text-green-700 mb-4 transition-colors font-bold cursor-pointer"
+          aria-label="Navigate to home page"
         >
-          <span className="mr-2 font-bold">
-            <IoIosArrowBack />
-          </span>
+          <IoIosArrowBack className="mr-2" aria-hidden="true" />
           Back to home page
         </button>
         <h1 className="text-2xl md:text-4xl font-bold bg-linear-to-r from-green-700 to-green-600 bg-clip-text text-transparent py-2">
-          Speaker Registration
+          Nomination Form
         </h1>
-        <p className="text-white max-w-3xl text-xs md:text-[13px] font-semibold">
-          Complete your registration as a speaker for iGaming AFRIKA Summit 2026
+        <p className="text-gray-300 max-w-3xl text-xs md:text-[13px] font-semibold">
+          Nominate a deserving company for the iGaming AFRIKA Awards 2026
         </p>
       </div>
 
-      <div className="lg:min-w-6xl mx-auto">
-        <div className="bg-green-600/20 rounded-lg shadow-md overflow-hidden">
-          <form onSubmit={handleSubmit} className="p-8">
+      <div className="container mx-auto">
+        {/* Progress indicator */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium text-gray-300">
+              Step {currentPage} of {TOTAL_PAGES}
+            </span>
+            <span className="text-sm font-medium text-gray-300">
+              {Math.round((currentPage / TOTAL_PAGES) * 100)}% Complete
+            </span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div
+              className="bg-green-600 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${(currentPage / TOTAL_PAGES) * 100}%` }}
+              role="progressbar"
+              aria-valuenow={currentPage}
+              aria-valuemin={1}
+              aria-valuemax={TOTAL_PAGES}
+            />
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8" noValidate>
             {/* Page 1: Personal Information */}
             {currentPage === 1 && (
               <div className="space-y-6">
                 <PageHeader
                   title="Personal Information"
-                  description="We'll use this information to reach out to you before the event. Your details will not be shared externally."
+                  description="Tell us about yourself and your company"
                 />
 
                 <div className="grid lg:grid-cols-2 gap-4">
@@ -284,11 +381,37 @@ export default function NominationForm(): JSX.Element {
                     disabled={isSubmitting}
                     required
                   />
+
+                  <TextInput
+                    name="companyName"
+                    label="Your Company Name"
+                    value={formData.companyName}
+                    onChange={handleInputChange}
+                    error={errors.companyName}
+                    helperText={errors.companyName}
+                    placeholder="Company you work for"
+                    disabled={isSubmitting}
+                    autoComplete="organization"
+                    required
+                  />
+
+                  <TextInput
+                    name="role"
+                    label="Your Role/Title"
+                    value={formData.role}
+                    onChange={handleInputChange}
+                    error={errors.role}
+                    helperText={errors.role}
+                    placeholder="e.g. Marketing Manager"
+                    disabled={isSubmitting}
+                    autoComplete="organization-title"
+                    required
+                  />
                 </div>
 
                 <TextInput
                   name="linkedin"
-                  label="LinkedIn Profile"
+                  label="LinkedIn Profile (Optional)"
                   value={formData.linkedin}
                   onChange={handleInputChange}
                   error={errors.linkedin}
@@ -300,104 +423,47 @@ export default function NominationForm(): JSX.Element {
               </div>
             )}
 
-            {/* Page 2: Organization Details */}
+            {/* Page 2: Nomination Details */}
             {currentPage === 2 && (
               <div className="space-y-6">
                 <PageHeader
-                  title="Company Details"
-                  description="This helps us understand your professional context. We often match speakers with themes or partners from similar sectors."
+                  title="Nomination Details"
+                  description="Provide details about the company you want to nominate"
                 />
 
                 <TextInput
-                  name="companyName"
-                  label="Company Name"
-                  value={formData.companyName}
-                  onChange={handleInputChange}
-                  error={errors.companyName}
-                  helperText={errors.companyName}
-                  disabled={isSubmitting}
-                  autoComplete="organization"
-                  required
-                />
-
-                <TextInput
-                  name="role"
-                  label="Your Role/Title"
-                  value={formData.role}
-                  onChange={handleInputChange}
-                  error={errors.role}
-                  helperText={errors.role}
-                  disabled={isSubmitting}
-                  autoComplete="organization-title"
-                  required
-                />
-
-                <TextInput
-                  name="websiteUrl"
-                  label="Website URL"
-                  value={formData.websiteUrl}
-                  onChange={handleInputChange}
-                  disabled={isSubmitting}
-                  autoComplete="url"
-                />
-
-                <RadioGroupField
-                  label="Company Type"
                   name="companyType"
+                  label="Nominated Company Name"
                   value={formData.companyType}
                   onChange={handleInputChange}
-                  options={companyTypes}
-                  required
-                />
-              </div>
-            )}
-
-            {/* Page 3: Speaking Topic */}
-            {currentPage === 3 && (
-              <div className="space-y-6">
-                <PageHeader
-                  title="What would you like to speak about?"
-                  description="We're looking for original, insightful, and valuable topics that resonate with our audience."
-                />
-
-                <MultiSelectField
-                  label="Type of Participation"
-                  name="participationType"
-                  value={formData.participationType}
-                  onChange={handleMultiSelectChange("participationType")}
-                  options={participationTypes}
-                  error={errors.participationType}
-                  disabled={isSubmitting}
-                  required
-                />
-
-                <TextInput
-                  name="talkTitle"
-                  label="Talk Title"
-                  value={formData.talkTitle}
-                  onChange={handleInputChange}
-                  error={errors.talkTitle}
-                  helperText={errors.talkTitle}
-                  placeholder="e.g Reimagining gaming in Africa: Trends and Opportunities"
+                  error={errors.companyType}
+                  helperText={errors.companyType}
+                  placeholder="Name of the company you're nominating"
                   disabled={isSubmitting}
                   autoComplete="off"
+                  required
                 />
 
                 <TextAreaField
-                  label="Topic Description"
-                  name="topicDescription"
-                  value={formData.topicDescription}
+                  name="reasonForNomination"
+                  label="Reason for Nomination"
+                  value={formData.reasonForNomination}
                   onChange={handleInputChange}
-                  placeholder="e.g An in-depth look at emerging trends in the African iGaming market, exploring new technologies, player behaviors, and regulatory changes shaping the industry's future."
+                  placeholder="Briefly describe why this company deserves to be nominated. Include their achievements, impact, and what makes them stand out."
                   disabled={isSubmitting}
                   required
+                  minRows={6}
                 />
 
-                <FileUploadField
-                  label="Upload Supporting Files"
-                  name="supportingFiles"
-                  onChange={(event) => console.log(event.target.files)}
-                  multiple
+                <MultiSelectField
+                  label="Award Categories"
+                  name="awardCategories"
+                  value={formData.award_category}
+                  onChange={handleMultiSelectChange("award_category")}
+                  options={awardsCategories}
+                  error={errors.award_category}
+                  disabled={isSubmitting}
+                  required
                 />
               </div>
             )}
@@ -411,7 +477,7 @@ export default function NominationForm(): JSX.Element {
               }
               canProceed={validatePage(currentPage)}
               isSubmitting={isSubmitting}
-              totalPages={3}
+              totalPages={TOTAL_PAGES}
             />
           </form>
         </div>
