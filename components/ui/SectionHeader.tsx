@@ -29,11 +29,11 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
     variants={fadeInUp}
     className={`mb-8 sm:mb-12 md:mb-16 px-4 ${centered ? "text-center" : ""}`}
   >
-    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 bg-linear-to-r from-white to-white/60 bg-clip-text text-transparent">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 bg-linear-to-r from-green-600 to-green-700 bg-clip-text text-transparent">
       {title}
     </h2>
     {subtitle && (
-      <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
+      <p className="text-gray-400 text-sm sm:text-base md:text-md max-w-2xl mx-auto">
         {subtitle}
       </p>
     )}

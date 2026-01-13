@@ -80,13 +80,13 @@ const Judges: React.FC = () => {
           initial="hidden"
           animate="visible"
           variants={container}
-          className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
         >
           {visibleJudges.map((judge, index) => (
             <Card key={index} hover={true}>
               <div
                 onClick={() => openModal(judge)}
-                className="flex items-center justify-center flex-col cursor-pointer"
+                className="flex items-center justify-center flex-col cursor-pointer space-y-12 sm:space-y-20 h-full relative"
               >
                 <div className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 mb-4 sm:mb-6 rounded-full bg-linear-to-br from-green-500/20 to-purple-500/20 overflow-hidden flex items-center justify-center border-4 border-green-500/20 hover:border-green-500/50 transition-colors">
                   {judge.image ? (
@@ -119,8 +119,8 @@ const Judges: React.FC = () => {
                   {judge.name}
                 </h3>
 
-                <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10 w-full">
-                  <span className="text-green-600 text-xs sm:text-sm font-semibold flex items-center justify-center hover:text-green-500 transition-colors">
+                <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10 absolute bottom-0 left-0 w-full">
+                  <span className="text-green-600 text-xs sm:text-sm font-semibold flex items-center hover:text-green-500 transition-colors">
                     View Details <ArrowRight className="ml-2" size={16} />
                   </span>
                 </div>

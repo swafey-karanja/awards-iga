@@ -142,7 +142,7 @@ const Hero: React.FC<HeroProps> = ({
               <Button className="text-sm sm:text-base">
                 <span className="hidden sm:inline">{buttonText}</span>
                 <span className="sm:hidden">Explore Awards</span>
-                <ArrowDown className="inline ml-2" size={20} />
+                {/* <ArrowDown className="inline ml-2" size={20} /> */}
               </Button>
             </motion.div>
           )}

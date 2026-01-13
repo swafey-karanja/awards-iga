@@ -34,7 +34,10 @@ export default function EventInformation() {
           viewport={{ once: true }}
           variants={staggerContainer}
         >
-          <SectionHeader title="Event Information" />
+          <SectionHeader
+            title="Event Information"
+            subtitle="Key details about the awards event"
+          />
         </motion.div>
 
         <motion.div

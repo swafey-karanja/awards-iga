@@ -55,16 +55,16 @@ const AwardsCategories: React.FC = () => {
             subtitle="Explore the awards available at the iGaming Afrika Awards 2026"
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {awardsCategories.map((awardsCategory: AwardCategory) => (
               <Card
                 key={awardsCategory.id}
-                className="cursor-pointer"
+                className="cursor-pointer "
                 hover={true}
               >
                 <div
                   onClick={() => handleCardClick(awardsCategory)}
-                  className="space-y-3 sm:space-y-4"
+                  className="space-y-12 sm:space-y-20 h-full relative"
                 >
                   <div className="aspect-video rounded-lg sm:rounded-xl mb-4 sm:mb-6 relative overflow-hidden flex items-center justify-center bg-linear-to-br from-green-500/10 to-purple-500/10">
                     <Image
@@ -79,7 +79,7 @@ const AwardsCategories: React.FC = () => {
                     {awardsCategory.title}
                   </h3>
 
-                  <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10">
+                  <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10 absolute bottom-0 left-0 w-full">
                     <span className="text-green-600 text-xs sm:text-sm font-semibold flex items-center hover:text-green-500 transition-colors">
                       View Details <ArrowRight className="ml-2" size={16} />
                     </span>
