@@ -27,7 +27,7 @@ import {
   // Button,
   SelectChangeEvent,
 } from "@mui/material";
-import { MuiTelInput } from "mui-tel-input";
+import { MuiTelInput, MuiTelInputProps } from "mui-tel-input";
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -98,7 +98,7 @@ interface PhoneInputProps {
   onChange: (value: string) => void;
   disabled?: boolean;
   required?: boolean;
-  defaultCountry?: string;
+  defaultCountry?: MuiTelInputProps["defaultCountry"];
   name?: string;
 }
 
@@ -244,10 +244,10 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
         disabled={disabled}
         defaultCountry={defaultCountry}
         name={name}
-        inputProps={{
-          id: fieldId,
-          name: name,
-          autoComplete: "tel",
+        slotProps={{
+          input: {
+            autoComplete: "tel",
+          },
         }}
       />
     </FormField>
