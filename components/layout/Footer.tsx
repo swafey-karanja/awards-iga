@@ -2,14 +2,14 @@ import Image from "next/image";
 import SocialMediaLinks from "../ui/SocilaMediaLinks";
 
 const Footer = () => {
-  const footerLinks = {
-    Company: ["About", "Services", "Work", "Careers"],
-    Resources: ["Blog", "Case Studies", "Documentation", "Support"],
-    Legal: ["Privacy", "Terms", "Cookies", "Licenses"],
-  };
+  // const footerLinks = {
+  //   Company: ["About", "Services", "Work", "Careers"],
+  //   Resources: ["Blog", "Case Studies", "Documentation", "Support"],
+  //   Legal: ["Privacy", "Terms", "Cookies", "Licenses"],
+  // };
 
   return (
-    <footer className="bg-green-900/20 border-t border-white/10 py-12 sm:py-16 px-4 sm:px-6">
+    <footer className="bg-green-500/20 border-t border-white/10 py-12 sm:py-16 px-4 sm:px-6">
       <div className="container mx-auto flex flex-col items-center justify-center">
         <div className="gap-8 sm:gap-10 mb-8 sm:mb-12">
           {/* Logo and Description */}

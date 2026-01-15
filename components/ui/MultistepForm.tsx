@@ -50,11 +50,13 @@ export interface FormData {
   lastName: string;
   email: string;
   phone: string;
-  linkedin: string;
+  linkedin?: string;
   companyName: string;
   role: string;
-  companyType: string;
+  nominatedCompany: string;
   reasonForNomination: string;
+  specialContribution: string;
+  impactOfNominee: string;
   award_category: number[];
 }
 
@@ -66,8 +68,10 @@ export interface FormErrors {
   linkedin?: string;
   companyName?: string;
   role?: string;
-  companyType?: string;
+  nominatedCompany?: string;
   reasonForNomination?: string;
+  specialContribution?: string;
+  impactOfNominee?: string;
   award_category?: string;
 }
 
