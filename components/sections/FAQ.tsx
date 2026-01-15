@@ -28,7 +28,7 @@ const FAQs: React.FC = () => {
             href={part}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-green-500 hover:text-green-400 underline break-all"
+            className="text-green-700 hover:text-green-800 underline break-all font-medium"
           >
             {part}
           </a>
@@ -39,7 +39,7 @@ const FAQs: React.FC = () => {
   };
 
   return (
-    <section id="faqs" className="py-12 sm:py-16 px-4 md:px-0">
+    <section id="faqs" className="py-12 sm:py-16 px-4 lg:px-8">
       <div className="container mx-auto">
         <SectionHeader
           title="Frequently Asked Questions"
@@ -50,19 +50,19 @@ const FAQs: React.FC = () => {
           {faqs.map((faq: FAQ, index: number) => (
             <div
               key={index}
-              className="bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 hover:border-green-500/30"
+              className="bg-white/90 border border-green-200/60 rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 hover:border-green-600/60 shadow-sm"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="flex justify-between items-center w-full text-left py-4 sm:py-5 px-4 sm:px-6 focus:outline-none cursor-pointer transition-colors"
+                className="flex justify-between items-center w-full text-left py-4 sm:py-5 px-4 sm:px-6 focus:outline-none cursor-pointer transition-colors hover:bg-white/50"
                 aria-expanded={activeIndex === index}
                 aria-controls={`faq-answer-${index}`}
               >
-                <h2 className="text-sm sm:text-base md:text-lg font-semibold text-white pr-4">
+                <h2 className="text-sm sm:text-base md:text-lg font-semibold text-gray-900 pr-4">
                   {faq.question}
                 </h2>
                 <svg
-                  className={`w-5 h-5 sm:w-6 sm:h-6 text-green-500 transition-transform duration-300 shrink-0 ${
+                  className={`w-5 h-5 sm:w-6 sm:h-6 text-green-700 transition-transform duration-300 shrink-0 ${
                     activeIndex === index ? "rotate-180" : ""
                   }`}
                   fill="none"
@@ -87,7 +87,7 @@ const FAQs: React.FC = () => {
                 }`}
               >
                 <div className="px-4 sm:px-6 pb-4 sm:pb-5 pt-2">
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+                  <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
                     {renderTextWithLinks(faq.answer)}
                   </p>
                 </div>

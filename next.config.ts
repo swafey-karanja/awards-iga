@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       "1000logos.net",
       "static.wikia.nocookie.net",
       "igamingafrika.com",
+      "images.unsplash.com",
     ],
   },
 };

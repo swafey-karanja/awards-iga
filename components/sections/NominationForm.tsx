@@ -5,17 +5,17 @@ import { IoIosArrowBack } from "react-icons/io";
 // import { toast } from "react-hot-toast";
 import {
   FormData,
-  FormErrors,
   TextInput,
   PhoneInput,
   PageHeader,
   NavigationButtons,
   TextAreaField,
   MultiSelectField,
+  FormErrors,
 } from "@/components/ui/MultistepForm";
 import { awardsCategories } from "@/lib/Appdata";
 import { SelectChangeEvent } from "@mui/material";
-// import { companyTypes } from "@/lib/Appdata";
+// import { nominatedCompanys } from "@/lib/Appdata";
 // import { fetchCSRFToken } from "@/services/api";
 
 const TOTAL_PAGES = 2;
@@ -32,8 +32,10 @@ export default function NominationForm(): JSX.Element {
     linkedin: "",
     companyName: "",
     role: "",
-    companyType: "",
+    nominatedCompany: "",
     reasonForNomination: "",
+    specialContribution: "",
+    impactOfNominee: "",
     award_category: [],
   });
 
@@ -105,8 +107,10 @@ export default function NominationForm(): JSX.Element {
         );
       case 2:
         return !!(
-          formData.companyType.trim() &&
+          formData.nominatedCompany.trim() &&
           formData.reasonForNomination.trim() &&
+          formData.impactOfNominee.trim() &&
+          formData.specialContribution.trim() &&
           formData.award_category.length > 0
         );
       default:
@@ -161,12 +165,21 @@ export default function NominationForm(): JSX.Element {
     }
 
     // Page 2 validations
-    if (!formData.companyType.trim()) {
-      newErrors.companyType = "Nominated company name is required";
+    if (!formData.nominatedCompany.trim()) {
+      newErrors.nominatedCompany = "Nominated company name is required";
     }
 
     if (!formData.reasonForNomination.trim()) {
       newErrors.reasonForNomination = "Reason for nomination is required";
+    }
+
+    if (!formData.specialContribution.trim()) {
+      newErrors.specialContribution = "Special contribution is required";
+    }
+
+    if (!formData.impactOfNominee.trim()) {
+      newErrors.impactOfNominee =
+        "Impact of nominee's contribution is required";
     }
 
     if (formData.award_category.length === 0) {
@@ -216,8 +229,10 @@ export default function NominationForm(): JSX.Element {
         linkedin: formData.linkedin,
         companyName: formData.companyName,
         role: formData.role,
-        nominatedCompany: formData.companyType,
+        nominatedCompany: formData.nominatedCompany,
         reasonForNomination: formData.reasonForNomination,
+        specialContribution: formData.specialContribution,
+        impactOfNominee: formData.impactOfNominee,
         award_category: awardCategoryNames,
       };
 
@@ -256,7 +271,7 @@ export default function NominationForm(): JSX.Element {
       //       linkedin: "",
       //       companyName: "",
       //       role: "",
-      //       companyType: "",
+      //       nominatedCompany: "",
       //       reasonForNomination: "",
       //       award_category: [],
       //     });
@@ -282,12 +297,12 @@ export default function NominationForm(): JSX.Element {
   };
 
   return (
-    <div className="py-8 md:py-15 container mx-auto">
-      <div className="mb-8">
+    <div className="py-12 md:py-16 px-4 lg:px-8 ">
+      <div className="mb-8 container mx-auto h-auto z-10">
         <button
           type="button"
           onClick={handleNavigateHome}
-          className="flex items-center text-green-600 hover:text-green-700 mb-4 transition-colors font-bold cursor-pointer"
+          className="flex items-center text-green-700 hover:text-green-800 mb-4 transition-colors font-bold cursor-pointer"
           aria-label="Navigate to home page"
         >
           <IoIosArrowBack className="mr-2" aria-hidden="true" />
@@ -296,7 +311,7 @@ export default function NominationForm(): JSX.Element {
         <h1 className="text-2xl md:text-4xl font-bold bg-linear-to-r from-green-700 to-green-600 bg-clip-text text-transparent py-2">
           Nomination Form
         </h1>
-        <p className="text-gray-300 max-w-3xl text-xs md:text-[13px] font-semibold">
+        <p className="text-gray-700 max-w-3xl text-xs md:text-[13px] font-semibold">
           Nominate a deserving company for the iGaming AFRIKA Awards 2026
         </p>
       </div>
@@ -305,16 +320,16 @@ export default function NominationForm(): JSX.Element {
         {/* Progress indicator */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-300">
+            <span className="text-sm font-medium text-gray-700">
               Step {currentPage} of {TOTAL_PAGES}
             </span>
-            <span className="text-sm font-medium text-gray-300">
+            <span className="text-sm font-medium text-gray-700">
               {Math.round((currentPage / TOTAL_PAGES) * 100)}% Complete
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-green-200 rounded-full h-2">
             <div
-              className="bg-green-600 h-2 rounded-full transition-all duration-300"
+              className="bg-green-700 h-2 rounded-full transition-all duration-300"
               style={{ width: `${(currentPage / TOTAL_PAGES) * 100}%` }}
               role="progressbar"
               aria-valuenow={currentPage}
@@ -324,7 +339,7 @@ export default function NominationForm(): JSX.Element {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden border border-green-200/60">
           <form onSubmit={handleSubmit} className="p-6 md:p-8" noValidate>
             {/* Page 1: Personal Information */}
             {currentPage === 1 && (
@@ -412,7 +427,7 @@ export default function NominationForm(): JSX.Element {
                 <TextInput
                   name="linkedin"
                   label="LinkedIn Profile (Optional)"
-                  value={formData.linkedin}
+                  value={formData.linkedin ?? ""}
                   onChange={handleInputChange}
                   error={errors.linkedin}
                   helperText={errors.linkedin}
@@ -432,27 +447,16 @@ export default function NominationForm(): JSX.Element {
                 />
 
                 <TextInput
-                  name="companyType"
+                  name="nominatedCompany"
                   label="Nominated Company Name"
-                  value={formData.companyType}
+                  value={formData.nominatedCompany}
                   onChange={handleInputChange}
-                  error={errors.companyType}
-                  helperText={errors.companyType}
+                  error={errors.nominatedCompany}
+                  helperText={errors.nominatedCompany}
                   placeholder="Name of the company you're nominating"
                   disabled={isSubmitting}
                   autoComplete="off"
                   required
-                />
-
-                <TextAreaField
-                  name="reasonForNomination"
-                  label="Reason for Nomination"
-                  value={formData.reasonForNomination}
-                  onChange={handleInputChange}
-                  placeholder="Briefly describe why this company deserves to be nominated. Include their achievements, impact, and what makes them stand out."
-                  disabled={isSubmitting}
-                  required
-                  minRows={6}
                 />
 
                 <MultiSelectField
@@ -464,6 +468,39 @@ export default function NominationForm(): JSX.Element {
                   error={errors.award_category}
                   disabled={isSubmitting}
                   required
+                />
+
+                <TextAreaField
+                  name="reasonForNomination"
+                  label="Reason for Nomination"
+                  value={formData.reasonForNomination}
+                  onChange={handleInputChange}
+                  placeholder="Give us some background information that explains why you are nominating the individual or company."
+                  disabled={isSubmitting}
+                  required
+                  minRows={6}
+                />
+
+                <TextAreaField
+                  name="impactOfNominee"
+                  label="Nominee's special contribution or innovative solution to the gaming industry in Africa"
+                  value={formData.reasonForNomination}
+                  onChange={handleInputChange}
+                  placeholder="Describe a specific instance or project where the individual or company exemplified their special contribution or innovative solution to the gaming industry in Africa."
+                  disabled={isSubmitting}
+                  required
+                  minRows={6}
+                />
+
+                <TextAreaField
+                  name="reasonForNomination"
+                  label="Nominee's contribution's impact on the iGaming industry in Africa"
+                  value={formData.reasonForNomination}
+                  onChange={handleInputChange}
+                  placeholder="What impact does the contribution/achievement have on the gaming industry in Africa?"
+                  disabled={isSubmitting}
+                  required
+                  minRows={6}
                 />
               </div>
             )}

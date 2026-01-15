@@ -4,6 +4,8 @@ import React from "react";
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import SectionHeader from "../ui/SectionHeader";
+import Timeline from "../ui/Timeline";
+import MobileTimeline from "../ui/MobileTimeline";
 
 export default function EventInformation() {
   const staggerContainer: Variants = {
@@ -26,7 +28,10 @@ export default function EventInformation() {
   };
 
   return (
-    <section id="about" className="py-12 sm:py-16 px-4 md:px-0 bg-white/5">
+    <section
+      id="about"
+      className="py-12 sm:py-16 px-4 lg:px-8 border-b-5 border-green-600"
+    >
       <div className="container mx-auto">
         <motion.div
           initial="hidden"
@@ -52,9 +57,9 @@ export default function EventInformation() {
             {/* Top Image */}
             <motion.div
               variants={fadeInUp}
-              className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-linear-to-br from-green-800/80 to-green-900/80 backdrop-blur-sm border border-gray-700/50"
+              className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-linear-to-br from-green-700/30 to-green-800/40 backdrop-blur-sm border border-green-300/50"
             >
-              <div className="relative h-64 sm:h-80 md:h-96">
+              <div className="relative h-64 sm:h-80 md:h-145">
                 <Image
                   src="/image_3.jpg"
                   alt="Event venue"
@@ -69,9 +74,9 @@ export default function EventInformation() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <motion.div
                 variants={fadeInUp}
-                className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-linear-to-br from-green-800/80 to-green-900/80 backdrop-blur-sm border border-gray-700/50"
+                className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-linear-to-br from-green-700/30 to-green-800/40 backdrop-blur-sm border border-green-300/50"
               >
-                <div className="relative aspect-square">
+                <div className=" relative h-64 sm:h-80">
                   <Image
                     src="/image_1.jpg"
                     alt="Event atmosphere"
@@ -84,9 +89,9 @@ export default function EventInformation() {
 
               <motion.div
                 variants={fadeInUp}
-                className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-linear-to-br from-green-800/80 to-green-900/80 backdrop-blur-sm border border-gray-700/50"
+                className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-linear-to-br from-green-700/30 to-green-800/40 backdrop-blur-sm border border-green-300/50"
               >
-                <div className="relative aspect-square">
+                <div className="relative h-64 sm:h-80">
                   <Image
                     src="/image_2.jpg"
                     alt="Event highlights"
@@ -104,18 +109,18 @@ export default function EventInformation() {
             {/* Venue Section */}
             <motion.div
               variants={fadeInUp}
-              className="bg-linear-to-br from-green-800/40 to-green-900/50 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-gray-700/50"
+              className=" p-4 sm:p-6 border-b-3 border-green-600/50  "
             >
-              <h2 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">
+              <h2 className="text-lg sm:text-3xl font-bold text-green-700 mb-2">
                 Venue
               </h2>
-              <div className="space-y-3">
-                <h3 className="text-base sm:text-lg font-semibold text-white">
+              <div className="space-y-2">
+                <h3 className="text-base sm:text-lg font-semibold text-black">
                   TBC
                 </h3>
                 <div className="flex items-start gap-3">
                   <svg
-                    className="w-5 h-5 text-orange-400 mt-1 shrink-0"
+                    className="w-5 h-5 text-green-700 mt-1 shrink-0"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -126,10 +131,10 @@ export default function EventInformation() {
                     />
                   </svg>
                   <div>
-                    <p className="text-white font-semibold text-sm sm:text-base">
+                    <p className="text-green-800 font-semibold text-sm sm:text-base">
                       Venue Address:
                     </p>
-                    <p className="text-gray-300 text-sm">TBC</p>
+                    <p className="text-gray-700 text-sm">TBC</p>
                   </div>
                 </div>
               </div>
@@ -138,36 +143,36 @@ export default function EventInformation() {
             {/* On The Evening Section */}
             <motion.div
               variants={fadeInUp}
-              className="bg-linear-to-br from-green-800/40 to-green-900/50 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-gray-700/50"
+              className=" p-4 sm:p-6 border-b-3 border-green-600/50 "
             >
-              <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
+              <h2 className="text-lg sm:text-3xl font-bold text-green-700 mb-2">
                 On The Evening
               </h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-orange-400 rounded-full mt-2 shrink-0"></div>
-                  <p className="text-gray-300 text-sm sm:text-base">
+                  <div className="w-2 h-2 bg-green-600 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-gray-700 text-sm sm:text-base">
                     Luxury dinner
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-orange-400 rounded-full mt-2 shrink-0"></div>
-                  <p className="text-gray-300 text-sm sm:text-base">
+                  <div className="w-2 h-2 bg-green-600 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-gray-700 text-sm sm:text-base">
                     DJ and entertainment
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-orange-400 rounded-full mt-2 shrink-0"></div>
-                  <p className="text-gray-300 text-sm sm:text-base">
+                  <div className="w-2 h-2 bg-green-600 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-gray-700 text-sm sm:text-base">
                     Networking with the best of the iGaming Community
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-gray-700/50">
+              <div className="mt-4 pt-4 border-t border-green-200/50">
                 <div className="flex items-start gap-3">
                   <svg
-                    className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0"
+                    className="w-5 h-5 text-green-700 mt-0.5 shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -180,15 +185,31 @@ export default function EventInformation() {
                     />
                   </svg>
                   <div>
-                    <p className="text-white font-semibold text-sm sm:text-base">
+                    <p className="text-green-800 font-semibold text-sm sm:text-base">
                       Dress code:
                     </p>
-                    <p className="text-gray-300 text-sm">
+                    <p className="text-gray-700 text-sm">
                       Smart Casual/Lounge Suites/Cocktail Dresses
                     </p>
                   </div>
                 </div>
               </div>
+            </motion.div>
+
+            <motion.div
+              variants={fadeInUp}
+              className="hidden xl:block p-4 sm:p-6  "
+            >
+              <h2 className="text-lg sm:text-3xl font-bold text-green-700 mb-4">
+                Schedule
+              </h2>
+              <Timeline />
+            </motion.div>
+            <motion.div variants={fadeInUp} className="xl:hidden p-4 sm:p-6  ">
+              <h2 className="text-lg sm:text-3xl font-bold text-green-700 mb-4">
+                Schedule
+              </h2>
+              <MobileTimeline />
             </motion.div>
           </div>
         </motion.div>

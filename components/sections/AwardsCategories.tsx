@@ -42,8 +42,11 @@ const AwardsCategories: React.FC = () => {
   };
 
   return (
-    <section id="work" className="py-12 sm:py-16 px-4 sm:px-0">
-      <div className="container mx-auto">
+    <section
+      id="work"
+      className="py-12 sm:py-16 px-4 lg:px-8 border-b-5 border-green-600"
+    >
+      <div className="container mx-auto ">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -59,28 +62,28 @@ const AwardsCategories: React.FC = () => {
             {awardsCategories.map((awardsCategory: AwardCategory) => (
               <Card
                 key={awardsCategory.id}
-                className="cursor-pointer "
+                className="cursor-pointer"
                 hover={true}
               >
                 <div
                   onClick={() => handleCardClick(awardsCategory)}
                   className="space-y-12 sm:space-y-20 h-full relative"
                 >
-                  <div className="aspect-video rounded-lg sm:rounded-xl mb-4 sm:mb-6 relative overflow-hidden flex items-center justify-center bg-linear-to-br from-green-500/10 to-purple-500/10">
+                  <div className="aspect-video rounded-lg sm:rounded-xl mb-4 sm:mb-6 relative overflow-hidden flex items-center justify-center bg-linear-to-br from-green-600/20 to-green-700/20">
                     <Image
                       src="/trophy.png"
                       alt={`${awardsCategory.title} trophy`}
-                      className="w-full h-[70%] sm:h-[80%] object-contain opacity-80"
+                      className="w-full h-[70%] sm:h-[80%] object-contain opacity-90"
                       width={200}
                       height={200}
                     />
                   </div>
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white line-clamp-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 line-clamp-2">
                     {awardsCategory.title}
                   </h3>
 
-                  <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10 absolute bottom-0 left-0 w-full">
-                    <span className="text-green-600 text-xs sm:text-sm font-semibold flex items-center hover:text-green-500 transition-colors">
+                  <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-green-200/60 absolute bottom-0 left-0 w-full">
+                    <span className="text-green-700 text-xs sm:text-sm font-semibold flex items-center hover:text-green-800 transition-colors">
                       View Details <ArrowRight className="ml-2" size={16} />
                     </span>
                   </div>

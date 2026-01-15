@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Menu } from "lucide-react";
 import Button from "../ui/Button";
@@ -8,25 +8,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  // const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => setIsScrolled(window.scrollY > 50);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   // const navLinks = ["Home", "About Us", "Services", "Pages", "Contact Us"];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 pt-4 sm:pt-6 backdrop-blur-2xl">
-      <div
-        className={`container mx-auto transition-all duration-300 rounded-full border border-white/30 ${
-          isScrolled ? "bg-green-800/30" : ""
-        }`}
-      >
-        <div className="px-4 sm:px-8 py-2">
+    <nav className="fixed top-0 left-0 right-0 z-50 py-2 px-6 md:px-0 bg-gray-300/30 backdrop-blur-2xl">
+      <div className={`container mx-auto transition-all duration-300`}>
+        <div className="">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="shrink-0">
@@ -49,7 +45,7 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden text-white p-2 hover:bg-white/10 rounded-full transition-colors"
+              className="md:hidden text-green-600 p-2 hover:bg-white/10 rounded-full transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             >
@@ -79,7 +75,12 @@ const Navbar = () => {
                     </a>
                   ))} */}
                   <Link href="/awards" className="block pt-2">
-                    <Button className="w-full">Submit a Nomination</Button>
+                    <Button
+                      className="w-full"
+                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    >
+                      Submit a Nomination
+                    </Button>
                   </Link>
                 </div>
               </motion.div>
