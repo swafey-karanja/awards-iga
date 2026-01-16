@@ -86,19 +86,18 @@ const Judges: React.FC = () => {
 
           <div className="relative h-64 sm:h-80 md:h-180">
             <Image
-              className="relative rounded-lg shadow-2xl"
               src="https://images.unsplash.com/photo-1650240852447-46505dba4726?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="IGA 2026 Event"
               fill
               sizes="(max-width: 540px) 80vw, (max-width: 668px) 30vw, 13vw"
-              objectFit="cover"
+              className="relative rounded-lg shadow-2xl object-cover"
               unoptimized
             />
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto sm:px-6 lg:px-8 py-8">
+      <div className="hidden container mx-auto sm:px-6 lg:px-8 py-8">
         <motion.div
           initial="hidden"
           whileInView="visible"

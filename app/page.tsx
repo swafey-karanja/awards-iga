@@ -5,6 +5,7 @@ import Portfolio from "@/components/sections/AwardsCategories";
 // import Timeline from "@/components/ui/Timeline";
 import Judges from "@/components/sections/Judges";
 import FAQs from "@/components/sections/FAQ";
+import NewsSection from "@/components/sections/News";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <About />
       <Portfolio />
       <Judges />
+      <NewsSection />
       <FAQs />
       {/* <CTA /> */}
     </div>

@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/MultistepForm";
 import { awardsCategories } from "@/lib/Appdata";
 import { SelectChangeEvent } from "@mui/material";
+import { fetchCSRFToken } from "@/app/services/api";
+import { toast } from "sonner";
 // import { nominatedCompanys } from "@/lib/Appdata";
 // import { fetchCSRFToken } from "@/services/api";
 
@@ -214,6 +216,9 @@ export default function NominationForm(): JSX.Element {
 
     setIsSubmitting(true);
 
+    // 🔔 show loading toast and keep its id
+    const toastId = toast.loading("Submitting nomination...");
+
     try {
       // Get award category names for submission
       const awardCategoryNames = getAwardCategoryNames();
@@ -240,53 +245,58 @@ export default function NominationForm(): JSX.Element {
       console.log("Form submission data:", submissionData);
 
       // Uncomment when ready to connect to API
-      // const { csrf_token } = await fetchCSRFToken();
+      const { csrfToken } = await fetchCSRFToken();
 
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_API_URL}nominations/submit/`,
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "X-CSRF-Token": csrf_token,
-      //     },
-      //     body: JSON.stringify(submissionData),
-      //   }
-      // );
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}nominations/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": csrfToken,
+          },
+          body: JSON.stringify(submissionData),
+        }
+      );
 
-      // const data = await response.json();
+      const data = await response.json();
 
-      // if (response.ok) {
-      //   toast.success("Nomination submitted successfully!", {
-      //     id: "submit-toast",
-      //   });
-      //
-      //   // Reset form after successful submission
-      //   setTimeout(() => {
-      //     setFormData({
-      //       firstName: "",
-      //       lastName: "",
-      //       email: "",
-      //       phone: "",
-      //       linkedin: "",
-      //       companyName: "",
-      //       role: "",
-      //       nominatedCompany: "",
-      //       reasonForNomination: "",
-      //       award_category: [],
-      //     });
-      //     setCurrentPage(1);
-      //   }, 1500);
-      // } else {
-      //   toast.error(data?.message || "Submission failed", {
-      //     id: "submit-toast",
-      //   });
-      // }
+      if (!response.ok) {
+        throw new Error(
+          data?.message || "Submission failed, Please try again."
+        );
+      }
+
+      // ✅ success toast (replaces loading)
+      toast.success("Nomination submitted successfully!", {
+        id: toastId,
+      });
+
+      // Reset form
+      setTimeout(() => {
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          linkedin: "",
+          companyName: "",
+          role: "",
+          nominatedCompany: "",
+          reasonForNomination: "",
+          specialContribution: "",
+          impactOfNominee: "",
+          award_category: [],
+        });
+        setCurrentPage(1);
+      }, 1500);
     } catch (error) {
       console.error("Submission error:", error);
-      // toast.error("Submission failed. Please try again.", {
-      //   id: "submit-toast",
-      // });
+
+      // ❌ error toast (replaces loading)
+      toast.error("Something went wrong. Please try again.", {
+        id: toastId,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -484,7 +494,7 @@ export default function NominationForm(): JSX.Element {
                 <TextAreaField
                   name="impactOfNominee"
                   label="Nominee's special contribution or innovative solution to the gaming industry in Africa"
-                  value={formData.reasonForNomination}
+                  value={formData.impactOfNominee}
                   onChange={handleInputChange}
                   placeholder="Describe a specific instance or project where the individual or company exemplified their special contribution or innovative solution to the gaming industry in Africa."
                   disabled={isSubmitting}
@@ -493,9 +503,9 @@ export default function NominationForm(): JSX.Element {
                 />
 
                 <TextAreaField
-                  name="reasonForNomination"
+                  name="specialContribution"
                   label="Nominee's contribution's impact on the iGaming industry in Africa"
-                  value={formData.reasonForNomination}
+                  value={formData.specialContribution}
                   onChange={handleInputChange}
                   placeholder="What impact does the contribution/achievement have on the gaming industry in Africa?"
                   disabled={isSubmitting}
