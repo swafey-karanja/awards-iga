@@ -24,10 +24,10 @@ const Card: React.FC<CardProps> = ({
 }) => (
   <motion.div
     variants={scaleIn}
-    whileHover={hover ? { y: -4, scale: 1.02 } : {}}
+    whileHover={hover ? { y: -2, scale: 1.02 } : {}}
     className={`bg-green-100/90 backdrop-blur-sm border border-green-200/60 rounded-2xl p-8 transition-all duration-300 shadow-sm ${
       hover
-        ? "hover:border-green-600/60 hover:shadow-lg hover:shadow-green-600/20"
+        ? "hover:border-green-600/60 hover:shadow-sm hover:shadow-green-600/20"
         : ""
     } ${className}`}
   >

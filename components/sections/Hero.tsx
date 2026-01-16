@@ -19,16 +19,15 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
           {/* Left Content Column */}
           <div className="w-full lg:w-1/2 mb-10 lg:mb-0 lg:pr-8 xl:pr-16">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-black text-center lg:text-left leading-tight lg:leading-tight">
-              Welcome to the{" "}
               <span className="text-green-600 block lg:inline">
-                iGaming Awards 2026
+                iGA Awards 2026
               </span>
             </h1>
 
             <p className="mt-4 sm:mt-6 text-sm sm:text-base text-gray-900 leading-relaxed text-center lg:text-left">
               The{" "}
               <span className="font-semibold text-gray-600">
-                iGaming AFRIKA Awards 2026
+                iGaming AFRIKA Summit Awards 2026
               </span>{" "}
               is designed to celebrate excellence and innovation within the
               African iGaming industry. The awards process will be transparent,
@@ -146,13 +145,14 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
   return (
     <section className="relative py-20 pt-50 overflow-hidden min-h-[45vh] flex items-center border-b-5 border-green-600">
       {/* Background Image */}
-      <div className=" inset-0">
+      <div className="inset-0 absolute z-0">
         <Image
           src="https://images.unsplash.com/photo-1764874298962-ac0c84307fc0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Awards Background"
           fill
           className="object-cover"
           unoptimized
+          loading="eager"
         />
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-linear-to-br from-gray-900/85 via-green-900/75 to-gray-900/85"></div>
@@ -198,7 +198,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
       </div>
 
       {/* Main Content */}
-      <div className="px-4 mx-auto relative sm:px-6 lg:px-8 container max-w-5xl">
+      <div className="px-4 mx-auto relative sm:px-6 lg:px-8 container max-w-6xl">
         <div className="text-center">
           {/* Subtitle - smaller text at top */}
           <p className="text-gray-300 text-sm md:text-base mb-4 uppercase tracking-wider">
@@ -206,12 +206,10 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
           </p>
 
           {/* Main Heading */}
-          <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-6 px-4">
+          <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-6 px-4">
             Recognizing and Rewarding Expertise and Innovation
             <br />
-            <span className="text-gray-300">
-              in the Sports Betting and Gaming Industries
-            </span>
+            <span className="text-gray-300">in the iGaming Industry.</span>
           </h1>
         </div>
       </div>
