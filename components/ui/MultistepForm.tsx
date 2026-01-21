@@ -3,29 +3,21 @@
 // ============================================================================
 
 import { ChangeEvent } from "react";
-import {
-  ChevronRight,
-  ChevronLeft,
-  Check,
-  // CloudUploadIcon,
-} from "lucide-react";
-// import { styled } from "@mui/material/styles";
+import { ChevronRight, ChevronLeft, Check } from "lucide-react";
 import {
   TextField,
   InputLabel,
   Select,
   OutlinedInput,
   MenuItem,
-  Checkbox,
-  ListItemText,
   FormHelperText,
   TextareaAutosize,
   Radio,
   RadioGroup,
   FormControlLabel,
   FormControl,
-  // Button,
   SelectChangeEvent,
+  ListItemText,
 } from "@mui/material";
 import { MuiTelInput, MuiTelInputProps } from "mui-tel-input";
 
@@ -57,7 +49,7 @@ export interface FormData {
   reasonForNomination: string;
   specialContribution: string;
   impactOfNominee: string;
-  award_category: number[];
+  award_category: number | null; // Changed from number[] to number | null
 }
 
 export interface FormErrors {
@@ -120,17 +112,18 @@ interface RadioGroupFieldProps {
   required?: boolean;
 }
 
-interface MultiSelectFieldProps {
+// Updated interface for single select
+interface SingleSelectFieldProps {
   label: string;
   name: string;
-  value: number[]; // selected award category IDs
-  onChange: (event: SelectChangeEvent<number[]>) => void;
+  value: number | null; // Changed from number[] to number | null
+  onChange: (event: SelectChangeEvent<number>) => void;
   options: AwardCategory[];
   error?: string;
   disabled?: boolean;
   required?: boolean;
-  multiple?: boolean; // NEW
 }
+
 interface TextAreaFieldProps {
   label: string;
   name: keyof FormData;
@@ -141,13 +134,6 @@ interface TextAreaFieldProps {
   required?: boolean;
   minRows?: number;
 }
-
-// interface FileUploadFieldProps {
-//   label: string;
-//   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-//   multiple?: boolean;
-//   name?: string;
-// }
 
 interface PageHeaderProps {
   title: string;
@@ -299,7 +285,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = ({
   );
 };
 
-export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
+export const SingleSelectField: React.FC<SingleSelectFieldProps> = ({
   label,
   name,
   value,
@@ -308,7 +294,6 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
   error,
   disabled = false,
   required = false,
-  multiple = true, // default to multi-select
 }) => {
   const fieldId = `${name}-select`;
   const labelId = `${name}-label`;
@@ -322,31 +307,30 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
           labelId={labelId}
           id={fieldId}
           name={name}
-          multiple={multiple}
-          value={value}
+          value={value === null ? "" : value}
           onChange={onChange}
           input={<OutlinedInput label={label} />}
           renderValue={(selected) => {
-            if (selected.length === 0) {
+            if (selected === null) {
               return "Select award category";
             }
 
-            return options
-              .filter((opt) => selected.includes(opt.id))
-              .map((opt) => opt.title)
-              .join(", ");
+            const selectedOption = options.find((opt) => opt.id === selected);
+            return selectedOption
+              ? selectedOption.title
+              : "Select award category";
           }}
           MenuProps={{
             PaperProps: {
               sx: {
-                maxHeight: 300,
+                maxHeight: 600,
               },
             },
           }}
         >
           {options.map((option) => (
             <MenuItem key={option.id} value={option.id}>
-              {multiple && <Checkbox checked={value.includes(option.id)} />}
+              {/* Removed Checkbox for single select */}
               <ListItemText
                 primary={option.title}
                 secondary={option.description}

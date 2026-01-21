@@ -4,15 +4,21 @@ export const API_CONFIG = {
   TOKEN: process.env.NEXT_PUBLIC_API_TOKEN as string | undefined,
 };
 
+interface RawCsrfTokenResponse {
+  csrf_token: string;
+  expires_in: number;
+  message: string;
+}
+
 interface CsrfTokenResponse {
   csrfToken: string;
 }
 
 export async function fetchCSRFToken(): Promise<CsrfTokenResponse> {
   const tokenResponse = await fetch(
-    `${API_CONFIG.BASE_URL}/security/csrf-token/`
+    `${API_CONFIG.BASE_URL}/security/csrf-token/`,
     // {
-    //   credentials: "include", // important if backend uses cookies
+    //   credentials: "include",
     // }
   );
 
@@ -20,5 +26,9 @@ export async function fetchCSRFToken(): Promise<CsrfTokenResponse> {
     throw new Error("Failed to get CSRF token");
   }
 
-  return (await tokenResponse.json()) as CsrfTokenResponse;
+  const data = (await tokenResponse.json()) as RawCsrfTokenResponse;
+
+  return {
+    csrfToken: data.csrf_token,
+  };
 }

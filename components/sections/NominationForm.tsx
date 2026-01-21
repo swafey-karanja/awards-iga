@@ -2,7 +2,6 @@
 
 import { useState, ChangeEvent, FormEvent, JSX } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-// import { toast } from "react-hot-toast";
 import {
   FormData,
   TextInput,
@@ -10,15 +9,13 @@ import {
   PageHeader,
   NavigationButtons,
   TextAreaField,
-  MultiSelectField,
+  SingleSelectField,
   FormErrors,
 } from "@/components/ui/MultistepForm";
 import { awardsCategories } from "@/lib/Appdata";
 import { SelectChangeEvent } from "@mui/material";
 import { fetchCSRFToken } from "@/app/services/api";
 import { toast } from "sonner";
-// import { nominatedCompanys } from "@/lib/Appdata";
-// import { fetchCSRFToken } from "@/services/api";
 
 const TOTAL_PAGES = 2;
 
@@ -38,20 +35,21 @@ export default function NominationForm(): JSX.Element {
     reasonForNomination: "",
     specialContribution: "",
     impactOfNominee: "",
-    award_category: [],
+    award_category: null,
   });
 
-  // Derived state: Get award category names from IDs
-  const getAwardCategoryNames = (): string[] => {
-    return formData.award_category
-      .map((id) => {
-        const category = awardsCategories.find((cat) => cat.id === id);
-        return category?.title || "";
-      })
-      .filter(Boolean);
+  // Derived state: Get award category name from ID
+  const getAwardCategoryName = (): string => {
+    if (!formData.award_category) return "";
+
+    const category = awardsCategories.find(
+      (cat) => cat.id === formData.award_category,
+    );
+    return category?.title || "";
   };
+
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -67,19 +65,16 @@ export default function NominationForm(): JSX.Element {
     }));
   };
 
-  const handleMultiSelectChange =
+  const handleSingleSelectChange =
     <K extends keyof FormData>(field: K) =>
-    (event: SelectChangeEvent<number[]>): void => {
+    (event: SelectChangeEvent<number>): void => {
       const {
         target: { value },
       } = event;
 
       setFormData((prev) => ({
         ...prev,
-        [field]:
-          typeof value === "string"
-            ? (value.split(",").map(Number) as FormData[K])
-            : (value as FormData[K]),
+        [field]: (value === null ? null : Number(value)) as FormData[K],
       }));
     };
 
@@ -113,7 +108,8 @@ export default function NominationForm(): JSX.Element {
           formData.reasonForNomination.trim() &&
           formData.impactOfNominee.trim() &&
           formData.specialContribution.trim() &&
-          formData.award_category.length > 0
+          formData.award_category !== null &&
+          formData.award_category > 0
         );
       default:
         return false;
@@ -184,8 +180,8 @@ export default function NominationForm(): JSX.Element {
         "Impact of nominee's contribution is required";
     }
 
-    if (formData.award_category.length === 0) {
-      newErrors.award_category = "Please select at least one award category";
+    if (formData.award_category === null || formData.award_category === 0) {
+      newErrors.award_category = "Please select an award category";
     }
 
     setErrors(newErrors);
@@ -216,17 +212,16 @@ export default function NominationForm(): JSX.Element {
 
     setIsSubmitting(true);
 
-    // 🔔 show loading toast and keep its id
     const toastId = toast.loading("Submitting nomination...");
 
     try {
-      // Get award category names for submission
-      const awardCategoryNames = getAwardCategoryNames();
+      // Get award category name for submission
+      const awardCategoryName = getAwardCategoryName();
 
       // Combine first and last name
       const fullName = `${formData.firstName.trim()} ${formData.lastName.trim()}`;
 
-      // Prepare submission data with category names instead of IDs
+      // Prepare submission data with category name as an array (single item)
       const submissionData = {
         fullName,
         email: formData.email,
@@ -238,13 +233,11 @@ export default function NominationForm(): JSX.Element {
         reasonForNomination: formData.reasonForNomination,
         specialContribution: formData.specialContribution,
         impactOfNominee: formData.impactOfNominee,
-        award_category: awardCategoryNames,
+        award_category: [awardCategoryName], // Send as array with single item
       };
 
-      // Log the data to see the distinction
-      console.log("Form submission data:", submissionData);
+      // console.log("Form submission data:", submissionData);
 
-      // Uncomment when ready to connect to API
       const { csrfToken } = await fetchCSRFToken();
 
       const response = await fetch(
@@ -256,18 +249,17 @@ export default function NominationForm(): JSX.Element {
             "X-CSRF-Token": csrfToken,
           },
           body: JSON.stringify(submissionData),
-        }
+        },
       );
 
       const data = await response.json();
 
       if (!response.ok) {
         throw new Error(
-          data?.message || "Submission failed, Please try again."
+          data?.message || "Submission failed, Please try again.",
         );
       }
 
-      // ✅ success toast (replaces loading)
       toast.success("Nomination submitted successfully!", {
         id: toastId,
       });
@@ -286,14 +278,13 @@ export default function NominationForm(): JSX.Element {
           reasonForNomination: "",
           specialContribution: "",
           impactOfNominee: "",
-          award_category: [],
+          award_category: null,
         });
         setCurrentPage(1);
       }, 1500);
     } catch (error) {
       console.error("Submission error:", error);
 
-      // ❌ error toast (replaces loading)
       toast.error("Something went wrong. Please try again.", {
         id: toastId,
       });
@@ -323,6 +314,10 @@ export default function NominationForm(): JSX.Element {
         </h1>
         <p className="text-gray-700 max-w-3xl text-xs md:text-[13px] font-semibold">
           Nominate a deserving company for the iGaming AFRIKA Awards 2026
+        </p>
+        <p className="text-red-700 max-w-5xl text-xs md:text-[15px] font-semibold">
+          Note: Only one award nomination is allowed per form submission.
+          Multiple nominations require separate form submissions.
         </p>
       </div>
 
@@ -469,11 +464,11 @@ export default function NominationForm(): JSX.Element {
                   required
                 />
 
-                <MultiSelectField
-                  label="Award Categories"
-                  name="awardCategories"
+                <SingleSelectField
+                  label="Award Category"
+                  name="awardCategory"
                   value={formData.award_category}
-                  onChange={handleMultiSelectChange("award_category")}
+                  onChange={handleSingleSelectChange("award_category")}
                   options={awardsCategories}
                   error={errors.award_category}
                   disabled={isSubmitting}
