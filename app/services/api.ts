@@ -1,7 +1,6 @@
 // config/api.ts
 export const API_CONFIG = {
-  BASE_URL: "https://events.igamingafrika.com/api",
-  TOKEN: process.env.NEXT_PUBLIC_API_TOKEN as string | undefined,
+  BASE_URL: process.env.NEXT_PUBLIC_API_URL,
 };
 
 interface RawCsrfTokenResponse {
@@ -16,7 +15,7 @@ interface CsrfTokenResponse {
 
 export async function fetchCSRFToken(): Promise<CsrfTokenResponse> {
   const tokenResponse = await fetch(
-    `${API_CONFIG.BASE_URL}/security/csrf-token/`,
+    `${API_CONFIG.BASE_URL}security/csrf-token/`,
     // {
     //   credentials: "include",
     // }
