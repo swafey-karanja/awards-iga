@@ -16,7 +16,7 @@ const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-center text-center">
             <Image
               className="w-auto h-20 sm:h-40 mb-4"
-              src="/IGA-Logo.png"
+              src="/Awards-logo.png"
               alt="iGaming Afrika"
               width={160}
               height={100}

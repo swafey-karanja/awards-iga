@@ -28,7 +28,7 @@ const Navbar = () => {
             <Link href="/" className="shrink-0">
               <Image
                 className="w-auto h-12 sm:h-16 md:h-20 lg:h-24"
-                src="/IGA-Logo.png"
+                src="/Awards-logo.png"
                 alt="iGaming Afrika"
                 width={160}
                 height={100}

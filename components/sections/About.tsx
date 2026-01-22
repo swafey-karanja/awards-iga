@@ -1,8 +1,6 @@
 "use client";
 
-import React from "react";
 import { motion, Variants } from "framer-motion";
-import Image from "next/image";
 import SectionHeader from "../ui/SectionHeader";
 import Timeline from "../ui/Timeline";
 import MobileTimeline from "../ui/MobileTimeline";
@@ -50,60 +48,8 @@ export default function EventInformation() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={staggerContainer}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8"
+          className=" gap-6 sm:gap-8"
         >
-          {/* Event Images */}
-          <div className="lg:col-span-1 space-y-4 sm:space-y-6">
-            {/* Top Image */}
-            <motion.div
-              variants={fadeInUp}
-              className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-linear-to-br from-green-700/30 to-green-800/40 backdrop-blur-sm border border-green-300/50"
-            >
-              <div className="relative h-64 sm:h-80 md:h-145">
-                <Image
-                  src="/image_3.jpg"
-                  alt="Event venue"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 33vw"
-                />
-              </div>
-            </motion.div>
-
-            {/* Bottom Images Grid */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              <motion.div
-                variants={fadeInUp}
-                className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-linear-to-br from-green-700/30 to-green-800/40 backdrop-blur-sm border border-green-300/50"
-              >
-                <div className=" relative h-64 sm:h-80">
-                  <Image
-                    src="/image_1.jpg"
-                    alt="Event atmosphere"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 50vw, 16vw"
-                  />
-                </div>
-              </motion.div>
-
-              <motion.div
-                variants={fadeInUp}
-                className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-linear-to-br from-green-700/30 to-green-800/40 backdrop-blur-sm border border-green-300/50"
-              >
-                <div className="relative h-64 sm:h-80">
-                  <Image
-                    src="/image_2.jpg"
-                    alt="Event highlights"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 50vw, 16vw"
-                  />
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
           {/* Event Details */}
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Venue Section */}

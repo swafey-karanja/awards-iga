@@ -122,7 +122,7 @@ const Timeline: React.FC = () => {
 
       <div className="relative">
         {/* Main horizontal timeline line - spans full width */}
-        <div className="absolute left-0 right-0 top-1/2 h-1 bg-linear-to-r from-green-500 via-green-600 to-green-500 transform -translate-y-1/2 w-[95%]"></div>
+        <div className="absolute left-0 right-0 top-1/2 h-1 bg-linear-to-r from-green-500 via-green-600 to-green-500 transform -translate-y-1/2 w-[90%]"></div>
 
         <div className="relative flex">
           {timelineData.map((item, index) => {
@@ -133,7 +133,7 @@ const Timeline: React.FC = () => {
             if (totalItems === 1) {
               leftPosition = 50;
             } else {
-              leftPosition = (index / (totalItems - 1)) * 95;
+              leftPosition = (index / (totalItems - 1)) * 90;
             }
 
             return (
