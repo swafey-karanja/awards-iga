@@ -83,11 +83,11 @@ export default function NominationForm(): JSX.Element {
     return emailRegex.test(email);
   };
 
-  const validateLinkedIn = (url: string): boolean => {
-    const linkedInRegex =
-      /^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/[A-Za-z0-9_-]+\/?$/;
-    return linkedInRegex.test(url);
-  };
+  // const validateLinkedIn = (url: string): boolean => {
+  //   const linkedInRegex =
+  //     /^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/[A-Za-z0-9_-]+\/?$/;
+  //   return linkedInRegex.test(url);
+  // };
 
   const validatePage = (page: number): boolean => {
     switch (page) {
@@ -100,7 +100,7 @@ export default function NominationForm(): JSX.Element {
           formData.phone.trim() &&
           formData.companyName.trim() &&
           formData.role.trim() &&
-          (!formData.linkedin || validateLinkedIn(formData.linkedin))
+          (!formData.linkedin || formData.linkedin)
         );
       case 2:
         return !!(
@@ -158,9 +158,9 @@ export default function NominationForm(): JSX.Element {
       newErrors.role = "Your role is required";
     }
 
-    if (formData.linkedin && !validateLinkedIn(formData.linkedin)) {
-      newErrors.linkedin = "Please enter a valid LinkedIn profile URL";
-    }
+    // if (formData.linkedin && !validateLinkedIn(formData.linkedin)) {
+    //   newErrors.linkedin = "Please enter a valid LinkedIn profile URL";
+    // }
 
     // Page 2 validations
     if (!formData.nominatedCompany.trim()) {
