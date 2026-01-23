@@ -9,7 +9,7 @@ import NewsSection from "@/components/sections/News";
 
 export default function Home() {
   return (
-    <div className="bg-green-50 min-h-screen">
+    <div className="0verflow-hidden">
       <Hero />
       {/* <Timeline /> */}
       <About />

@@ -46,20 +46,22 @@ const TimelineItemLeft: React.FC<{ item: TimelineItem }> = ({ item }) => {
   return (
     <div className="absolute right-[calc(50%+2rem)] w-40 top-1/2 -translate-y-1/2">
       {/* Connector line to the dot */}
-      <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-5 h-0.5 bg-linear-to-r from-green-600/60 via-green-600/40 to-transparent"></div>
+      <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-5 h-0.5 bg-linear-to-r from-green-600/60 dark:from-green-500/60 via-green-600/40 dark:via-green-500/40 to-transparent"></div>
 
       {/* Content box */}
-      <div className="bg-white rounded-lg p-4 shadow-md border border-gray-100 mr-2">
-        <h3 className="font-bold text-gray-900 mb-1 text-left">{item.title}</h3>
+      <div className="bg-green-50 dark:bg-transparent rounded-lg p-4 border dark:border-none mr-2">
+        <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-left">
+          {item.title}
+        </h3>
         {item.description && (
-          <p className="text-gray-600 text-sm mt-1 text-left">
+          <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 text-left">
             {item.description}
           </p>
         )}
 
         {/* Time badge */}
         <div className="mt-3">
-          <span className="inline-block px-3 py-1 bg-green-50 text-green-700 font-medium text-sm rounded-full border border-green-100 shadow-sm">
+          <span className="inline-block px-3 py-1 bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400 font-medium text-sm rounded-full border border-green-100 dark:border-green-700 shadow-sm">
             {item.dates}
           </span>
         </div>
@@ -73,20 +75,22 @@ const TimelineItemRight: React.FC<{ item: TimelineItem }> = ({ item }) => {
   return (
     <div className="absolute left-[calc(50%+2rem)] w-40 top-1/2 -translate-y-1/2">
       {/* Connector line to the dot */}
-      <div className="absolute left-0 top-1/2 transform -translate-y-3/4 w-2 h-0.5 bg-linear-to-l from-green-600/60 via-green-600/40 to-transparent"></div>
+      <div className="absolute left-0 top-1/2 transform -translate-y-3/4 w-2 h-0.5 bg-linear-to-l from-green-600/60 dark:from-green-500/60 via-green-600/40 dark:via-green-500/40 to-transparent"></div>
 
       {/* Content box */}
-      <div className="bg-white rounded-lg p-4 shadow-md border border-gray-100 ml-2">
-        <h3 className="font-bold text-gray-900 mb-1 text-left">{item.title}</h3>
+      <div className="bg-green-50 dark:bg-transparent rounded-lg p-4 border dark:border-none ml-2">
+        <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-left">
+          {item.title}
+        </h3>
         {item.description && (
-          <p className="text-gray-600 text-sm mt-1 text-left">
+          <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 text-left">
             {item.description}
           </p>
         )}
 
         {/* Time badge */}
         <div className="mt-3">
-          <span className="inline-block px-3 py-1 bg-green-50 text-green-700 font-medium text-sm rounded-full border border-green-100 shadow-sm">
+          <span className="inline-block px-3 py-1 bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400 font-medium text-sm rounded-full border border-green-100 dark:border-green-700 shadow-sm">
             {item.dates}
           </span>
         </div>
@@ -103,7 +107,7 @@ const MobileTimeline: React.FC = () => {
     <div className="w-full py-8 px-4 xl:hidden">
       <div className="relative">
         {/* Main vertical timeline line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-linear-to-b from-green-500 via-green-600 to-green-500 transform -translate-x-1/2"></div>
+        <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-linear-to-b from-green-500 dark:from-green-600 via-green-600 dark:via-green-500 to-green-500 dark:to-green-600 transform -translate-x-1/2"></div>
 
         <div className="relative">
           {timelineData.map((item, index) => {
@@ -122,8 +126,8 @@ const MobileTimeline: React.FC = () => {
                 {/* Timeline dot */}
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                   <div className="relative">
-                    <div className="absolute -inset-2 bg-green-500/20 rounded-full blur-sm"></div>
-                    <div className="relative w-4 h-4 bg-green-600 rounded-full border-2 border-white shadow-lg"></div>
+                    <div className="absolute -inset-2 bg-green-500/20 dark:bg-green-600/20 rounded-full blur-sm"></div>
+                    <div className="relative w-4 h-4 bg-green-600 dark:bg-green-500 rounded-full border-2 border-white dark:border-gray-900 shadow-lg"></div>
                   </div>
                 </div>
 

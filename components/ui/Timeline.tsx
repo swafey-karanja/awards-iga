@@ -11,12 +11,12 @@ interface TimelineItem {
 const timelineData: TimelineItem[] = [
   {
     title: "Self Nominations",
-    dates: "14 Dec 2025 – 15 Jan 2026",
+    dates: "16 Jan 2025 – 29 Jan 2026",
     description: "Submission of nominations across categories.",
   },
   {
     title: "Shortlisting",
-    dates: "16 Jan 2026 – 31 Jan 2026",
+    dates: "30 Jan 2026 – 31 Jan 2026",
     description: "Evaluation and selection of finalists.",
   },
   {
@@ -46,22 +46,22 @@ const TimelineItemBelow: React.FC<{ item: TimelineItem }> = ({ item }) => {
   return (
     <div className="absolute left-1/2 transform -translate-x-1/2 w-64 top-1/2 mt-20">
       {/* Connector line - goes UP from dot to card */}
-      <div className="absolute left-1/2 bottom-full transform -translate-x-1/2 w-0.5 h-20 bg-linear-to-t from-green-600/60 via-green-600/40 to-transparent"></div>
+      <div className="absolute left-1/2 bottom-full transform -translate-x-1/2 w-0.5 h-20 bg-linear-to-t from-green-600/60 dark:from-green-500/60 via-green-600/40 dark:via-green-500/40 to-transparent"></div>
 
       {/* Time badge */}
       <div className="flex justify-center items-center mb-2">
-        <span className="inline-block px-3 text-center py-1 bg-green-50 text-green-700 font-medium text-sm rounded-full border border-green-100 shadow-sm">
+        <span className="inline-block px-3 text-center py-1 bg-green-50 /30 text-green-700 dark:text-green-400 font-medium text-sm rounded-full border border-green-100 dark:border-green-700 shadow-sm">
           {item.dates}
         </span>
       </div>
 
       {/* Content box */}
       <div className="p-1 duration-300 w-[90%] ">
-        <h3 className="font-bold text-gray-900 mb-1 text-center">
+        <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-center">
           {item.title}
         </h3>
         {item.description && (
-          <p className="text-gray-600 text-sm mt-1 text-center">
+          <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 text-center">
             {item.description}
           </p>
         )}
@@ -75,15 +75,15 @@ const TimelineItemAbove: React.FC<{ item: TimelineItem }> = ({ item }) => {
   return (
     <div className="absolute left-1/2 transform -translate-x-1/2 w-64 top-1/2 -translate-y-[calc(100%+5rem)]">
       {/* Connector line - goes DOWN from dot to card */}
-      <div className="absolute left-1/2 top-full transform -translate-x-1/2 w-0.5 h-20 bg-linear-to-b from-green-600/60 via-green-600/40 to-transparent"></div>
+      <div className="absolute left-1/2 top-full transform -translate-x-1/2 w-0.5 h-20 bg-linear-to-b from-green-600/60 dark:from-green-500/60 via-green-600/40 dark:via-green-500/40 to-transparent"></div>
 
       {/* Content box */}
       <div className="rounded-lg p-1 transition-shadow duration-300">
-        <h3 className="font-bold text-gray-900 mb-1 text-center">
+        <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-center">
           {item.title}
         </h3>
         {item.description && (
-          <p className="text-gray-600 text-sm mt-1 text-center">
+          <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 text-center">
             {item.description}
           </p>
         )}
@@ -91,7 +91,7 @@ const TimelineItemAbove: React.FC<{ item: TimelineItem }> = ({ item }) => {
 
       {/* Time badge */}
       <div className="flex justify-center mt-2">
-        <span className="inline-block px-3 py-1 bg-green-50 text-green-700 font-medium text-sm rounded-full border border-green-100 shadow-sm">
+        <span className="inline-block px-3 py-1 bg-green-50 /30 text-green-700 dark:text-green-400 font-medium text-sm rounded-full border border-green-100 dark:border-green-700 shadow-sm">
           {item.dates}
         </span>
       </div>
@@ -105,9 +105,9 @@ const TimelineDot: React.FC = () => {
     <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
       <div className="relative">
         {/* Outer glow */}
-        <div className="absolute -inset-2 bg-green-500/20 rounded-full blur-sm"></div>
+        <div className="absolute -inset-2 bg-green-500/20 dark:bg-green-600/20 rounded-full blur-sm"></div>
         {/* Main dot */}
-        <div className="relative w-4 h-4 bg-green-600 rounded-full border-2 border-white shadow-lg"></div>
+        <div className="relative w-4 h-4 bg-green-600 dark:bg-green-500 rounded-full border-2 border-white dark:border-gray-900 shadow-lg"></div>
       </div>
     </div>
   );
@@ -122,7 +122,7 @@ const Timeline: React.FC = () => {
 
       <div className="relative">
         {/* Main horizontal timeline line - spans full width */}
-        <div className="absolute left-0 right-0 top-1/2 h-1 bg-linear-to-r from-green-500 via-green-600 to-green-500 transform -translate-y-1/2 w-[90%]"></div>
+        <div className="absolute left-0 right-0 top-1/2 h-1 bg-linear-to-r from-green-500 dark:from-green-600 via-green-600 dark:via-green-500 to-green-500 dark:to-green-600 transform -translate-y-1/2 w-[90%]"></div>
 
         <div className="relative flex">
           {timelineData.map((item, index) => {

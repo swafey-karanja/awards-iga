@@ -18,10 +18,11 @@ const Button: React.FC<ButtonProps> = ({
   const baseStyles =
     "px-6 py-3 rounded-full font-semibold transition-all duration-300";
   const variants: Record<string, string> = {
-    primary: "bg-green-600 text-white hover:bg-green-700 cursor-pointer",
+    primary:
+      "bg-green-600 text-white hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 cursor-pointer",
     secondary:
-      "border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/40 cursor-pointer",
-    dark: "bg-white/5 text-white border border-white/10 hover:bg-white/10",
+      "border-2 border-white/20 dark:border-gray-600/40 text-white dark:text-gray-200 hover:bg-white/10 dark:hover:bg-gray-700/30 hover:border-white/40 dark:hover:border-gray-500/60 cursor-pointer",
+    dark: "bg-white/5 dark:bg-gray-800/50 text-white dark:text-gray-200 border border-white/10 dark:border-gray-700/50 hover:bg-white/10 dark:hover:bg-gray-700/50",
   };
 
   return (

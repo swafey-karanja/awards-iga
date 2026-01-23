@@ -31,7 +31,6 @@ interface YoastHeadJson {
   og_image?: OGImage[];
   og_title?: string;
   og_description?: string;
-  //   [key: string]: any;
 }
 
 interface WPPost {
@@ -65,14 +64,14 @@ const NewsSection: React.FC = () => {
     setError(null);
     try {
       const response = await fetch(
-        "https://igamingafrika.com/wp-json/wp/v2/posts?tags=3229&categories=20&page=1&per_page=10"
+        "https://igamingafrika.com/wp-json/wp/v2/posts?tags=3229&categories=20&page=1&per_page=10",
       );
       if (!response.ok) throw new Error("Failed to fetch publications");
       const data: WPPost[] = await response.json();
       setPublications(data);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "An unknown error occurred"
+        err instanceof Error ? err.message : "An unknown error occurred",
       );
     } finally {
       setLoading(false);
@@ -127,7 +126,7 @@ const NewsSection: React.FC = () => {
   };
 
   return (
-    <section className="py-16 px-8 bg-gray-50 border-b-5 border-green-600">
+    <section className="py-16 px-8 bg-green-50 bg-green-50 dark:bg-green-950 border-b-5 border-green-600">
       <div className="container mx-auto">
         <SectionHeader
           title="Event News & Blogs"
@@ -136,13 +135,13 @@ const NewsSection: React.FC = () => {
 
         {loading && (
           <div className="flex justify-center items-center py-20">
-            <RefreshCw className="w-8 h-8 text-green-600 animate-spin" />
+            <RefreshCw className="w-8 h-8 text-green-600 dark:text-green-500 animate-spin" />
           </div>
         )}
 
         {error && (
           <div className="text-center py-10">
-            <p className="text-red-600 mb-4">
+            <p className="text-red-600 dark:text-red-400 mb-4">
               Error loading publications: {error}
             </p>
             <Button onClick={fetchPublications}>Try Again</Button>
@@ -154,7 +153,6 @@ const NewsSection: React.FC = () => {
             <motion.div
               variants={containerVariants}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-              //   key={`news-grid-${visibleCount}`}
               initial="hidden"
               animate="visible"
             >
@@ -197,19 +195,19 @@ const NewsSection: React.FC = () => {
                       )}
 
                       <div className="p-6 flex flex-col grow">
-                        <div className="flex items-center text-gray-500 text-sm mb-3">
+                        <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm mb-3">
                           <Calendar className="w-4 h-4 mr-2" />
                           {formatDate(post.date)}
                         </div>
 
                         <h3
-                          className="text-xl font-bold text-gray-800 mb-3 line-clamp-3"
+                          className="text-xl font-bold text-gray-800 dark:text-white mb-3 line-clamp-3"
                           dangerouslySetInnerHTML={{
                             __html: post.title.rendered,
                           }}
                         />
 
-                        <p className="text-gray-600 text-sm mb-4 grow line-clamp-3">
+                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 grow line-clamp-3">
                           {stripHtml(post.excerpt.rendered)}
                         </p>
 
@@ -217,7 +215,7 @@ const NewsSection: React.FC = () => {
                           href={post.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-green-600 font-semibold text-sm flex items-center hover:text-green-700 transition-colors"
+                          className="text-green-600 dark:text-green-500 font-semibold text-sm flex items-center hover:text-green-700 dark:hover:text-green-400 transition-colors"
                         >
                           Read article <ArrowRight className="w-4 h-4 ml-2" />
                         </a>
@@ -250,12 +248,12 @@ const NewsSection: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="inline-flex items-center text-gray-500">
-                  <div className="w-8 h-px bg-gray-300 mr-3"></div>
+                <div className="inline-flex items-center text-gray-500 dark:text-gray-400">
+                  <div className="w-8 h-px bg-gray-300 dark:bg-gray-600 mr-3"></div>
                   <span className="text-xs md:text-sm font-medium">
                     You&apos;re all caught up
                   </span>
-                  <div className="w-8 h-px bg-gray-300 ml-3"></div>
+                  <div className="w-8 h-px bg-gray-300 dark:bg-gray-600 ml-3"></div>
                 </div>
               </motion.div>
             )}

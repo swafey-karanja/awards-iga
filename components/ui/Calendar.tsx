@@ -96,31 +96,31 @@ export const CalendarDropdown = ({
     {
       name: "Google Calendar",
       icon: "/google.png",
-      color: "text-red-600",
+      color: "text-red-600 dark:text-red-500",
       action: () => window.open(generateGoogleCalendarUrl(), "_blank"),
     },
     {
       name: "Apple iCal",
       icon: "/apple.png",
-      color: "text-gray-700",
+      color: "text-gray-700 dark:text-gray-400",
       action: generateICalFile,
     },
     {
       name: "Outlook Desktop",
       icon: "/outlook desktop.png",
-      color: "text-yellow-500",
+      color: "text-yellow-500 dark:text-yellow-400",
       action: generateICalFile,
     },
     {
       name: "Outlook Web",
       icon: "/outlook web.png",
-      color: "text-blue-600",
+      color: "text-blue-600 dark:text-blue-500",
       action: () => window.open(generateOutlookWebUrl(), "_blank"),
     },
     {
       name: "Yahoo Calendar",
       icon: "/yahoo.png",
-      color: "text-purple-600",
+      color: "text-purple-600 dark:text-purple-500",
       action: () => window.open(generateYahooCalendarUrl(), "_blank"),
     },
   ];
@@ -130,7 +130,7 @@ export const CalendarDropdown = ({
       <button
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="bg-[#14a45c] text-white md:px-3.25 md:py-2 px-2.5 py-1 rounded-full shadow-lg flex items-center gap-2"
+        className="bg-[#14a45c] dark:bg-green-700 text-white md:px-3.25 md:py-2 px-2.5 py-1 rounded-full shadow-lg flex items-center gap-2 hover:bg-green-700 dark:hover:bg-green-600 transition-colors"
         aria-label="Add to calendar"
       >
         <span className="scale-90 sm:scale-100 md:scale-100 lg:scale-120 transition-transform">
@@ -147,13 +147,13 @@ export const CalendarDropdown = ({
         <div
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="absolute top-full right-0 mt-2 w-46 md:w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
+          className="absolute top-full right-0 mt-2 w-46 md:w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50"
         >
           {calendarOptions.map((option, index) => (
             <button
               key={index}
               onClick={option.action}
-              className="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors duration-150 flex items-center gap-3 cursor-pointer"
+              className="w-full px-4 py-2 text-left hover:bg-green-50 dark:hover:bg-gray-700 transition-colors duration-150 flex items-center gap-3 cursor-pointer"
             >
               <Image
                 src={option.icon}

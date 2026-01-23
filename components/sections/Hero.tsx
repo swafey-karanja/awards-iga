@@ -14,19 +14,19 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
   // Default Hero (Original Design)
   if (heroVariant === "default") {
     return (
-      <section className="relative py-8 sm:py-12 overflow-hidden bg-green-50 border-b-5 border-green-600">
+      <section className="relative py-8 sm:py-12 overflow-hidden bg-green-50 dark:bg-green-950 border-b-5 border-green-600">
         <div className="flex flex-col lg:flex-row items-center px-4 mx-auto container relative sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-25 md:pt-30 min-h-[70vh] lg:min-h-[80vh]">
           {/* Left Content Column */}
           <div className="w-full lg:w-1/2 mb-10 lg:mb-0 lg:pr-8 xl:pr-16">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-black text-center lg:text-left leading-tight lg:leading-tight">
-              <span className="text-green-600 block lg:inline">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-black dark:text-white text-center lg:text-left leading-tight lg:leading-tight">
+              <span className="text-green-600 dark:text-green-500 block lg:inline">
                 iGA Awards 2026
               </span>
             </h1>
 
-            <p className="mt-4 sm:mt-6 text-sm sm:text-base text-gray-900 leading-relaxed text-center lg:text-left">
+            <p className="mt-4 sm:mt-6 text-sm sm:text-base text-gray-900 dark:text-gray-300 leading-relaxed text-center lg:text-left">
               The{" "}
-              <span className="font-semibold text-gray-600">
+              <span className="font-semibold text-gray-600 dark:text-gray-400">
                 iGaming AFRIKA Summit Awards 2026
               </span>{" "}
               is designed to celebrate excellence and innovation within the
@@ -37,7 +37,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
               on 5th May 2026.
             </p>
 
-            <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-700">
+            <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-700 dark:border-gray-600">
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 <div className="flex items-start gap-3 p-3 sm:p-0">
                   <svg
@@ -54,8 +54,10 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                     />
                   </svg>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-700">Date</p>
-                    <p className="text-black font-semibold text-sm sm:text-base">
+                    <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">
+                      Date
+                    </p>
+                    <p className="text-black dark:text-white font-semibold text-sm sm:text-base">
                       5th May 2026
                     </p>
                   </div>
@@ -76,8 +78,10 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                     />
                   </svg>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-700">Time</p>
-                    <p className="text-black font-semibold text-sm sm:text-base">
+                    <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">
+                      Time
+                    </p>
+                    <p className="text-black dark:text-white font-semibold text-sm sm:text-base">
                       TBC
                     </p>
                   </div>
@@ -104,11 +108,13 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                     />
                   </svg>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-700">Venue</p>
-                    <p className="text-black font-semibold text-sm sm:text-base">
+                    <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">
+                      Venue
+                    </p>
+                    <p className="text-black dark:text-white font-semibold text-sm sm:text-base">
                       TBC
                     </p>
-                    <p className="text-gray-700 text-xs sm:text-sm"></p>
+                    <p className="text-gray-700 dark:text-gray-400 text-xs sm:text-sm"></p>
                   </div>
                 </div>
 
@@ -127,7 +133,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
             <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 xl:h-160 w-full max-w-md lg:max-w-full lg:w-4/5 xl:w-3/4">
               <Image
                 className="relative"
-                src="/png-golden-award.png"
+                src="/awards-trophy2.png"
                 alt="IGA 2026 Event"
                 fill
                 sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 50vw"

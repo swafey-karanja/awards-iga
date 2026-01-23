@@ -28,7 +28,7 @@ export default function EventInformation() {
   return (
     <section
       id="about"
-      className="py-12 sm:py-16 px-4 lg:px-8 border-b-5 border-green-600"
+      className="py-12 sm:py-16 px-4 lg:px-8 border-b-5 border-green-600 bg-green-50 dark:bg-green-950"
     >
       <div className="container mx-auto">
         <motion.div
@@ -57,16 +57,16 @@ export default function EventInformation() {
               variants={fadeInUp}
               className=" p-4 sm:p-6 border-b-3 border-green-600/50  "
             >
-              <h2 className="text-lg sm:text-3xl font-bold text-green-700 mb-2">
+              <h2 className="text-lg sm:text-3xl font-bold text-green-700 dark:text-green-500 mb-2">
                 Venue
               </h2>
               <div className="space-y-2">
-                <h3 className="text-base sm:text-lg font-semibold text-black">
+                <h3 className="text-base sm:text-lg font-semibold text-black dark:text-white">
                   TBC
                 </h3>
                 <div className="flex items-start gap-3">
                   <svg
-                    className="w-5 h-5 text-green-700 mt-1 shrink-0"
+                    className="w-5 h-5 text-green-700 dark:text-green-500 mt-1 shrink-0"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -77,10 +77,12 @@ export default function EventInformation() {
                     />
                   </svg>
                   <div>
-                    <p className="text-green-800 font-semibold text-sm sm:text-base">
+                    <p className="text-green-800 dark:text-green-400 font-semibold text-sm sm:text-base">
                       Venue Address:
                     </p>
-                    <p className="text-gray-700 text-sm">TBC</p>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm">
+                      TBC
+                    </p>
                   </div>
                 </div>
               </div>
@@ -91,34 +93,34 @@ export default function EventInformation() {
               variants={fadeInUp}
               className=" p-4 sm:p-6 border-b-3 border-green-600/50 "
             >
-              <h2 className="text-lg sm:text-3xl font-bold text-green-700 mb-2">
+              <h2 className="text-lg sm:text-3xl font-bold text-green-700 dark:text-green-500 mb-2">
                 On The Evening
               </h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-green-600 rounded-full mt-2 shrink-0"></div>
-                  <p className="text-gray-700 text-sm sm:text-base">
+                  <div className="w-2 h-2 bg-green-600 dark:bg-green-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                     Luxury dinner
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-green-600 rounded-full mt-2 shrink-0"></div>
-                  <p className="text-gray-700 text-sm sm:text-base">
+                  <div className="w-2 h-2 bg-green-600 dark:bg-green-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                     DJ and entertainment
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-green-600 rounded-full mt-2 shrink-0"></div>
-                  <p className="text-gray-700 text-sm sm:text-base">
+                  <div className="w-2 h-2 bg-green-600 dark:bg-green-500 rounded-full mt-2 shrink-0"></div>
+                  <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                     Networking with the best of the iGaming Community
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-green-200/50">
+              <div className="mt-4 pt-4 border-t border-green-200/50 dark:border-green-700/50">
                 <div className="flex items-start gap-3">
                   <svg
-                    className="w-5 h-5 text-green-700 mt-0.5 shrink-0"
+                    className="w-5 h-5 text-green-700 dark:text-green-500 mt-0.5 shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -131,10 +133,10 @@ export default function EventInformation() {
                     />
                   </svg>
                   <div>
-                    <p className="text-green-800 font-semibold text-sm sm:text-base">
+                    <p className="text-green-800 dark:text-green-400 font-semibold text-sm sm:text-base">
                       Dress code:
                     </p>
-                    <p className="text-gray-700 text-sm">
+                    <p className="text-gray-700 dark:text-gray-300 text-sm">
                       Smart Casual/Lounge Suites/Cocktail Dresses
                     </p>
                   </div>
@@ -146,13 +148,13 @@ export default function EventInformation() {
               variants={fadeInUp}
               className="hidden xl:block p-4 sm:p-6  "
             >
-              <h2 className="text-lg sm:text-3xl font-bold text-green-700 mb-4">
+              <h2 className="text-lg sm:text-3xl font-bold text-green-700 dark:text-green-500 mb-4">
                 Schedule
               </h2>
               <Timeline />
             </motion.div>
             <motion.div variants={fadeInUp} className="xl:hidden p-4 sm:p-6  ">
-              <h2 className="text-lg sm:text-3xl font-bold text-green-700 mb-4">
+              <h2 className="text-lg sm:text-3xl font-bold text-green-700 dark:text-green-500 mb-4">
                 Schedule
               </h2>
               <MobileTimeline />

@@ -298,24 +298,24 @@ export default function NominationForm(): JSX.Element {
   };
 
   return (
-    <div className="py-12 md:py-16 px-4 lg:px-8 ">
+    <div className="py-12 md:py-16 px-4 lg:px-8">
       <div className="mb-8 container mx-auto h-auto z-10">
         <button
           type="button"
           onClick={handleNavigateHome}
-          className="flex items-center text-green-700 hover:text-green-800 mb-4 transition-colors font-bold cursor-pointer"
+          className="flex items-center text-green-700 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 mb-4 transition-colors font-bold cursor-pointer"
           aria-label="Navigate to home page"
         >
           <IoIosArrowBack className="mr-2" aria-hidden="true" />
           Back to home page
         </button>
-        <h1 className="text-2xl md:text-4xl font-bold bg-linear-to-r from-green-700 to-green-600 bg-clip-text text-transparent py-2">
+        <h1 className="text-2xl md:text-4xl font-bold bg-linear-to-r from-green-700 to-green-600 dark:from-green-400 dark:to-green-500 bg-clip-text text-transparent py-2">
           Nomination Form
         </h1>
-        <p className="text-gray-700 max-w-3xl text-xs md:text-[13px] font-semibold">
+        <p className="text-gray-700 dark:text-gray-300 max-w-3xl text-xs md:text-[13px] font-semibold">
           Nominate a deserving company for the iGaming AFRIKA Awards 2026
         </p>
-        <p className="text-red-700 max-w-5xl text-xs md:text-[15px] font-semibold">
+        <p className="text-red-700 dark:text-red-400 max-w-5xl text-xs md:text-[15px] font-semibold">
           Note: Only one award nomination is allowed per form submission.
           Multiple nominations require separate form submissions.
         </p>
@@ -325,16 +325,16 @@ export default function NominationForm(): JSX.Element {
         {/* Progress indicator */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Step {currentPage} of {TOTAL_PAGES}
             </span>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {Math.round((currentPage / TOTAL_PAGES) * 100)}% Complete
             </span>
           </div>
-          <div className="w-full bg-green-200 rounded-full h-2">
+          <div className="w-full bg-green-200 dark:bg-green-900/30 rounded-full h-2">
             <div
-              className="bg-green-700 h-2 rounded-full transition-all duration-300"
+              className="bg-green-700 dark:bg-green-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${(currentPage / TOTAL_PAGES) * 100}%` }}
               role="progressbar"
               aria-valuenow={currentPage}
@@ -344,7 +344,7 @@ export default function NominationForm(): JSX.Element {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md overflow-hidden border border-green-200/60">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden border border-green-200/60 dark:border-green-700/30">
           <form onSubmit={handleSubmit} className="p-6 md:p-8" noValidate>
             {/* Page 1: Personal Information */}
             {currentPage === 1 && (
