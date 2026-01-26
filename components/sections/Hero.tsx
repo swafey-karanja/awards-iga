@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { CalendarDropdown } from "../ui/Calendar";
+import Link from "next/link";
+import Button from "../ui/Button";
 
 interface HeroProps {
   variant?: "default" | "dark-centered";
@@ -38,7 +40,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
           <div className="absolute inset-0 bg-transparent dark:bg-green-700/20"></div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center px-4 mx-auto container relative sm:px-4 pt-30 min-h-[70vh] xl:min-h-screen z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-center px-4 mx-auto container relative sm:px-4 pt-30 min-h-[70vh] xl:min-h-screen z-10">
           {/* Left Content Column */}
           <div className="w-full lg:w-1/2 mb-10 lg:mb-0 lg:pr-8 xl:pr-16">
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold text-white text-center lg:text-left leading-tight lg:leading-tight">
@@ -157,6 +159,12 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                 priority
               />
             </div>
+          </div>
+
+          <div className="flex md:hidden items-center mt-5">
+            <Link href="/awards">
+              <Button>Submit a Nomination</Button>
+            </Link>
           </div>
         </div>
 
