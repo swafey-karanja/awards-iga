@@ -138,7 +138,7 @@ export const CalendarDropdown = ({
       <button
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="bg-[#14a45c] dark:bg-green-700 text-white md:px-3.25 md:py-2 px-2.5 py-1 rounded-full shadow-lg flex items-center gap-2 hover:bg-green-700 dark:hover:bg-green-600 transition-colors"
+        className="bg-[#14a45c] dark:bg-green-700 text-white md:px-3.5 md:py-3 px-2.5 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-green-700 dark:hover:bg-green-600 transition-colors"
         aria-label="Add to calendar"
       >
         <span className="scale-90 sm:scale-100 md:scale-100 lg:scale-120 transition-transform">

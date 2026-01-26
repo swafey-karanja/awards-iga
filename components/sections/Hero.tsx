@@ -4,16 +4,58 @@ import Image from "next/image";
 import { CalendarDropdown } from "../ui/Calendar";
 import Link from "next/link";
 import Button from "../ui/Button";
+import { useEffect, useState } from "react";
 
 interface HeroProps {
   variant?: "default" | "dark-centered";
   page?: string;
 }
 
+type TimeLeft = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
 const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  const timeUnits: (keyof TimeLeft)[] = ["days", "hours", "minutes", "seconds"];
+
   // Determine variant based on page if not explicitly set
   const heroVariant =
     variant || (page === "home" ? "default" : "dark-centered");
+
+  // Calculate time left until the event (May 4, 2026)
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const eventDate = new Date("May 5, 2026").getTime();
+      const now = new Date().getTime();
+      const difference = eventDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+          ),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000),
+        });
+      }
+    };
+
+    const timer = setInterval(calculateTimeLeft, 1000);
+    calculateTimeLeft(); // Initial calculation
+
+    return () => clearInterval(timer);
+  }, []);
 
   // Default Hero (Original Design)
   if (heroVariant === "default") {
@@ -54,7 +96,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
               <span className="font-semibold text-gray-300">
                 iGaming AFRIKA Summit Awards 2026
               </span>{" "}
-              for b2b, b2c and industry professionals is designed to celebrate
+              for B2B, B2C and industry professionals is designed to celebrate
               excellence and innovation within the African Gaming industry. The
               awards process will be transparent, inclusive, and rigorous,
               involving multiple stages to ensure merited recognition. The
@@ -62,7 +104,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
               the grand winners&apos; announcement on 5th May 2026.
             </p>
 
-            <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-600">
+            <div className="mt-6 sm:mt-8 mb-6 sm:mb-8 pt-6 sm:pt-8 border-t border-gray-600">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 <div className="flex items-start gap-3 p-3 sm:p-0">
                   <svg
@@ -136,11 +178,33 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                   </div>
                 </div>
 
-                <div className="sm:col-span-2 lg:col-span-3 mt-4 sm:mt-6">
+                <div className="block md:hidden sm:col-span-2 lg:col-span-3 mt-4 sm:mt-6">
                   <div className="flex justify-start">
                     <CalendarDropdown showText={true} />
                   </div>
                 </div>
+              </div>
+            </div>
+            {/* Countdown Timer */}
+            <div className="flex justify-center flex-wrap md:justify-start gap-3 md:gap-4 lg:gap-6 mt-6">
+              {timeUnits.map((unit) => (
+                <div
+                  key={unit}
+                  className="text-center py-3 sm:py-6 bg-transparent border-3 border-[#14a45c] rounded-lg min-w-20 xl:min-w-25"
+                >
+                  <div className="text-xl font-bold text-[#14a45c]">
+                    {timeLeft[unit]}
+                  </div>
+                  <div className="text-xs sm:text-md text-[#14a45c] font-semibold uppercase mt-1">
+                    {unit}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden md:block sm:col-span-2 lg:col-span-3 mt-6">
+              <div className="flex justify-center md:justify-start">
+                <CalendarDropdown showText={true} />
               </div>
             </div>
           </div>
