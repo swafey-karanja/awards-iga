@@ -29,12 +29,12 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
               <span className="font-semibold text-gray-600 dark:text-gray-400">
                 iGaming AFRIKA Summit Awards 2026
               </span>{" "}
-              is designed to celebrate excellence and innovation within the
-              African iGaming industry. The awards process will be transparent,
-              inclusive, and rigorous, involving multiple stages to ensure
-              merited recognition. The timeline spans from the initiation of
-              nominations in early 2025 to the grand winners&apos; announcement
-              on 5th May 2026.
+              for b2b, b2c and industry professionals is designed to celebrate
+              excellence and innovation within the African Gaming industry. The
+              awards process will be transparent, inclusive, and rigorous,
+              involving multiple stages to ensure merited recognition. The
+              timeline spans from the initiation of nominations in early 2025 to
+              the grand winners&apos; announcement on 5th May 2026.
             </p>
 
             <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-700 dark:border-gray-600">

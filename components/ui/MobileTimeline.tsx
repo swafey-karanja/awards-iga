@@ -27,7 +27,7 @@ const timelineData: TimelineItem[] = [
   {
     title: "Judging & Voting",
     dates: "1 Mar 2026 – 10 Mar 2026",
-    description: "Panel votes for winners.",
+    description: "iGaming in Africa Community members vote for the winners.",
   },
   {
     title: "Shortlist Reveal",

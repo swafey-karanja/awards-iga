@@ -23,7 +23,7 @@ const Navbar = () => {
                 src="/Awards-logo-final.png"
                 alt="iGaming Afrika"
                 width={160}
-                height={100}
+                height={120}
                 priority
               />
             </Link>
