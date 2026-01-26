@@ -65,8 +65,8 @@ const Judges: React.FC = () => {
   };
 
   return (
-    <section className="py-12 sm:py-16 border-b-5 border-green-600 px-4 lg:px-8 bg-green-50 dark:bg-green-950">
-      <div className="container mx-auto ">
+    <section className="py-12 sm:py-16 border-b-5 border-green-600 px-4 lg:px-8 bg-green-50 dark:bg-green-950 min-h-[70vh]">
+      <div className="container mx-auto flex items-center justify-center mb-12 sm:mb-16">
         <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-2 gap-x-16 ">
           <div className="max-w-2xl flex flex-col justify-center">
             <h1 className="text-4xl font-semibold text-green-600 sm:text-5xl text-center md:text-left leading-tight">
@@ -77,24 +77,27 @@ const Judges: React.FC = () => {
             </h1>
 
             <p className="mt-6 text-base text-gray-900 dark:text-gray-300 leading-relaxed">
-              A dedicated panel of industry experts and stakeholders will
-              evaluate all nominations received. Using predefined criteria, they
-              will shortlist the top contenders in each category. Shortlisted
-              companies will be notified by January 31, 2026, and invited to
-              submit a concise supporting statement detailing why they deserve
-              to win, including key achievements, innovations, and contributions
-              over the recent period.
+              We will evaluate all nominations received. Based on the responses
+              under the self-nomination form, we will shortlist the top
+              contenders in each category. Shortlisted companies will be
+              notified by January 31, 2026, and will be invited to submit a
+              brief supporting statement highlighting their key achievements,
+              innovations, and contributions over the recent period. Following
+              this, the iGaming in Africa Community will vote to select the
+              final winners from the shortlisted candidates.
             </p>
           </div>
 
-          <div className="relative h-120 md:h-180">
+          <div className="relative h-48 sm:h-80 xl:h-180 w-full">
             <Image
-              src="https://images.unsplash.com/photo-1650240852447-46505dba4726?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              className="relative"
+              src="/IGA-Award-design-final-22.png"
               alt="IGA 2026 Event"
               fill
-              sizes="(max-width: 540px) 80vw, (max-width: 668px) 30vw, 13vw"
-              className="relative rounded-lg shadow-2xl object-cover"
+              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 50vw"
+              style={{ objectFit: "contain" }}
               unoptimized
+              priority
             />
           </div>
         </div>

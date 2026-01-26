@@ -62,7 +62,7 @@ export default function EventInformation() {
               </h2>
               <div className="space-y-2">
                 <h3 className="text-base sm:text-lg font-semibold text-black dark:text-white">
-                  TBC
+                  Nairobi, Kenya
                 </h3>
                 <div className="flex items-start gap-3">
                   <svg

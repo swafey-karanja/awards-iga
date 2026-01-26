@@ -15,15 +15,15 @@ const Footer = () => {
           {/* Logo and Description */}
           <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-center text-center">
             <Image
-              className="w-auto h-20 sm:h-40 mb-4"
-              src="/Awards-logo.png"
+              className="w-auto h-20 sm:h-32 mb-4"
+              src="/Awards-logo-final.png"
               alt="iGaming Afrika"
               width={160}
               height={100}
               priority
             />
             <p className="text-gray-400 mb-6 text-sm sm:text-base">
-              Empowering iGaming Excellence in Africa.
+              Celebrating iGaming Excellence in Africa.
             </p>
             <SocialMediaLinks />
           </div>

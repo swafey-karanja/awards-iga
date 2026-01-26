@@ -25,44 +25,49 @@ export const CalendarDropdown = ({
 
   // Event details
   const eventTitle = "iGaming Afrika Summit Awards 2026";
-  const eventLocation = "TBC";
+  const eventLocation = "Nairobi, Kenya";
   const eventDescription =
     "The Heart of Gaming in Africa - With expected attendees from over 100 countries";
-  const date = "20260504T090000";
+
+  // All-day date (YYYYMMDD)
+  // const eventDate = "20260505";
 
   // Calendar URLs
   const generateGoogleCalendarUrl = () => {
     const params = new URLSearchParams({
       action: "TEMPLATE",
       text: eventTitle,
-      dates: `${date}`,
+      dates: "20260505/20260506",
       details: eventDescription,
       location: eventLocation,
     });
+
     return `https://calendar.google.com/calendar/render?${params.toString()}`;
   };
 
   const generateICalFile = () => {
     const icsContent = `BEGIN:VCALENDAR
-    VERSION:2.0
-    PRODID:-//iGaming Afrika//Summit 2026//EN
-    BEGIN:VEVENT
-    DTSTART:${date}
-    DTEND:${date}
-    SUMMARY:${eventTitle}
-    DESCRIPTION:${eventDescription}
-    LOCATION:${eventLocation}
-    STATUS:CONFIRMED
-    END:VEVENT
-    END:VCALENDAR`;
+      VERSION:2.0
+      PRODID:-//iGaming Afrika//Summit 2026//EN
+      BEGIN:VEVENT
+      DTSTART;VALUE=DATE:20260505
+      DTEND;VALUE=DATE:20260506
+      SUMMARY:${eventTitle}
+      DESCRIPTION:${eventDescription}
+      LOCATION:${eventLocation}
+      STATUS:CONFIRMED
+      END:VEVENT
+      END:VCALENDAR`;
 
     const blob = new Blob([icsContent], { type: "text/calendar" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
+
     link.href = url;
     link.download = "igaming-afrika-summit-2026.ics";
     document.body.appendChild(link);
     link.click();
+
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
@@ -72,11 +77,13 @@ export const CalendarDropdown = ({
       path: "/calendar/action/compose",
       rru: "addevent",
       subject: eventTitle,
-      startdt: date,
-      enddt: date,
+      startdt: "2026-05-05",
+      enddt: "2026-05-06",
       body: eventDescription,
       location: eventLocation,
+      allday: "true",
     });
+
     return `https://outlook.live.com/calendar/0/deeplink/compose?${params.toString()}`;
   };
 
@@ -84,11 +91,12 @@ export const CalendarDropdown = ({
     const params = new URLSearchParams({
       v: "60",
       title: eventTitle,
-      st: date,
-      et: date,
+      st: "20260505",
+      et: "20260506",
       desc: eventDescription,
       in_loc: eventLocation,
     });
+
     return `https://calendar.yahoo.com/?${params.toString()}`;
   };
 

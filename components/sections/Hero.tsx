@@ -112,7 +112,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                       Venue
                     </p>
                     <p className="text-black dark:text-white font-semibold text-sm sm:text-base">
-                      TBC
+                      Nairobi, Kenya
                     </p>
                     <p className="text-gray-700 dark:text-gray-400 text-xs sm:text-sm"></p>
                   </div>
@@ -130,10 +130,10 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
 
           {/* Right Image Column */}
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end items-center">
-            <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 xl:h-160 w-full max-w-md lg:max-w-full lg:w-4/5 xl:w-3/4">
+            <div className="relative h-48 sm:h-80 xl:h-180 w-full">
               <Image
                 className="relative"
-                src="/awards-trophy2.png"
+                src="/IGA-Award-design-final-22.png"
                 alt="IGA 2026 Event"
                 fill
                 sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 50vw"

@@ -71,7 +71,7 @@ const AwardsCategories: React.FC = () => {
                 >
                   <div className="aspect-video rounded-lg sm:rounded-xl mb-4 sm:mb-6 relative overflow-hidden flex items-center justify-center bg-linear-to-br from-green-600/20 to-green-700/20 dark:from-green-500/20 dark:to-green-600/20">
                     <Image
-                      src="/awards-trophy2.png"
+                      src="/IGA-Award-design-final-22.png"
                       alt={`${awardsCategory.title} trophy`}
                       className="w-full h-[70%] sm:h-[80%] object-contain opacity-90"
                       width={200}
