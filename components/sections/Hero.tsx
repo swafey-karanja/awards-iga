@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { CalendarDropdown } from "../ui/Calendar";
 
@@ -14,19 +16,40 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
   // Default Hero (Original Design)
   if (heroVariant === "default") {
     return (
-      <section className="relative py-8 sm:py-12 overflow-hidden bg-green-50 dark:bg-green-950 border-b-5 border-green-600">
-        <div className="flex flex-col lg:flex-row items-center px-4 mx-auto container relative sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-25 md:pt-30 min-h-[70vh] lg:min-h-[80vh]">
+      <section className="relative py-8 sm:py-12 xl:py-0 overflow-hidden bg-black border-b-5 border-green-600">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-40"
+          >
+            <source src="/background-pattern-video.mp4" type="video/mp4" />
+            <Image
+              src="/fallback.webp"
+              alt="Background"
+              fill
+              className="object-cover"
+              priority
+            />
+          </video>
+          <div className="absolute inset-0 bg-transparent dark:bg-green-700/20"></div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center px-4 mx-auto container relative sm:px-4 pt-30 min-h-[70vh] xl:min-h-screen z-10">
           {/* Left Content Column */}
           <div className="w-full lg:w-1/2 mb-10 lg:mb-0 lg:pr-8 xl:pr-16">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-black dark:text-white text-center lg:text-left leading-tight lg:leading-tight">
-              <span className="text-green-600 dark:text-green-500 block lg:inline">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold text-white text-center lg:text-left leading-tight lg:leading-tight">
+              <span className="text-green-500 block lg:inline">
                 iGA Awards 2026
               </span>
             </h1>
 
-            <p className="mt-4 sm:mt-6 text-sm sm:text-base text-gray-900 dark:text-gray-300 leading-relaxed text-center lg:text-left">
+            <p className="mt-4 sm:mt-6 text-sm sm:text-base text-gray-200 leading-relaxed text-center lg:text-left">
               The{" "}
-              <span className="font-semibold text-gray-600 dark:text-gray-400">
+              <span className="font-semibold text-gray-300">
                 iGaming AFRIKA Summit Awards 2026
               </span>{" "}
               for b2b, b2c and industry professionals is designed to celebrate
@@ -37,8 +60,8 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
               the grand winners&apos; announcement on 5th May 2026.
             </p>
 
-            <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-700 dark:border-gray-600">
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-600">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 <div className="flex items-start gap-3 p-3 sm:p-0">
                   <svg
                     className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400 shrink-0 mt-0.5 sm:mt-1"
@@ -54,10 +77,8 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                     />
                   </svg>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">
-                      Date
-                    </p>
-                    <p className="text-black dark:text-white font-semibold text-sm sm:text-base">
+                    <p className="text-xs sm:text-sm text-gray-400">Date</p>
+                    <p className="text-white font-semibold text-sm sm:text-base">
                       5th May 2026
                     </p>
                   </div>
@@ -78,16 +99,14 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                     />
                   </svg>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">
-                      Time
-                    </p>
-                    <p className="text-black dark:text-white font-semibold text-sm sm:text-base">
+                    <p className="text-xs sm:text-sm text-gray-400">Time</p>
+                    <p className="text-white font-semibold text-sm sm:text-base">
                       TBC
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 sm:p-0 lg:col-span-3 lg:mt-4">
+                <div className="flex items-start gap-3 p-3 sm:p-0">
                   <svg
                     className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400 shrink-0 mt-0.5 sm:mt-1"
                     fill="none"
@@ -108,19 +127,15 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                     />
                   </svg>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400">
-                      Venue
-                    </p>
-                    <p className="text-black dark:text-white font-semibold text-sm sm:text-base">
+                    <p className="text-xs sm:text-sm text-gray-400">Venue</p>
+                    <p className="text-white font-semibold text-sm sm:text-base">
                       Nairobi, Kenya
                     </p>
-                    <p className="text-gray-700 dark:text-gray-400 text-xs sm:text-sm"></p>
                   </div>
                 </div>
 
-                {/* Calendar Dropdown - full width on mobile, centered */}
                 <div className="sm:col-span-2 lg:col-span-3 mt-4 sm:mt-6">
-                  <div className="flex justify-center lg:justify-start">
+                  <div className="flex justify-start">
                     <CalendarDropdown showText={true} />
                   </div>
                 </div>
@@ -130,7 +145,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
 
           {/* Right Image Column */}
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end items-center">
-            <div className="relative h-48 sm:h-80 xl:h-180 w-full">
+            <div className="relative h-48 sm:h-80 xl:h-200 w-full">
               <Image
                 className="relative"
                 src="/IGA-Award-design-final-22.png"
@@ -144,6 +159,41 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
             </div>
           </div>
         </div>
+
+        {/* Animated Scroll Indicator */}
+        <div className="hidden xl:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-green-400 text-xl font-bold">Scroll Down</p>
+            <svg
+              className="w-12 h-16 text-green-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="5"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <style jsx>{`
+          @keyframes bounce {
+            0%,
+            100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+          }
+          .animate-bounce {
+            animation: bounce 2s infinite;
+          }
+        `}</style>
       </section>
     );
   }
@@ -208,14 +258,14 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
         <div className="text-center">
           {/* Subtitle - smaller text at top */}
           <p className="text-gray-300 text-sm md:text-base mb-4 uppercase tracking-wider">
-            Acquire • Retain • Grow
+            iGaming Afrika Summit Awards 2026
           </p>
 
           {/* Main Heading */}
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-6 px-4">
-            Recognizing and Rewarding Expertise and Innovation
-            <br />
-            <span className="text-gray-300">in the iGaming Industry.</span>
+            Celebrating iGaming Excellence in Africa.
+            {/* <br />
+            <span className="text-gray-300">in the iGaming Industry.</span> */}
           </h1>
         </div>
       </div>
