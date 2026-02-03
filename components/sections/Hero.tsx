@@ -226,9 +226,9 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
           </div>
 
           <div className="flex md:hidden items-center mt-5">
-            <Link href="/awards">
-              <Button>Submit a Nomination</Button>
-            </Link>
+            {/* <Link href="/awards"> */}
+            <Button>Nominations closed</Button>
+            {/* </Link> */}
           </div>
         </div>
 
