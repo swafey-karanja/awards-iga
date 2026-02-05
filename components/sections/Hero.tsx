@@ -225,11 +225,11 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
             </div>
           </div>
 
-          <div className="flex md:hidden items-center mt-5">
-            {/* <Link href="/awards"> */}
+          {/* <div className="flex md:hidden items-center mt-5">
+            <Link href="/awards">
             <Button>Nominations closed</Button>
-            {/* </Link> */}
-          </div>
+            </Link>
+          </div> */}
         </div>
 
         {/* Animated Scroll Indicator */}
