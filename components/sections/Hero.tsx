@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { CalendarDropdown } from "../ui/Calendar";
-import Link from "next/link";
-import Button from "../ui/Button";
+// import Link from "next/link";
+// import Button from "../ui/Button";
 import { useEffect, useState } from "react";
 
 interface HeroProps {
