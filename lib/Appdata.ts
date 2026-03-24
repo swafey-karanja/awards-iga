@@ -2,141 +2,307 @@ interface AwardCategory {
   id: number;
   title: string;
   description: string;
-  focusAreas?: string[];
+  nominees?: string[];
 }
+
+// Awards categories with nominations - paste this into your lib/Appdata.ts
+// (replace/merge with your existing awardsCategories array)
 
 export const awardsCategories: AwardCategory[] = [
   {
     id: 1,
     title: "Sports Betting Operator of the Year",
     description:
-      "Recognizing the (retail and/or online) operator in Africa that has delivered an exceptional sportsbetting experience over the past 12 months while focusing on product innovation, user experience, Corporate Social Responsibility, Responsible Marketing, Compliance and Responsible Gaming.",
+      "Recognizing the (retail and/or online) operator in Africa that has delivered an exceptional sports betting experience over the past 12 months while focusing on product innovation, user experience, Corporate Social Responsibility, Responsible Marketing, Compliance and Responsible Gaming.",
+    nominees: ["Betway Africa", "SportPesa", "Betika", "BetKing", "SportyBet"],
   },
   {
     id: 2,
     title: "Sports Betting Supplier of the Year",
     description:
       "Honouring the provider that has made the most significant impact on the African sports betting industry through cutting-edge technology and innovation.",
+    nominees: [
+      "EveryMatrix",
+      "Digitain",
+      "Diamante Tech",
+      "Golden Race",
+      "Digient Technologies",
+    ],
   },
   {
     id: 3,
     title: "Casino of the Year",
     description:
       "Recognizing the land-based casino operator that has delivered an exceptional guest experience, strong commercial performance, and innovation.",
+    nominees: [
+      "Sun City Casino – South Africa",
+      "Emperors Palace – South Africa",
+      "The Federal Palace Hotel & Casino – Nigeria",
+      "Moyo Casino – Kenya",
+      "Mayfair Casino – Kenya",
+    ],
   },
   {
     id: 4,
     title: "Casino Supplier of the Year",
     description:
       "Celebrating suppliers delivering outstanding products and services to the African land-based casino sector.",
+    nominees: [
+      "Novomatic",
+      "EGT",
+      "Pragmatic Play",
+      "FAZI Company",
+      "QTech Games",
+    ],
   },
   {
     id: 5,
     title: "Online Casino of the Year",
     description:
       "Honouring the operator that has delivered an exceptional online gaming experience with strong game portfolios and RG commitment.",
+    nominees: [
+      "Melbet Casino",
+      "Mozzart Casino",
+      "1XBet Casino",
+      "22bet Casino",
+      "Hollywoodbets Casino",
+    ],
   },
   {
     id: 6,
     title: "Online Slot of the Year",
     description:
       "Celebrating the most outstanding slot game launched in Africa over the past 12 months.",
+    nominees: [
+      "African Gold by 7777Gaming",
+      "Ten Shining Diamonds by EGT Digital",
+      "Wild Hot 40 by FAZI",
+      "Chest of Cai Shen by Pragmatic Play",
+      "2025 Hit Slot by Endorphina",
+    ],
   },
   {
     id: 7,
     title: "Online Slot Supplier of the Year",
     description:
       "Celebrating the supplier delivering outstanding slot game products in the African region.",
+    nominees: [
+      "Amusnet",
+      "Booming Games",
+      "Fazi Company",
+      "1Spin4Win",
+      "Pragmatic Play",
+    ],
   },
   {
     id: 8,
     title: "Affiliate Platform of the Year",
     description:
       "Honouring companies showcasing exceptional affiliate platform performance, innovation, and service in Africa.",
+    nominees: [
+      "Raventrack",
+      "Alanbase",
+      "Affilka by SOFTSWISS",
+      "AffiGates",
+      "PartnerMatrix by EveryMatrix",
+    ],
   },
   {
     id: 9,
     title: "Affiliate Program of the Year",
     description:
       "Recognizing affiliate programs demonstrating strong commitment to mutually beneficial relationships in Africa.",
+    nominees: [
+      "1win Partners",
+      "WinWin Partners",
+      "1XPartners",
+      "Linebet Partners",
+      "22Bet Partners",
+    ],
   },
   {
     id: 10,
     title: "Platform Provider of the Year",
     description:
       "Celebrating suppliers empowering operators with robust, flexible, and secure gaming solutions.",
+    nominees: [
+      "BetConstruct",
+      "Digitain",
+      "Altenar",
+      "SOFTSWISS",
+      "Betfounders",
+    ],
   },
   {
     id: 11,
     title: "Service Provider of the Year",
     description:
       "Honouring expert service providers across consultancy, legal, compliance, payments, marketing, and support.",
+    nominees: [
+      "Slec Africa",
+      "Ocean Gaming Consult Ltd",
+      "iGaming Consult Africa",
+      "SumSub",
+      "Betting Jobs",
+    ],
   },
   {
     id: 12,
     title: "Crash Game of the Year",
     description:
       "Celebrating the crash game that has captivated players with fast-paced, high-risk gameplay.",
+    nominees: [
+      "Aviator by Spribe",
+      "Matatu by Shacks Evolution",
+      "Shark Rush by SimplePlay",
+      "JetX by SmartSoft",
+      "Chicken Road by InOut Games",
+    ],
   },
   {
     id: 13,
     title: "Crash Game Provider of the Year",
     description:
       "Celebrating companies delivering exceptional crash game experiences to African players.",
+    nominees: [
+      "Split the Pot AB",
+      "OnlyPlay",
+      "Aviatrix",
+      "Spribe",
+      "SmartSoft",
+    ],
   },
   {
     id: 14,
     title: "Marketing Campaign of the Year",
     description:
       "Celebrating creative and responsible marketing campaigns delivering measurable success in Africa.",
+    nominees: [
+      "Bola Queens campaign by Bolabet",
+      "Let's do it Again Campaign by bet9ja",
+      "Betika na Community by Betika",
+      "Play with Champions by Sportybet",
+      "Francis Ngannou x Premierbet Campaign",
+    ],
   },
   {
     id: 15,
     title: "New Operation Launch of the Year",
     description:
       "Spotlighting newly launched operations that enhanced player experience and industry standards.",
+    nominees: ["Chopbet", "Pepeta", "Betgr8", "MulaSport", "Chezagame"],
   },
   {
     id: 16,
-    title: "Emerging Company of the Year",
+    title: "Emerging Provider of the Year",
     description:
       "Recognising companies disrupting the market through innovation, growth, and bold strategy.",
+    nominees: [
+      "Choice Gaming",
+      "Leprecoins",
+      "Tada Gaming",
+      "SimplePlay",
+      "OptimoPlay",
+    ],
   },
   {
     id: 17,
     title: "Rising Star in Responsible Gambling",
     description:
-      "Honouring companies demonstrating exceptional commitment to player protection and sustainability.",
+      "Honouring companies or organizations demonstrating exceptional commitment to player protection and sustainability.",
+    nominees: [
+      "Fisayo Oke, Gamble Alert – Nigeria",
+      "Tumelo Mokoena, SA Responsible Gambling Foundation",
+      "Denis Mudene, CEO, National Lotteries and Gaming Regulatory Board – Uganda",
+      "Moruntshi Kemorwale, Acting CEO, Gambling Authority – Botswana",
+      "Dr. Alfred Gitonga, Consultant Psychiatrist, Responsible Gambling Kenya",
+    ],
   },
   {
     id: 18,
-    title: "Overall Corporate Responsibility Award",
+    title: "Overall Corporate Social Responsibility Award",
     description:
       "Recognizing companies integrating ethical, social, and environmental stewardship into core operations.",
+    nominees: ["SportPesa", "Betika", "Premierbet", "betPawa", "Odi Bets"],
   },
   {
     id: 19,
     title: "CEO of the Year Award",
     description:
       "Celebrating chief executives driving growth, innovation, and excellence in African gaming.",
+    nominees: [
+      "Ulrik Bengtsson, Sunbet",
+      "Mutua Mutava, Betika",
+      "Laurence Michel, Betway Africa",
+      "Sudeep Dalamal Ramnani, SportyBet",
+      "Gossy Ukanwoke, BetKing",
+    ],
   },
   {
     id: 20,
-    title: "IGaming AFRIKA Choice – Person of the Year (Male)",
+    title: "iGaming AFRIKA Choice – Person of the Year (Male)",
     description:
       "Celebrating a male individual driving positive change in African iGaming.",
+    nominees: [
+      "John Mutua, CEO, Association of Gaming Operators Kenya (AGOK)",
+      "Peter Emolemo, CEO, African iGaming Alliance",
+      "Musa Mngadi, CEO, African Lotteries and Gaming Association",
+      "Garron Whitesman, Founding Partner, Whitesmans Attorneys",
+      "Christopher Coyne, CEO, 888Africa",
+    ],
   },
   {
     id: 21,
-    title: "IGaming AFRIKA Choice – Person of the Year (Female)",
+    title: "iGaming AFRIKA Choice – Person of the Year (Female)",
     description:
       "Celebrating a female individual driving positive change in African iGaming.",
+    nominees: [
+      "Lois Bright, Founder, Women in Gaming Africa",
+      "Mrs Sibongile Simelane-Quntana, Executive Director, SARGF",
+      "Olabimpe Akingba, Head of Responsible Gaming, pawaTech",
+      "Sabrina H. Msuya, Chairperson, Tanzania Sports Betting Association",
+      "Dianne Maina, Country Manager, Sportybet Kenya",
+    ],
   },
   {
     id: 22,
-    title: "IGaming AFRIKA Choice – Fairplay Star of the Year",
+    title: "iGaming AFRIKA Choice – Fairplay Organization of the Year",
     description:
       "Celebrating organizations advocating for proper regulation and fair play in African iGaming.",
+    nominees: [
+      "Choplife Gaming",
+      "Lagos State Lotteries and Gaming Authority (LSLGA)",
+      "Association of Nigerian Bookmakers (ANB)",
+      "Gambling Regulatory Authority (GRA)",
+      "Gaming Board of Tanzania (GBT)",
+    ],
+  },
+  {
+    id: 23,
+    title: "Advertising Network of the Year",
+    description:
+      "Recognizing the advertising network that has delivered outstanding results for African iGaming operators.",
+    nominees: ["Adsterra", "RichAds", "PropellerAds", "ROIads", "Kadam"],
+  },
+  {
+    id: 24,
+    title: "Payment Service Provider of the Year",
+    description:
+      "Honoring the payment service provider delivering seamless, secure, and innovative payment solutions across Africa.",
+    nominees: ["PawaPay", "bitLipa", "Flexifai", "KotaniPay", "PalmPay"],
+  },
+  {
+    id: 25,
+    title: "Retail Provider of the Year",
+    description:
+      "Recognizing the retail solution provider empowering operators with outstanding in-store gaming experiences.",
+    nominees: [
+      "Stellarbets",
+      "GoldenRace",
+      "Kiron Interactive",
+      "IB Games",
+      "Clickobet",
+    ],
   },
 ];
 

@@ -15,14 +15,9 @@ const timelineData: TimelineItem[] = [
     description: "Submission of nominations across categories.",
   },
   {
-    title: "Shortlisting",
+    title: "Shortlisting Nominees",
     dates: "30 Jan 2026 – 6 Mar 2026",
-    description: "Evaluation and selection of finalists.",
-  },
-  {
-    title: "Supporting Statements",
-    dates: "9 Mar 2026 - 20 Mar 2026",
-    description: "Shortlisted nominees submit supporting evidence.",
+    description: "Evaluation and selection of Nominees.",
   },
   {
     title: "Shortlist Reveal",
@@ -30,15 +25,21 @@ const timelineData: TimelineItem[] = [
     description: "Announcement of finalists.",
   },
   {
+    title: "Supporting Statements",
+    dates: "25 Mar 2026 - 1 Apr 2026",
+    description: "Shortlisted nominees submit supporting evidence.",
+  },
+
+  {
     title: "Voting",
-    dates: "25 Mar 2026 – 1 Apr 2026",
+    dates: "3 Apr 2026 – 10 Apr 2026",
     description: "iGaming in Africa Community members vote for the winners.",
   },
   {
     title: "Judging",
-    dates: "3 Apr 2026 – 10 Apr 2026",
+    dates: "11 Apr 2026 – 18 Apr 2026",
     description:
-      "A panel of judges picks the winners based on various factors.",
+      "A panel of judges picks the winners based on evidence submitted and votes cast.",
   },
   {
     title: "Final Awards",

@@ -1,13 +1,14 @@
 import React from "react";
 import { motion, Variants } from "framer-motion";
 import Button from "./Button";
-import { ArrowRight, Award, X } from "lucide-react";
+import { ArrowRight, Award, Trophy, X } from "lucide-react";
 import Link from "next/link";
 
 interface AwardCategory {
   id: number;
   title: string;
   description: string;
+  nominees?: string[];
 }
 
 interface ModalProps {
@@ -84,6 +85,37 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
           </p>
         </div>
 
+        {/* Nominees */}
+        {award.nominees && award.nominees.length > 0 && (
+          <div className="mb-6 sm:mb-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Trophy size={18} className="text-green-400" />
+              <h4 className="text-base sm:text-xl font-bold text-white">
+                Shortlisted Nominees
+              </h4>
+              <span className="ml-auto text-xs text-gray-400 font-medium">
+                {award.nominees.length} nominees
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {award.nominees.map((nominee, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-green-500/40 rounded-xl px-4 py-3 transition-all duration-200 group"
+                >
+                  <span className="w-7 h-7 rounded-full bg-green-500/20 border border-green-500/30 text-green-400 text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-green-500/30 transition-colors">
+                    {index + 1}
+                  </span>
+                  <span className="text-lg text-gray-200 group-hover:text-white transition-colors leading-snug font-semibold">
+                    {nominee}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/10 dark:border-gray-700/50">
           <Button
@@ -93,12 +125,18 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
           >
             Close
           </Button>
-          <Link href="/awards" className="w-full sm:w-auto order-1 sm:order-2">
+          {/* <Link href="/voting" className="w-full sm:w-auto order-1 sm:order-2">
+            <Button className="w-full sm:w-auto">
+              Submit Your Vote
+              <ArrowRight className="inline ml-2" size={18} />
+            </Button>
+          </Link> */}
+          {/* <Link href="/awards" className="w-full sm:w-auto order-1 sm:order-2">
             <Button className="w-full sm:w-auto">
               Submit Nomination
               <ArrowRight className="inline ml-2" size={18} />
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </motion.div>
     </motion.div>
