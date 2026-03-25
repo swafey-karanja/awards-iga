@@ -46,10 +46,10 @@ export const awardsCategories: AwardCategory[] = [
     id: 4,
     title: "Casino Supplier of the Year",
     description:
-      "Celebrating suppliers delivering outstanding products and services to the African land-based casino sector.",
+      "Celebrating suppliers delivering outstanding products and services to the African land-based and online casino sector.",
     nominees: [
       "Novomatic",
-      "EGT",
+      "EGT Digital",
       "Pragmatic Play",
       "FAZI Company",
       "QTech Games",
@@ -75,7 +75,7 @@ export const awardsCategories: AwardCategory[] = [
       "Celebrating the most outstanding slot game launched in Africa over the past 12 months.",
     nominees: [
       "African Gold by 7777Gaming",
-      "Ten Shining Diamonds by EGT Digital",
+      "40burning hot clover chance by EGT Digital",
       "Wild Hot 40 by FAZI",
       "Chest of Cai Shen by Pragmatic Play",
       "2025 Hit Slot by Endorphina",
