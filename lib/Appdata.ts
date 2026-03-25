@@ -75,7 +75,7 @@ export const awardsCategories: AwardCategory[] = [
       "Celebrating the most outstanding slot game launched in Africa over the past 12 months.",
     nominees: [
       "African Gold by 7777Gaming",
-      "40burning hot clover chance by EGT Digital",
+      "40burning Hot Clover Chance by EGT Digital",
       "Wild Hot 40 by FAZI",
       "Chest of Cai Shen by Pragmatic Play",
       "2025 Hit Slot by Endorphina",
@@ -100,7 +100,7 @@ export const awardsCategories: AwardCategory[] = [
     description:
       "Honouring companies showcasing exceptional affiliate platform performance, innovation, and service in Africa.",
     nominees: [
-      "Raventrack",
+      "RavenTrack",
       "Alanbase",
       "Affilka by SOFTSWISS",
       "AffiGates",
@@ -164,13 +164,7 @@ export const awardsCategories: AwardCategory[] = [
     title: "Crash Game Provider of the Year",
     description:
       "Celebrating companies delivering exceptional crash game experiences to African players.",
-    nominees: [
-      "Split the Pot AB",
-      "OnlyPlay",
-      "Aviatrix",
-      "Spribe",
-      "SmartSoft",
-    ],
+    nominees: ["Split the Pot", "OnlyPlay", "Aviatrix", "Spribe", "SmartSoft"],
   },
   {
     id: 14,
@@ -223,7 +217,7 @@ export const awardsCategories: AwardCategory[] = [
     title: "Overall Corporate Social Responsibility Award",
     description:
       "Recognizing companies integrating ethical, social, and environmental stewardship into core operations.",
-    nominees: ["SportPesa", "Betika", "Premierbet", "betPawa", "Odi Bets"],
+    nominees: ["SportPesa", "Betika", "Premierbet", "betPawa", "Odibets"],
   },
   {
     id: 19,
@@ -289,7 +283,7 @@ export const awardsCategories: AwardCategory[] = [
     title: "Payment Service Provider of the Year",
     description:
       "Honoring the payment service provider delivering seamless, secure, and innovative payment solutions across Africa.",
-    nominees: ["PawaPay", "bitLipa", "Flexifai", "KotaniPay", "PalmPay"],
+    nominees: ["PawaPay", "BitLipa", "Flexifai", "Kotani Pay", "PalmPay"],
   },
   {
     id: 25,
