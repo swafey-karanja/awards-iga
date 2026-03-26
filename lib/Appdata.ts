@@ -317,7 +317,7 @@ export const awardsCategories: AwardCategory[] = [
     description:
       "Recognizing the retail solution provider empowering operators with outstanding in-store gaming experiences.",
     nominees: [
-      "Stellarbets",
+      "Stellar Bets",
       "GoldenRace",
       "Kiron Interactive",
       "Highlight Games",
