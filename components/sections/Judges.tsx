@@ -98,6 +98,7 @@ const Judges: React.FC = () => {
               style={{ objectFit: "contain" }}
               unoptimized
               priority
+              loading="eager"
             />
           </div>
         </div>

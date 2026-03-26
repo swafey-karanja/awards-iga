@@ -1,114 +1,121 @@
-"use client";
-
-import { useState, useCallback } from "react";
-import { motion } from "framer-motion";
-import { AlertCircle, Vote } from "lucide-react";
-
-import { awardsCategories } from "@/lib/Appdata";
 import { fetchCSRFToken, API_CONFIG } from "@/app/services/api";
 import { toast } from "sonner";
-
-import { isCompanyEmail } from "../../app/voting/EmailUtils";
-import CategoryCard from "../../app/voting/CategoryCard";
-import VoterInfoCard from "../../app/voting/VoterInfoCard";
-import VoteProgressBar from "../../app/voting/VoteProgressBar";
-import SubmitBar from "../../app/voting/SubmitBar";
-import VoteSuccessScreen from "../../app/voting/VoteSuccessscreen";
+import { isCompanyEmail } from "../../lib/EmailUtils";
 import SectionHeader from "./SectionHeader";
+import { useCallback, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  StepCastVotes,
+  StepCategories,
+  StepDetails,
+  StepNav,
+  StepReview,
+  SuccessScreen,
+  VoterInfo,
+  VoteSelection,
+} from "../sections/FormSteps";
+import { FormErrors } from "../sections/FormSteps";
+import { Vote } from "lucide-react";
+import { IoIosArrowBack } from "react-icons/io";
 
-export interface VoteSelection {
-  categoryId: number;
-  categoryTitle: string;
-  nominee: string;
-}
-
-export interface VoterInfo {
-  name: string;
-  email: string;
-}
-
-export interface VotingFormErrors {
-  name?: string;
-  email?: string;
-  votes?: string;
-}
+// ── Main VotingForm ───────────────────────────────────────────────────────────
 
 export default function VotingForm() {
+  const [step, setStep] = useState(1);
   const [voter, setVoter] = useState<VoterInfo>({ name: "", email: "" });
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [selections, setSelections] = useState<Record<number, VoteSelection>>(
     {},
   );
-  const [expandedId, setExpandedId] = useState<number | null>(1);
-  const [errors, setErrors] = useState<VotingFormErrors>({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const voteCount = Object.keys(selections).length;
-
-  // ── Handlers ──────────────────────────────────────────────────────────────────
-
   const handleVoterChange = useCallback(
     (field: keyof VoterInfo, value: string) => {
-      setVoter((prev) => ({ ...prev, [field]: value }));
-      setErrors((prev) => ({ ...prev, [field]: undefined }));
+      setVoter((p) => ({ ...p, [field]: value }));
+      setErrors((p) => ({ ...p, [field]: undefined }));
     },
     [],
   );
+
+  const handleToggleCategory = useCallback((id: number) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+        setSelections((s) => {
+          const c = { ...s };
+          delete c[id];
+          return c;
+        });
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+    setErrors((p) => ({ ...p, categories: undefined }));
+  }, []);
 
   const handleSelect = useCallback(
     (categoryId: number, categoryTitle: string, nominee: string) => {
-      setSelections((prev) => ({
-        ...prev,
+      setSelections((p) => ({
+        ...p,
         [categoryId]: { categoryId, categoryTitle, nominee },
       }));
-      // Auto-advance to next category
-      const currentIdx = awardsCategories.findIndex((c) => c.id === categoryId);
-      const next = awardsCategories[currentIdx + 1];
-      if (next) setExpandedId(next.id);
+      setErrors((p) => ({ ...p, votes: undefined }));
     },
     [],
   );
 
-  const handleToggle = useCallback((categoryId: number) => {
-    setExpandedId((prev) => (prev === categoryId ? null : categoryId));
+  const goNext = useCallback(() => {
+    if (step === 1) {
+      const newErrors: FormErrors = {};
+      if (!voter.name.trim()) newErrors.name = "Please enter your full name.";
+      if (!voter.email.trim()) {
+        newErrors.email = "Please enter your email address.";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(voter.email)) {
+        newErrors.email = "Please enter a valid email address.";
+      } else if (!isCompanyEmail(voter.email)) {
+        newErrors.email =
+          "Please use your company email. Personal addresses (Gmail, Yahoo, etc.) are not accepted.";
+      }
+      if (Object.keys(newErrors).length) {
+        setErrors(newErrors);
+        return;
+      }
+    }
+    if (step === 2 && selectedIds.size === 0) {
+      setErrors({
+        categories: "Please select at least one category to continue.",
+      });
+      return;
+    }
+    if (step === 3) {
+      const unvoted = [...selectedIds].filter((id) => !selections[id]);
+      if (unvoted.length > 0) {
+        setErrors({
+          votes:
+            "Please cast a vote in each of your selected categories before continuing.",
+        });
+        return;
+      }
+    }
+    setErrors({});
+    setStep((s) => s + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [step, voter, selectedIds, selections]);
+
+  const goBack = useCallback(() => {
+    setErrors({});
+    setStep((s) => s - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // ── Validation ────────────────────────────────────────────────────────────────
-
-  const validate = (): boolean => {
-    const newErrors: VotingFormErrors = {};
-
-    if (!voter.name.trim()) {
-      newErrors.name = "Please enter your full name.";
-    }
-
-    if (!voter.email.trim()) {
-      newErrors.email = "Please enter your email address.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(voter.email)) {
-      newErrors.email = "Please enter a valid email address.";
-    } else if (!isCompanyEmail(voter.email)) {
-      newErrors.email =
-        "Please use your company email. Personal email addresses (Gmail, Yahoo, Hotmail, etc.) are not accepted.";
-    }
-
-    if (voteCount === 0) {
-      newErrors.votes =
-        "Please vote in at least one category before submitting.";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // ── Submission ────────────────────────────────────────────────────────────────
-
   const handleSubmit = async () => {
-    if (!validate()) return;
     setIsSubmitting(true);
-
     try {
-      //   const { csrfToken } = await fetchCSRFToken();
-
+      // const { csrfToken } = await fetchCSRFToken();
       const payload = {
         voter_name: voter.name.trim(),
         voter_email: voter.email.trim().toLowerCase(),
@@ -120,114 +127,116 @@ export default function VotingForm() {
       };
 
       console.log({ payload });
-
-      //   const response = await fetch(`${API_CONFIG.BASE_URL}votes/submit/`, {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "X-CSRFToken": csrfToken,
-      //     },
-      //     body: JSON.stringify(payload),
-      //   });
-
-      //   if (!response.ok) {
-      //     const errorData = await response.json().catch(() => ({}));
-      //     const message =
-      //       (errorData as { message?: string }).message ||
-      //       "Something went wrong. Please try again.";
-      //     throw new Error(message);
-      //   }
-
-      //   setSubmitted(true);
-      //   toast.success("Your votes have been submitted successfully!");
+      // const response = await fetch(`${API_CONFIG.BASE_URL}votes/submit/`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "X-CSRFToken": csrfToken,
+      //   },
+      //   body: JSON.stringify(payload),
+      // });
+      // if (!response.ok) {
+      //   const errorData = await response.json().catch(() => ({}));
+      //   throw new Error(
+      //     (errorData as { message?: string }).message ||
+      //       "Something went wrong. Please try again.",
+      //   );
+      // }
+      setSubmitted(true);
+      toast.success("Your ballot has been submitted successfully!");
     } catch (err) {
-      const message =
+      toast.error(
         err instanceof Error
           ? err.message
-          : "Submission failed. Please try again.";
-      toast.error(message);
+          : "Submission failed. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // ── Render ────────────────────────────────────────────────────────────────────
-
   if (submitted) {
-    return <VoteSuccessScreen voterName={voter.name} selections={selections} />;
+    return (
+      <SuccessScreen
+        voterName={voter.name}
+        selectedIds={selectedIds}
+        selections={selections}
+      />
+    );
   }
 
+  const handleNavigateHome = (): void => {
+    window.location.href = "/";
+  };
+
   return (
-    <section className="py-16 px-4 min-h-screen">
+    <section className="py-16 px-4 min-h-screen bg-gray-50 dark:bg-green-950">
       <div className="max-w-7xl mx-auto">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-10"
-        >
+        <div className="mb-8 container mx-auto h-auto z-10">
           <span className="inline-flex items-center gap-2 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-4">
-            <Vote size={14} />
-            Community Vote
+            <Vote size={14} /> Community Vote
           </span>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            // variants={staggerContainer}
+          <button
+            type="button"
+            onClick={handleNavigateHome}
+            className="flex items-center text-green-700 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 mb-4 transition-colors font-bold cursor-pointer"
+            aria-label="Navigate to home page"
           >
-            <SectionHeader
-              title="Cast Your Vote"
-              subtitle=" Vote for your favourite nominees across any of the 25 award categories."
-            />
-          </motion.div>
-        </motion.div>
-
-        {/* Voter details */}
-        <VoterInfoCard
-          voter={voter}
-          errors={errors}
-          onChange={handleVoterChange}
-        />
-
-        {/* Progress */}
-        <VoteProgressBar
-          voteCount={voteCount}
-          totalCategories={awardsCategories.length}
-        />
-
-        {/* Vote-count error */}
-        {errors.votes && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-xs text-red-500 mb-4 flex items-center gap-1"
-          >
-            <AlertCircle size={12} /> {errors.votes}
-          </motion.p>
-        )}
-
-        {/* Category cards */}
-        <div className="flex flex-col gap-3 mb-8">
-          {awardsCategories.map((category, index) => (
-            <CategoryCard
-              key={category.id}
-              category={category}
-              selection={selections[category.id]?.nominee}
-              onSelect={handleSelect}
-              isExpanded={expandedId === category.id}
-              onToggle={() => handleToggle(category.id)}
-              index={index}
-            />
-          ))}
+            <IoIosArrowBack className="mr-2" aria-hidden="true" />
+            Back to home page
+          </button>
+          <h1 className="text-2xl md:text-4xl font-bold bg-linear-to-r from-green-700 to-green-600 dark:from-green-400 dark:to-green-500 bg-clip-text text-transparent py-2">
+            Cast Your Votes
+          </h1>
+          <p className="text-gray-700 dark:text-gray-300 max-w-3xl text-xs md:text-[14px] font-semibold">
+            Vote for your favourite nominees across any of the 25 award
+            categories.
+          </p>
         </div>
 
-        {/* Sticky submit bar */}
-        <SubmitBar
-          voteCount={voteCount}
-          isSubmitting={isSubmitting}
-          onSubmit={handleSubmit}
-        />
+        <StepNav current={step} />
+
+        <div className="bg-gray-50 dark:bg-green-950 ">
+          <AnimatePresence mode="wait">
+            {step === 1 && (
+              <StepDetails
+                voter={voter}
+                errors={errors}
+                onChange={handleVoterChange}
+                onNext={goNext}
+              />
+            )}
+            {step === 2 && (
+              <StepCategories
+                selectedIds={selectedIds}
+                errors={errors}
+                onToggle={handleToggleCategory}
+                onNext={goNext}
+                onBack={goBack}
+              />
+            )}
+            {step === 3 && (
+              <StepCastVotes
+                selectedIds={selectedIds}
+                selections={selections}
+                errors={errors}
+                onSelect={handleSelect}
+                onNext={goNext}
+                onBack={goBack}
+              />
+            )}
+            {step === 4 && (
+              <StepReview
+                voter={voter}
+                selectedIds={selectedIds}
+                selections={selections}
+                isSubmitting={isSubmitting}
+                onSubmit={handleSubmit}
+                onBack={goBack}
+              />
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

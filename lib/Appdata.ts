@@ -3,6 +3,7 @@ interface AwardCategory {
   title: string;
   description: string;
   nominees?: string[];
+  emoji?: string;
 }
 
 // Awards categories with nominations - paste this into your lib/Appdata.ts
@@ -12,6 +13,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 1,
     title: "Sports Betting Operator of the Year",
+    emoji: "🏆⚽",
     description:
       "Recognizing the (retail and/or online) operator in Africa that has delivered an exceptional sports betting experience over the past 12 months while focusing on product innovation, user experience, Corporate Social Responsibility, Responsible Marketing, Compliance and Responsible Gaming.",
     nominees: ["Betway Africa", "SportPesa", "Betika", "BetKing", "SportyBet"],
@@ -19,6 +21,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 2,
     title: "Sports Betting Supplier of the Year",
+    emoji: "⚙️📊",
     description:
       "Honouring the provider that has made the most significant impact on the African sports betting industry through cutting-edge technology and innovation.",
     nominees: [
@@ -32,6 +35,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 3,
     title: "Casino of the Year",
+    emoji: "🎰🏨",
     description:
       "Recognizing the land-based casino operator that has delivered an exceptional guest experience, strong commercial performance, and innovation.",
     nominees: [
@@ -45,6 +49,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 4,
     title: "Casino Supplier of the Year",
+    emoji: "🧩🎰",
     description:
       "Celebrating suppliers delivering outstanding products and services to the African land-based and online casino sector.",
     nominees: [
@@ -58,6 +63,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 5,
     title: "Online Casino of the Year",
+    emoji: "💻🎰",
     description:
       "Honouring the operator that has delivered an exceptional online gaming experience with strong game portfolios and RG commitment.",
     nominees: [
@@ -71,11 +77,12 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 6,
     title: "Online Slot of the Year",
+    emoji: "🎰✨",
     description:
       "Celebrating the most outstanding slot game launched in Africa over the past 12 months.",
     nominees: [
       "African Gold by 7777Gaming",
-      "40burning Hot Clover Chance by EGT Digital",
+      "40Burning Hot Clover Chance by EGT Digital",
       "Wild Hot 40 by FAZI",
       "Chest of Cai Shen by Pragmatic Play",
       "2025 Hit Slot by Endorphina",
@@ -84,6 +91,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 7,
     title: "Online Slot Supplier of the Year",
+    emoji: "🏭🎰",
     description:
       "Celebrating the supplier delivering outstanding slot game products in the African region.",
     nominees: [
@@ -97,6 +105,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 8,
     title: "Affiliate Platform of the Year",
+    emoji: "🔗💻",
     description:
       "Honouring companies showcasing exceptional affiliate platform performance, innovation, and service in Africa.",
     nominees: [
@@ -110,6 +119,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 9,
     title: "Affiliate Program of the Year",
+    emoji: "🤝📈",
     description:
       "Recognizing affiliate programs demonstrating strong commitment to mutually beneficial relationships in Africa.",
     nominees: [
@@ -123,6 +133,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 10,
     title: "Platform Provider of the Year",
+    emoji: "🖥️⚙️",
     description:
       "Celebrating suppliers empowering operators with robust, flexible, and secure gaming solutions.",
     nominees: [
@@ -136,6 +147,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 11,
     title: "Service Provider of the Year",
+    emoji: "🛠️📞",
     description:
       "Honouring expert service providers across consultancy, legal, compliance, payments, marketing, and support.",
     nominees: [
@@ -149,6 +161,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 12,
     title: "Crash Game of the Year",
+    emoji: "🚀💥",
     description:
       "Celebrating the crash game that has captivated players with fast-paced, high-risk gameplay.",
     nominees: [
@@ -162,6 +175,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 13,
     title: "Crash Game Provider of the Year",
+    emoji: "🏭🚀",
     description:
       "Celebrating companies delivering exceptional crash game experiences to African players.",
     nominees: ["Split the Pot", "OnlyPlay", "Aviatrix", "Spribe", "SmartSoft"],
@@ -169,6 +183,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 14,
     title: "Marketing Campaign of the Year",
+    emoji: "📣🎯",
     description:
       "Celebrating creative and responsible marketing campaigns delivering measurable success in Africa.",
     nominees: [
@@ -182,6 +197,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 15,
     title: "New Operation Launch of the Year",
+    emoji: "🚀🆕",
     description:
       "Spotlighting newly launched operations that enhanced player experience and industry standards.",
     nominees: ["Chopbet", "Pepeta", "Betgr8", "MulaSport", "Chezagame"],
@@ -189,6 +205,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 16,
     title: "Emerging Provider of the Year",
+    emoji: "🌱⚡",
     description:
       "Recognising companies disrupting the market through innovation, growth, and bold strategy.",
     nominees: [
@@ -202,6 +219,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 17,
     title: "Rising Star in Responsible Gambling",
+    emoji: "🌟🛡️",
     description:
       "Honouring companies or organizations demonstrating exceptional commitment to player protection and sustainability.",
     nominees: [
@@ -215,6 +233,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 18,
     title: "Overall Corporate Social Responsibility Award",
+    emoji: "🌍❤️",
     description:
       "Recognizing companies integrating ethical, social, and environmental stewardship into core operations.",
     nominees: ["SportPesa", "Betika", "Premierbet", "betPawa", "Odibets"],
@@ -222,6 +241,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 19,
     title: "CEO of the Year Award",
+    emoji: "👔🏆",
     description:
       "Celebrating chief executives driving growth, innovation, and excellence in African gaming.",
     nominees: [
@@ -235,6 +255,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 20,
     title: "iGaming AFRIKA Choice – Person of the Year (Male)",
+    emoji: "👨🏆",
     description:
       "Celebrating a male individual driving positive change in African iGaming.",
     nominees: [
@@ -248,6 +269,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 21,
     title: "iGaming AFRIKA Choice – Person of the Year (Female)",
+    emoji: "👩🏆",
     description:
       "Celebrating a female individual driving positive change in African iGaming.",
     nominees: [
@@ -261,6 +283,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 22,
     title: "iGaming AFRIKA Choice – Fairplay Organization of the Year",
+    emoji: "⚖️🛡️",
     description:
       "Celebrating organizations advocating for proper regulation and fair play in African iGaming.",
     nominees: [
@@ -274,6 +297,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 23,
     title: "Advertising Network of the Year",
+    emoji: "📡📢",
     description:
       "Recognizing the advertising network that has delivered outstanding results for African iGaming operators.",
     nominees: ["Adsterra", "RichAds", "PropellerAds", "ROIads", "Kadam"],
@@ -281,6 +305,7 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 24,
     title: "Payment Service Provider of the Year",
+    emoji: "💳💸",
     description:
       "Honoring the payment service provider delivering seamless, secure, and innovative payment solutions across Africa.",
     nominees: ["PawaPay", "BitLipa", "Flexifai", "Kotani Pay", "PalmPay"],
@@ -288,13 +313,14 @@ export const awardsCategories: AwardCategory[] = [
   {
     id: 25,
     title: "Retail Provider of the Year",
+    emoji: "🏪🎮",
     description:
       "Recognizing the retail solution provider empowering operators with outstanding in-store gaming experiences.",
     nominees: [
       "Stellarbets",
       "GoldenRace",
       "Kiron Interactive",
-      "IB Games",
+      "Highlight Games",
       "Clickobet",
     ],
   },

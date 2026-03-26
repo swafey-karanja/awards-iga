@@ -54,7 +54,7 @@ const JudgeModal: React.FC<JudgeModalProps> = ({
     >
       {/* Backdrop */}
       <motion.div
-        className="absolute inset-0 bg-black/60 bg-green-50 dark:bg-green-950/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-green-50 dark:bg-green-950/80 backdrop-blur-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -63,7 +63,7 @@ const JudgeModal: React.FC<JudgeModalProps> = ({
 
       {/* Modal Content */}
       <motion.div
-        className="relative bg-green-900/95 bg-green-50 dark:bg-green-950/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] sm:max-h-[85vh] overflow-y-auto border border-green-500/20 dark:border-green-600/30 shadow-2xl shadow-green-500/10 dark:shadow-green-600/20"
+        className="relative bg-green-50 dark:bg-green-950/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] sm:max-h-[85vh] overflow-y-auto border border-green-500/20 dark:border-green-600/30 shadow-2xl shadow-green-500/10 dark:shadow-green-600/20"
         variants={scaleUp}
         initial="hidden"
         animate="visible"

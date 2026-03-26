@@ -35,7 +35,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
   // Calculate time left until the event (May 4, 2026)
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const eventDate = new Date("May 5, 2026").getTime();
+      const eventDate = new Date("May 4, 2026").getTime();
       const now = new Date().getTime();
       const difference = eventDate - now;
 
@@ -68,7 +68,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
             muted
             loop
             playsInline
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover opacity-40 relative"
           >
             <source src="/background-pattern-video.mp4" type="video/mp4" />
             <Image
@@ -77,6 +77,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
               fill
               className="object-cover"
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </video>
           <div className="absolute inset-0 bg-transparent dark:bg-green-700/20"></div>
@@ -101,7 +102,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
               awards process will be transparent, inclusive, and rigorous,
               involving multiple stages to ensure merited recognition. The
               timeline spans from the initiation of nominations in early 2025 to
-              the grand winners&apos; announcement on 5th May 2026.
+              the grand winners&apos; announcement on 4th May 2026.
             </p>
 
             <div className="mt-6 sm:mt-8 mb-6 sm:mb-8 pt-6 sm:pt-8 border-t border-gray-600">
@@ -123,7 +124,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                   <div>
                     <p className="text-xs sm:text-sm text-gray-400">Date</p>
                     <p className="text-white font-semibold text-sm sm:text-base">
-                      5th May 2026
+                      4th May 2026
                     </p>
                   </div>
                 </div>
@@ -221,6 +222,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                 style={{ objectFit: "contain" }}
                 unoptimized
                 priority
+                loading="eager"
               />
             </div>
           </div>
