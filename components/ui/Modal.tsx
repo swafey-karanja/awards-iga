@@ -2,14 +2,8 @@ import React from "react";
 import { motion, Variants } from "framer-motion";
 import Button from "./Button";
 import { Award, Trophy, X } from "lucide-react";
-// import Link from "next/link";
-
-interface AwardCategory {
-  id: number;
-  title: string;
-  description: string;
-  nominees?: string[];
-}
+import { AwardCategory } from "@/lib/types";
+import Link from "next/link";
 
 interface ModalProps {
   isOpen: boolean;
@@ -68,7 +62,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
         <div className="mb-6 sm:mb-8 pr-8">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 flex-wrap">
             <span className="px-3 sm:px-4 py-1 bg-purple-500/10 dark:bg-purple-600/20 border border-purple-500/30 dark:border-purple-600/40 rounded-full text-xs sm:text-sm text-purple-400 dark:text-purple-300 font-semibold">
-              Category #{award.id}
+              Category #{award.category_id}
             </span>
           </div>
 
@@ -77,7 +71,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
               size={28}
               className="text-green-500 dark:text-green-400 shrink-0 sm:w-9 sm:h-9"
             />
-            <span className="leading-tight">{award.title}</span>
+            <span className="leading-tight">{award.category_title}</span>
           </h3>
 
           <p className="text-sm sm:text-base md:text-lg text-gray-300 dark:text-gray-400 leading-relaxed">
@@ -99,16 +93,16 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {award.nominees.map((nominee, index) => (
+              {award.nominees.map((nom, index) => (
                 <div
-                  key={index}
+                  key={nom.nominee_id}
                   className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-green-500/40 rounded-xl px-4 py-3 transition-all duration-200 group"
                 >
                   <span className="w-7 h-7 rounded-full bg-green-500/20 border border-green-500/30 text-green-400 text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-green-500/30 transition-colors">
                     {index + 1}
                   </span>
                   <span className="text-lg text-gray-200 group-hover:text-white transition-colors leading-snug font-semibold">
-                    {nominee}
+                    {nom.nominee}
                   </span>
                 </div>
               ))}
@@ -118,6 +112,14 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/10 dark:border-gray-700/50">
+          {/* <Link href="/voting">
+            <Button
+              variant="primary"
+              className="w-full sm:w-auto order-2 sm:order-1"
+            >
+              Proceed to vote
+            </Button>
+          </Link> */}
           <Button
             variant="secondary"
             onClick={onClose}
@@ -125,18 +127,6 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
           >
             Close
           </Button>
-          {/* <Link href="/voting" className="w-full sm:w-auto order-1 sm:order-2">
-            <Button className="w-full sm:w-auto">
-              Submit Your Vote
-              <ArrowRight className="inline ml-2" size={18} />
-            </Button>
-          </Link> */}
-          {/* <Link href="/awards" className="w-full sm:w-auto order-1 sm:order-2">
-            <Button className="w-full sm:w-auto">
-              Submit Nomination
-              <ArrowRight className="inline ml-2" size={18} />
-            </Button>
-          </Link> */}
         </div>
       </motion.div>
     </motion.div>

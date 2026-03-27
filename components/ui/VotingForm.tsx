@@ -1,10 +1,17 @@
-import { fetchCSRFToken, API_CONFIG } from "@/app/services/api";
-import { toast } from "sonner";
-import { isCompanyEmail } from "../../lib/EmailUtils";
-import SectionHeader from "./SectionHeader";
+"use client";
+
 import { useCallback, useState } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
+import { Vote } from "lucide-react";
+import { IoIosArrowBack } from "react-icons/io";
+import { toast } from "sonner";
+
+import { fetchCSRFToken, API_CONFIG } from "@/app/services/api";
+import { isCompanyEmail } from "../../lib/EmailUtils";
+
 import {
+  FormErrors,
   StepCastVotes,
   StepCategories,
   StepDetails,
@@ -14,13 +21,17 @@ import {
   VoterInfo,
   VoteSelection,
 } from "../sections/FormSteps";
-import { FormErrors } from "../sections/FormSteps";
-import { Vote } from "lucide-react";
-import { IoIosArrowBack } from "react-icons/io";
-
-// ── Main VotingForm ───────────────────────────────────────────────────────────
+import { useAwardsCategories } from "@/app/hooks/useAwardsCategories";
+import { Nominees } from "@/lib/types";
 
 export default function VotingForm() {
+  const {
+    categories,
+    isLoading,
+    error: fetchError,
+    refetch,
+  } = useAwardsCategories();
+
   const [step, setStep] = useState(1);
   const [voter, setVoter] = useState<VoterInfo>({ name: "", email: "" });
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
@@ -30,6 +41,8 @@ export default function VotingForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  // ── Handlers ────────────────────────────────────────────────────────────────
 
   const handleVoterChange = useCallback(
     (field: keyof VoterInfo, value: string) => {
@@ -57,16 +70,24 @@ export default function VotingForm() {
     setErrors((p) => ({ ...p, categories: undefined }));
   }, []);
 
+  // Receives a full Nominee object to capture nominee_id for the payload
   const handleSelect = useCallback(
-    (categoryId: number, categoryTitle: string, nominee: string) => {
+    (categoryId: number, categoryTitle: string, nominee: Nominees) => {
       setSelections((p) => ({
         ...p,
-        [categoryId]: { categoryId, categoryTitle, nominee },
+        [categoryId]: {
+          categoryId,
+          categoryTitle,
+          nomineeId: nominee.nominee_id,
+          nominee: nominee.nominee,
+        },
       }));
       setErrors((p) => ({ ...p, votes: undefined }));
     },
     [],
   );
+
+  // ── Navigation & validation ──────────────────────────────────────────────────
 
   const goNext = useCallback(() => {
     if (step === 1) {
@@ -85,12 +106,14 @@ export default function VotingForm() {
         return;
       }
     }
+
     if (step === 2 && selectedIds.size === 0) {
       setErrors({
         categories: "Please select at least one category to continue.",
       });
       return;
     }
+
     if (step === 3) {
       const unvoted = [...selectedIds].filter((id) => !selections[id]);
       if (unvoted.length > 0) {
@@ -101,6 +124,7 @@ export default function VotingForm() {
         return;
       }
     }
+
     setErrors({});
     setStep((s) => s + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -112,36 +136,41 @@ export default function VotingForm() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  // ── Submission ───────────────────────────────────────────────────────────────
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // const { csrfToken } = await fetchCSRFToken();
+      const { csrfToken } = await fetchCSRFToken();
+
       const payload = {
         voter_name: voter.name.trim(),
         voter_email: voter.email.trim().toLowerCase(),
         votes: Object.values(selections).map((s) => ({
           category_id: s.categoryId,
           category_title: s.categoryTitle,
+          nominee_id: s.nomineeId,
           nominee: s.nominee,
         })),
       };
 
-      console.log({ payload });
-      // const response = await fetch(`${API_CONFIG.BASE_URL}votes/submit/`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     "X-CSRFToken": csrfToken,
-      //   },
-      //   body: JSON.stringify(payload),
-      // });
-      // if (!response.ok) {
-      //   const errorData = await response.json().catch(() => ({}));
-      //   throw new Error(
-      //     (errorData as { message?: string }).message ||
-      //       "Something went wrong. Please try again.",
-      //   );
-      // }
+      const response = await fetch(`${API_CONFIG.BASE_URL}awards/votes/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          (errorData as { message?: string }).message ||
+            "Something went wrong. Please try again.",
+        );
+      }
+
       setSubmitted(true);
       toast.success("Your ballot has been submitted successfully!");
     } catch (err) {
@@ -155,19 +184,61 @@ export default function VotingForm() {
     }
   };
 
+  const handleNavigateHome = () => {
+    window.location.href = "/";
+  };
+
+  // ── Loading state ────────────────────────────────────────────────────────────
+
+  if (isLoading) {
+    return (
+      <section className="py-16 px-4 min-h-screen bg-gray-50 dark:bg-green-950 flex items-center justify-center">
+        <div className="text-center">
+          <span className="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin block mx-auto mb-4" />
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
+            Loading award categories…
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  // ── Fetch error state ────────────────────────────────────────────────────────
+
+  if (fetchError) {
+    return (
+      <section className="py-16 px-4 min-h-screen bg-gray-50 dark:bg-green-950 flex items-center justify-center">
+        <div className="text-center max-w-sm">
+          <p className="text-red-500 font-semibold mb-2">
+            Failed to load categories
+          </p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
+            {fetchError}
+          </p>
+          <button
+            onClick={refetch}
+            className="px-5 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </section>
+    );
+  }
+
+  // ── Success screen ───────────────────────────────────────────────────────────
+
   if (submitted) {
     return (
       <SuccessScreen
-        voterName={voter.name}
+        categories={categories}
         selectedIds={selectedIds}
         selections={selections}
       />
     );
   }
 
-  const handleNavigateHome = (): void => {
-    window.location.href = "/";
-  };
+  // ── Form ─────────────────────────────────────────────────────────────────────
 
   return (
     <section className="py-16 px-4 min-h-screen bg-gray-50 dark:bg-green-950">
@@ -189,14 +260,14 @@ export default function VotingForm() {
             Cast Your Votes
           </h1>
           <p className="text-gray-700 dark:text-gray-300 max-w-3xl text-xs md:text-[14px] font-semibold">
-            Vote for your favourite nominees across any of the 25 award
-            categories.
+            Vote for your favourite nominees across any of the{" "}
+            {categories.length} award categories.
           </p>
         </div>
 
         <StepNav current={step} />
 
-        <div className="bg-gray-50 dark:bg-green-950 ">
+        <div className="bg-gray-50 dark:bg-green-950">
           <AnimatePresence mode="wait">
             {step === 1 && (
               <StepDetails
@@ -208,6 +279,7 @@ export default function VotingForm() {
             )}
             {step === 2 && (
               <StepCategories
+                categories={categories}
                 selectedIds={selectedIds}
                 errors={errors}
                 onToggle={handleToggleCategory}
@@ -217,6 +289,7 @@ export default function VotingForm() {
             )}
             {step === 3 && (
               <StepCastVotes
+                categories={categories}
                 selectedIds={selectedIds}
                 selections={selections}
                 errors={errors}
@@ -227,6 +300,7 @@ export default function VotingForm() {
             )}
             {step === 4 && (
               <StepReview
+                categories={categories}
                 voter={voter}
                 selectedIds={selectedIds}
                 selections={selections}

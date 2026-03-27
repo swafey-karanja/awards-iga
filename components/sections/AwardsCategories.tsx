@@ -6,16 +6,9 @@ import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { awardsCategories } from "@/lib/Appdata";
 import Image from "next/image";
-
-interface AwardCategory {
-  id: number;
-  title: string;
-  description: string;
-  focusAreas?: string[];
-  nominees?: string[];
-}
+import { AwardCategory } from "@/lib/types";
+import { useAwardsCategories } from "@/app/hooks/useAwardsCategories";
 
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
@@ -42,6 +35,51 @@ const AwardsCategories: React.FC = () => {
     setSelectedAwardsCategory(null);
   };
 
+  const {
+    categories,
+    isLoading,
+    error: fetchError,
+    refetch,
+  } = useAwardsCategories();
+
+  // ── Loading state ────────────────────────────────────────────────────────────
+
+  if (isLoading) {
+    return (
+      <section className="py-16 px-4 min-h-screen bg-gray-50 dark:bg-green-950 flex items-center justify-center">
+        <div className="text-center">
+          <span className="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin block mx-auto mb-4" />
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
+            Loading award categories…
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  // ── Fetch error state ────────────────────────────────────────────────────────
+
+  if (fetchError) {
+    return (
+      <section className="py-16 px-4 min-h-screen bg-gray-50 dark:bg-green-950 flex items-center justify-center">
+        <div className="text-center max-w-sm">
+          <p className="text-red-500 font-semibold mb-2">
+            Failed to load categories
+          </p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
+            {fetchError}
+          </p>
+          <button
+            onClick={refetch}
+            className="px-5 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       id="work"
@@ -60,9 +98,9 @@ const AwardsCategories: React.FC = () => {
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-            {awardsCategories.map((awardsCategory: AwardCategory) => (
+            {categories.map((awardsCategory: AwardCategory) => (
               <Card
-                key={awardsCategory.id}
+                key={awardsCategory.category_id}
                 className="cursor-pointer"
                 hover={true}
               >
@@ -74,7 +112,7 @@ const AwardsCategories: React.FC = () => {
                   <div className="aspect-video rounded-lg sm:rounded-xl mb-4 sm:mb-5 relative overflow-hidden flex items-center justify-center bg-linear-to-br from-green-600/20 to-green-700/20 dark:from-green-500/20 dark:to-green-600/20">
                     <Image
                       src="/IGA-Award-design-final-22.png"
-                      alt={`${awardsCategory.title} trophy`}
+                      alt={`${awardsCategory.category_title} trophy`}
                       className="w-full h-[70%] sm:h-[80%] object-contain opacity-90"
                       width={200}
                       height={200}
@@ -84,7 +122,7 @@ const AwardsCategories: React.FC = () => {
 
                   {/* Category title */}
                   <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white line-clamp-2">
-                    {awardsCategory.title}
+                    {awardsCategory.category_title}
                   </h3>
 
                   {/* View details link */}

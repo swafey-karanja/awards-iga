@@ -26,7 +26,7 @@ const timelineData: TimelineItem[] = [
   },
   {
     title: "Supporting Statements",
-    dates: "25 Mar 2026 - 1 Apr 2026",
+    dates: "25 Mar 2026 - 10 Apr 2026",
     description: "Shortlisted nominees submit supporting evidence.",
   },
 

@@ -11,14 +11,14 @@ import {
   Trophy,
   User,
 } from "lucide-react";
-
-import { awardsCategories } from "@/lib/Appdata";
+import { AwardCategory, Nominees } from "@/lib/types";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface VoteSelection {
   categoryId: number;
   categoryTitle: string;
+  nomineeId: number;
   nominee: string;
 }
 
@@ -177,12 +177,14 @@ export function StepDetails({
 // ── Step 2: Category Selection ────────────────────────────────────────────────
 
 export function StepCategories({
+  categories,
   selectedIds,
   errors,
   onToggle,
   onNext,
   onBack,
 }: {
+  categories: AwardCategory[];
   selectedIds: Set<number>;
   errors: FormErrors;
   onToggle: (id: number) => void;
@@ -217,12 +219,12 @@ export function StepCategories({
       )}
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-8">
-        {awardsCategories.map((cat) => {
-          const selected = selectedIds.has(cat.id);
+        {categories.map((cat) => {
+          const selected = selectedIds.has(cat.category_id);
           return (
             <button
-              key={cat.id}
-              onClick={() => onToggle(cat.id)}
+              key={cat.category_id}
+              onClick={() => onToggle(cat.category_id)}
               className={`relative text-left p-6 border transition-all duration-200
                 ${
                   selected
@@ -235,13 +237,10 @@ export function StepCategories({
                   <CheckCircle2 size={15} className="text-white/80" />
                 </span>
               )}
-              <span className="block text-xl mb-5 leading-none">
-                {cat.emoji}
-              </span>
               <p
                 className={`text-xl font-bold leading-tight mt-1 pr-4 ${selected ? "text-white" : "text-gray-800 dark:text-gray-200"}`}
               >
-                {cat.title}
+                {cat.category_title}
               </p>
               <p
                 className={`text-sm mt-1.5 ${selected ? "text-green-100" : "text-gray-400 dark:text-gray-300"}`}
@@ -274,6 +273,7 @@ export function StepCategories({
 // ── Step 3: Cast Votes ────────────────────────────────────────────────────────
 
 export function StepCastVotes({
+  categories,
   selectedIds,
   selections,
   errors,
@@ -281,21 +281,24 @@ export function StepCastVotes({
   onNext,
   onBack,
 }: {
+  categories: AwardCategory[];
   selectedIds: Set<number>;
   selections: Record<number, VoteSelection>;
   errors: FormErrors;
   onSelect: (
     categoryId: number,
     categoryTitle: string,
-    nominee: string,
+    nominee: Nominees,
   ) => void;
   onNext: () => void;
   onBack: () => void;
 }) {
-  const selectedCategories = awardsCategories.filter((c) =>
-    selectedIds.has(c.id),
+  const selectedCategories = categories.filter((c) =>
+    selectedIds.has(c.category_id),
   );
-  const votedCount = selectedCategories.filter((c) => selections[c.id]).length;
+  const votedCount = selectedCategories.filter(
+    (c) => selections[c.category_id],
+  ).length;
 
   return (
     <motion.div
@@ -344,59 +347,102 @@ export function StepCastVotes({
 
       <div className="flex flex-col gap-4 mb-8">
         {selectedCategories.map((cat) => {
-          const nominees = cat.nominees ?? [];
-          const voted = selections[cat.id]?.nominee;
+          const nominees: Nominees[] = cat.nominees ?? [];
+          const currentSelection = selections[cat.category_id];
+          const voted = currentSelection?.nominee;
+
           return (
             <div
-              key={cat.id}
-              className={`rounded-2xl border overflow-hidden transition-all duration-200 ${voted ? "border-green-500 shadow-sm shadow-green-200 dark:shadow-green-900/20" : "border-gray-200 dark:border-gray-500"}`}
+              key={cat.category_id}
+              className={`rounded-2xl border overflow-hidden transition-all duration-200 ${
+                voted
+                  ? "border-green-500 shadow-sm shadow-green-200 dark:shadow-green-900/20"
+                  : "border-gray-200 dark:border-gray-500"
+              }`}
             >
+              {/* Category header */}
               <div
-                className={`px-5 py-3 flex items-center justify-between ${voted ? "bg-green-600 dark:bg-green-700" : "bg-green-600/90 dark:bg-green-700/90"}`}
+                className={`px-5 py-3 flex items-center gap-3 justify-between ${
+                  voted
+                    ? "bg-green-600 dark:bg-green-700"
+                    : "bg-green-600/90 dark:bg-green-700/90"
+                }`}
               >
-                <span className="block text-xl mb-5 leading-none">
-                  {cat.emoji}
-                </span>
-                <h3 className="text-lg font-bold text-white">{cat.title}</h3>
+                <h3 className="text-lg font-bold text-white flex-1">
+                  {cat.category_title}
+                </h3>
                 <span
-                  className={`text-md font-semibold ${voted ? "text-green-100" : "text-gray-200"}`}
+                  className={`text-md font-semibold shrink-0 ${voted ? "text-green-100" : "text-gray-200"}`}
                 >
                   {voted ? "✓ Voted" : "Choose one"}
                 </span>
               </div>
+
+              {/* Nominees */}
               <ul className="divide-y divide-gray-100 dark:divide-gray-600 bg-white dark:bg-green-950">
-                {nominees.map((nominee) => {
-                  const isSelected = voted === nominee;
+                {nominees.map((nomineeObj: Nominees) => {
+                  const isSelected =
+                    currentSelection?.nomineeId === nomineeObj.nominee_id;
+                  const initials = nomineeObj.nominee
+                    .split(" ")
+                    .map((w) => w[0])
+                    .join("")
+                    .slice(0, 2)
+                    .toUpperCase();
+
                   return (
-                    <li key={nominee}>
+                    <li key={nomineeObj.nominee_id}>
                       <button
-                        onClick={() => onSelect(cat.id, cat.title, nominee)}
+                        onClick={() =>
+                          onSelect(
+                            cat.category_id,
+                            cat.category_title,
+                            nomineeObj,
+                          )
+                        }
                         className={`w-full flex items-center gap-4 px-5 py-4 text-left transition-colors duration-150
-                          ${isSelected ? "bg-green-50 dark:bg-green-950/30" : "hover:bg-gray-50 dark:hover:bg-green-950/60"}`}
+                          ${
+                            isSelected
+                              ? "bg-green-50 dark:bg-green-950/30"
+                              : "hover:bg-gray-50 dark:hover:bg-green-950/60"
+                          }`}
                       >
+                        {/* Radio */}
                         <span
-                          className={`shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? "border-green-600 bg-green-600" : "border-gray-300 dark:border-gray-600"}`}
+                          className={`shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                            isSelected
+                              ? "border-green-600 bg-green-600"
+                              : "border-gray-300 dark:border-gray-600"
+                          }`}
                         >
                           {isSelected && (
                             <span className="w-2 h-2 bg-white rounded-full" />
                           )}
                         </span>
+
+                        {/* Initials avatar */}
                         <span
                           className={`shrink-0 w-9 h-9 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all
-                          ${isSelected ? "border-green-500 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300" : "border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-green-950 text-gray-500 dark:text-gray-400"}`}
+                          ${
+                            isSelected
+                              ? "border-green-500 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300"
+                              : "border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-green-950 text-gray-500 dark:text-gray-400"
+                          }`}
                         >
-                          {nominee
-                            .split(" ")
-                            .map((w) => w[0])
-                            .join("")
-                            .slice(0, 2)
-                            .toUpperCase()}
+                          {initials}
                         </span>
+
+                        {/* Name */}
                         <span
-                          className={`flex-1 text-md font-medium ${isSelected ? "text-gray-900 dark:text-white" : "text-gray-700 dark:text-gray-300"}`}
+                          className={`flex-1 text-md font-medium ${
+                            isSelected
+                              ? "text-gray-900 dark:text-white"
+                              : "text-gray-700 dark:text-gray-300"
+                          }`}
                         >
-                          {nominee}
+                          {nomineeObj.nominee}
                         </span>
+
                         {isSelected && (
                           <span className="shrink-0 text-xs font-semibold text-green-600 dark:text-green-400 uppercase tracking-wider">
                             Your Pick
@@ -433,6 +479,7 @@ export function StepCastVotes({
 // ── Step 4: Review ────────────────────────────────────────────────────────────
 
 export function StepReview({
+  categories,
   voter,
   selectedIds,
   selections,
@@ -440,6 +487,7 @@ export function StepReview({
   onSubmit,
   onBack,
 }: {
+  categories: AwardCategory[];
   voter: VoterInfo;
   selectedIds: Set<number>;
   selections: Record<number, VoteSelection>;
@@ -447,8 +495,8 @@ export function StepReview({
   onSubmit: () => void;
   onBack: () => void;
 }) {
-  const selectedCategories = awardsCategories.filter((c) =>
-    selectedIds.has(c.id),
+  const selectedCategories = categories.filter((c) =>
+    selectedIds.has(c.category_id),
   );
 
   return (
@@ -488,24 +536,23 @@ export function StepReview({
       {/* Vote review cards */}
       <div className="grid sm:grid-cols-2 gap-3 mb-8">
         {selectedCategories.map((cat) => {
-          const nominee = selections[cat.id]?.nominee ?? "";
-          const initials = nominee
+          const selection = selections[cat.category_id];
+          const nomineeName = selection?.nominee ?? "";
+          const initials = nomineeName
             .split(" ")
             .map((w) => w[0])
             .join("")
             .slice(0, 2)
             .toUpperCase();
+
           return (
             <div
-              key={cat.id}
+              key={cat.category_id}
               className="rounded-xl border border-gray-200 dark:border-gray-500 overflow-hidden bg-white dark:bg-green-950"
             >
               <div className="px-4 py-3.5 bg-gray-50 dark:bg-green-950 border-b border-gray-200 dark:border-gray-700">
-                <span className="block text-xl mb-5 leading-none">
-                  {cat.emoji}
-                </span>
                 <p className="text-md font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 truncate">
-                  {cat.title}
+                  {cat.category_title}
                 </p>
               </div>
               <div className="px-4 py-3 flex items-center gap-3">
@@ -513,7 +560,7 @@ export function StepReview({
                   {initials}
                 </span>
                 <p className="font-semibold text-gray-900 dark:text-white text-md leading-tight">
-                  {nominee}
+                  {nomineeName}
                 </p>
               </div>
             </div>
@@ -558,41 +605,45 @@ export function StepReview({
 // ── Success Screen ────────────────────────────────────────────────────────────
 
 export function SuccessScreen({
-  voterName,
+  categories,
   selectedIds,
   selections,
 }: {
-  voterName: string;
+  categories: AwardCategory[];
   selectedIds: Set<number>;
   selections: Record<number, VoteSelection>;
 }) {
-  const votes = awardsCategories.filter((c) => selectedIds.has(c.id));
+  const votes = categories.filter((c) => selectedIds.has(c.category_id));
 
   return (
     <section className="min-h-screen py-20 px-4 flex items-center justify-center bg-gray-50 dark:bg-green-950">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="max-w-3xl w-full text-center"
+        className="max-w-4xl w-full text-center"
       >
         <div className="w-40 h-40 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center mx-auto mb-6">
           <Trophy size={56} className="text-green-600" />
         </div>
-        <h2 className="text-3xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-3">
-          Votes Received!
+        <h2 className="text-xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+          Votes Received! Please check the email that you provided to verify
+          your identity and allow us to tally your vote
+          {votes.length !== 1 ? "s" : ""}.
         </h2>
-        <p className="text-gray-500 dark:text-gray-400 mb-2 text-xl">
+        {/* <p className="text-gray-500 dark:text-gray-400 mb-2 text-xl">
           Thank you,{" "}
           <strong className="text-gray-700 dark:text-gray-200">
             {voterName}
           </strong>
+          Please check the email you provided to confirm your votes so that they are recorded
           . Your <strong className="text-green-600">{votes.length}</strong> vote
           {votes.length !== 1 ? "s have" : " has"} been recorded.
-        </p>
+        </p> */}
         <p className="text-lg text-gray-400 dark:text-gray-500 mt-4">
-          Results will be announced at the iGaming AFRIKA Summit — May 4, 2026
-          in Nairobi.
+          The results will be announced at the iGaming AFRIKA Summit — May 4,
+          2026 in Nairobi.
         </p>
+
         <div className="mt-8 rounded-2xl border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30 overflow-hidden">
           <p className="text-md font-bold uppercase tracking-widest text-green-700 dark:text-green-400 py-3 px-5 border-b border-green-200 dark:border-green-800">
             Your Votes
@@ -600,14 +651,14 @@ export function SuccessScreen({
           <ul className="divide-y divide-green-100 dark:divide-green-900">
             {votes.map((cat) => (
               <li
-                key={cat.id}
+                key={cat.category_id}
                 className="flex items-center justify-between gap-4 px-5 py-3"
               >
                 <span className="text-md text-gray-700 dark:text-gray-300 uppercase tracking-wide truncate">
-                  {cat.title}
+                  {cat.category_title}
                 </span>
                 <span className="text-md font-semibold text-gray-900 dark:text-white shrink-0">
-                  {selections[cat.id]?.nominee}
+                  {selections[cat.category_id]?.nominee}
                 </span>
               </li>
             ))}
