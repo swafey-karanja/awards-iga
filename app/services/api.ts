@@ -1,4 +1,4 @@
-import { AwardCategoriesResponse, AwardCategory } from "@/lib/types";
+import { AwardCategory } from "@/lib/types";
 
 // config/api.ts
 export const API_CONFIG = {

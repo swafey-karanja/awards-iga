@@ -33,7 +33,12 @@ export default function VotingForm() {
   } = useAwardsCategories();
 
   const [step, setStep] = useState(1);
-  const [voter, setVoter] = useState<VoterInfo>({ name: "", email: "" });
+  const [voter, setVoter] = useState<VoterInfo>({
+    name: "",
+    email: "",
+    companyName: "",
+    jobTitle: "",
+  });
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [selections, setSelections] = useState<Record<number, VoteSelection>>(
     {},
@@ -93,6 +98,10 @@ export default function VotingForm() {
     if (step === 1) {
       const newErrors: FormErrors = {};
       if (!voter.name.trim()) newErrors.name = "Please enter your full name.";
+      if (!voter.companyName.trim())
+        newErrors.companyName = "Please enter your company name.";
+      if (!voter.jobTitle.trim())
+        newErrors.jobTitle = "Please enter your job title.";
       if (!voter.email.trim()) {
         newErrors.email = "Please enter your email address.";
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(voter.email)) {
@@ -146,6 +155,8 @@ export default function VotingForm() {
       const payload = {
         voter_name: voter.name.trim(),
         voter_email: voter.email.trim().toLowerCase(),
+        company: voter.companyName.trim(),
+        position: voter.jobTitle.trim(),
         votes: Object.values(selections).map((s) => ({
           category_id: s.categoryId,
           category_title: s.categoryTitle,

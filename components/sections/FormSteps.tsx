@@ -5,6 +5,8 @@ import {
   AlertCircle,
   ArrowLeft,
   ArrowRight,
+  Briefcase,
+  Building,
   CheckCircle2,
   Mail,
   Send,
@@ -25,11 +27,15 @@ export interface VoteSelection {
 export interface VoterInfo {
   name: string;
   email: string;
+  companyName: string;
+  jobTitle: string;
 }
 
 export interface FormErrors {
   name?: string;
   email?: string;
+  companyName?: string;
+  jobTitle?: string;
   categories?: string;
   votes?: string;
 }
@@ -157,6 +163,56 @@ export function StepDetails({
           {errors.email && (
             <p className="text-sm text-red-500 mt-1.5 flex items-center gap-1">
               <AlertCircle size={12} /> {errors.email}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-md font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">
+            Company Name <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <Building
+              size={16}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+            />
+            <input
+              type="text"
+              placeholder="your company's name"
+              value={voter.companyName}
+              onChange={(e) => onChange("companyName", e.target.value)}
+              className={`w-full pl-9 pr-4 py-4 rounded-lg border text-md text-gray-900 dark:text-white bg-gray-50 dark:bg-green-950 placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-colors
+                ${errors.companyName ? "border-red-400 focus:border-red-500" : "border-gray-300 focus:border-green-500"}`}
+            />
+          </div>
+          {errors.companyName && (
+            <p className="text-sm text-red-500 mt-1.5 flex items-center gap-1">
+              <AlertCircle size={12} /> {errors.companyName}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-md font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">
+            Job Title <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <Briefcase
+              size={16}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+            />
+            <input
+              type="text"
+              placeholder="your job title"
+              value={voter.jobTitle}
+              onChange={(e) => onChange("jobTitle", e.target.value)}
+              className={`w-full pl-9 pr-4 py-4 rounded-lg border text-md text-gray-900 dark:text-white bg-gray-50 dark:bg-green-950 placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-colors
+                ${errors.jobTitle ? "border-red-400 focus:border-red-500" : "border-gray-300 focus:border-green-500"}`}
+            />
+          </div>
+          {errors.jobTitle && (
+            <p className="text-sm text-red-500 mt-1.5 flex items-center gap-1">
+              <AlertCircle size={12} /> {errors.jobTitle}
             </p>
           )}
         </div>
