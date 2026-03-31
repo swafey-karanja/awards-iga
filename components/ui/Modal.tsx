@@ -112,14 +112,14 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/10 dark:border-gray-700/50">
-          {/* <Link href="/voting">
+          <Link href="/voting">
             <Button
               variant="primary"
               className="w-full sm:w-auto order-2 sm:order-1"
             >
               Proceed to vote
             </Button>
-          </Link> */}
+          </Link>
           <Button
             variant="secondary"
             onClick={onClose}

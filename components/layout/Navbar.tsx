@@ -30,8 +30,8 @@ const Navbar = () => {
 
             {/* Desktop - Theme Toggle & CTA Button */}
             <div className="hidden md:flex items-center gap-4">
-              <Link href="/awards">
-                <Button>Nominations closed</Button>
+              <Link href="/voting">
+                <Button>Cast your Votes</Button>
               </Link>
               <ModeToggle />
             </div>

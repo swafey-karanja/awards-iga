@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   AlertCircle,
   ArrowLeft,
@@ -9,9 +10,11 @@ import {
   Building,
   CheckCircle2,
   Mail,
+  MailCheck,
   Send,
   Trophy,
   User,
+  X,
 } from "lucide-react";
 import { AwardCategory, Nominees } from "@/lib/types";
 
@@ -43,7 +46,7 @@ export interface FormErrors {
 const STEPS = [
   { id: 1, label: "Your Details" },
   { id: 2, label: "Categories" },
-  { id: 3, label: "Cast Votes" },
+  { id: 3, label: "Cast your Votes" },
   { id: 4, label: "Review" },
 ];
 
@@ -65,7 +68,7 @@ export function StepNav({ current }: { current: number }) {
             `}
           >
             <span
-              className={`block font-bold text-2xl leading-none mb-1
+              className={`block font-bold text-lg xl:text-2xl leading-none mb-1
               ${active ? "text-white" : ""}
               ${done ? "text-green-500" : ""}
               ${!active && !done ? "text-gray-600 dark:text-gray-200" : ""}
@@ -624,6 +627,37 @@ export function StepReview({
         })}
       </div>
 
+      {/* ── Email verification disclaimer ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.35 }}
+        className="mb-6 rounded-xl border-2 border-amber-400 dark:border-amber-500 bg-amber-50 dark:bg-amber-950/30 px-5 py-4 flex gap-4 items-start"
+      >
+        <span className="shrink-0 mt-0.5 w-9 h-9 rounded-full bg-amber-100 dark:bg-amber-900/40 border-2 border-amber-400 dark:border-amber-500 flex items-center justify-center">
+          <MailCheck size={18} className="text-amber-600 dark:text-amber-400" />
+        </span>
+        <div>
+          <p className="text-lg font-bold text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-1">
+            Action Required After Submission
+          </p>
+          <p className="text-md text-amber-700 dark:text-amber-400 leading-relaxed">
+            A verification email will be sent to{" "}
+            <strong className="font-bold">{voter.email}</strong> immediately
+            after you submit. You{" "}
+            <strong className="font-bold">
+              must click the confirmation link
+            </strong>{" "}
+            in that email to validate your identity — your votes will not be
+            counted until you do so.
+          </p>
+          <p className="text-sm text-amber-600 dark:text-amber-500 mt-2 font-medium">
+            Please check your inbox (and spam/junk folder) straight after
+            submitting.
+          </p>
+        </div>
+      </motion.div>
+
       <div className="flex items-center justify-between gap-4">
         <button
           onClick={onBack}
@@ -664,15 +698,119 @@ export function SuccessScreen({
   categories,
   selectedIds,
   selections,
+  voterEmail,
 }: {
   categories: AwardCategory[];
   selectedIds: Set<number>;
   selections: Record<number, VoteSelection>;
+  voterEmail?: string;
 }) {
   const votes = categories.filter((c) => selectedIds.has(c.category_id));
+  const [modalOpen, setModalOpen] = useState(true);
 
   return (
     <section className="min-h-screen py-20 px-4 flex items-center justify-center bg-gray-50 dark:bg-green-950">
+      {/* ── Email verification modal ── */}
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            key="email-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={() => setModalOpen(false)}
+          >
+            <motion.div
+              key="email-modal"
+              initial={{ opacity: 0, scale: 0.88, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 16 }}
+              transition={{ type: "spring", stiffness: 320, damping: 28 }}
+              className="relative w-full max-w-lg rounded-2xl bg-white dark:bg-green-950 border-2 border-amber-400 dark:border-amber-500 shadow-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal header */}
+              <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/50">
+                <div className="flex items-center gap-3">
+                  <span className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/50 border-2 border-amber-400 dark:border-amber-500 flex items-center justify-center shrink-0">
+                    <MailCheck
+                      size={20}
+                      className="text-amber-600 dark:text-amber-400"
+                    />
+                  </span>
+                  <p className="text-lg font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300">
+                    Verify Your Votes
+                  </p>
+                </div>
+                <button
+                  onClick={() => setModalOpen(false)}
+                  aria-label="Close notification"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              {/* Modal body */}
+              <div className="px-6 py-5">
+                <h3 className="text-lg font-bold text-red-700 dark:text-white mb-2 leading-snug">
+                  Check your inbox — action required!
+                </h3>
+                <p className="text-md text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                  We&apos;ve sent a confirmation email to{" "}
+                  <strong className="font-bold text-gray-900 dark:text-white break-all">
+                    {voterEmail}
+                  </strong>
+                  . You{" "}
+                  <strong className="font-bold text-red-700 dark:text-red-700">
+                    must click the verification button
+                  </strong>{" "}
+                  inside that email to confirm your identity.
+                </p>
+
+                {/* Steps */}
+                <ol className="space-y-2.5 mb-5">
+                  {[
+                    "Open the email from iGaming AFRIKA Awards",
+                    "Click the 'Confirm All Votes' button",
+                    "Your votes will be confirmed and tallied",
+                  ].map((step, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300"
+                    >
+                      <span className="shrink-0 w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/40 border border-green-400 dark:border-green-600 flex items-center justify-center text-xs font-bold text-green-700 dark:text-green-400 mt-0.5">
+                        {i + 1}
+                      </span>
+                      {step}
+                    </li>
+                  ))}
+                </ol>
+
+                <p className="text-sm text-gray-400 dark:text-gray-500 mb-5">
+                  Can&apos;t find the email? Check your{" "}
+                  <strong>
+                    spam or junk folder if you don&apos;t see it within a few
+                    minutes
+                  </strong>
+                  . Unverified votes will not be counted.
+                </p>
+
+                <button
+                  onClick={() => setModalOpen(false)}
+                  className="w-full py-3 rounded-xl bg-green-600 hover:bg-green-600/90 dark:bg-green-700 dark:hover:bg-green-700/90 text-white text-sm font-bold tracking-wide transition-colors shadow-md shadow-green-200 dark:shadow-green-900/40"
+                >
+                  Got it — I&apos;ll check my email
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Page content ── */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -686,19 +824,40 @@ export function SuccessScreen({
           your identity and allow us to tally your vote
           {votes.length !== 1 ? "s" : ""}.
         </h2>
-        {/* <p className="text-gray-500 dark:text-gray-400 mb-2 text-xl">
-          Thank you,{" "}
-          <strong className="text-gray-700 dark:text-gray-200">
-            {voterName}
-          </strong>
-          Please check the email you provided to confirm your votes so that they are recorded
-          . Your <strong className="text-green-600">{votes.length}</strong> vote
-          {votes.length !== 1 ? "s have" : " has"} been recorded.
-        </p> */}
-        <p className="text-lg text-gray-400 dark:text-gray-500 mt-4">
+        <p className="text-lg text-gray-400 dark:text-gray-400 mt-4">
           The results will be announced at the iGaming AFRIKA Summit — May 4,
           2026 in Nairobi.
         </p>
+
+        {/* ── Inline email reminder banner ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.35 }}
+          className="mt-6 rounded-xl border-2 border-amber-400 dark:border-amber-500 bg-amber-50 dark:bg-amber-950/30 px-5 py-4 flex gap-4 items-start text-left"
+        >
+          <span className="shrink-0 mt-0.5 w-9 h-9 rounded-full bg-amber-100 dark:bg-amber-900/40 border-2 border-amber-400 dark:border-amber-500 flex items-center justify-center">
+            <Mail size={16} className="text-amber-600 dark:text-amber-400" />
+          </span>
+          <div>
+            <p className="text-lg font-bold text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-1">
+              Don&apos;t forget to verify!
+            </p>
+            <p className="text-md text-amber-700 dark:text-amber-400 leading-relaxed">
+              A verification email has been sent to{" "}
+              <strong className="font-bold">{voterEmail}</strong>. Click the
+              link inside to confirm your votes —{" "}
+              <strong className="font-bold">
+                unverified votes will not be tallied
+              </strong>
+              .
+            </p>
+            <p className="text-sm text-amber-600 dark:text-amber-500 mt-1.5 font-medium">
+              Check your spam/junk folder if you don&apos;t see it within a few
+              minutes.
+            </p>
+          </div>
+        </motion.div>
 
         <div className="mt-8 rounded-2xl border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30 overflow-hidden">
           <p className="text-md font-bold uppercase tracking-widest text-green-700 dark:text-green-400 py-3 px-5 border-b border-green-200 dark:border-green-800">

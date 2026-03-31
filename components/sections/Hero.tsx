@@ -273,58 +273,19 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
   }
   // Dark Centered Hero (Matching the image)
   return (
-    <section className="relative py-20 pt-50 overflow-hidden min-h-[45vh] flex items-center border-b-5 border-green-600">
+    <section className="relative py-20 pt-50 overflow-hidden min-h-[55vh] flex items-center border-b-5 border-green-600">
       {/* Background Image */}
       <div className="inset-0 absolute z-0">
         <Image
-          src="https://images.unsplash.com/photo-1764874298962-ac0c84307fc0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src="https://plus.unsplash.com/premium_photo-1738067044612-b9dff6e806a0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Awards Background"
           fill
-          className="object-cover"
+          className="object-cover object-center md:object-[center_30%]"
           unoptimized
           loading="eager"
         />
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-linear-to-br from-gray-900/85 via-green-900/75 to-gray-900/85"></div>
-      </div>
-
-      {/* Decorative Elements - Starburst patterns like in the image */}
-      <div className="absolute top-10 left-20 w-32 h-32 opacity-20">
-        <svg viewBox="0 0 100 100" className="w-full h-full text-yellow-400">
-          <g>
-            {[...Array(12)].map((_, i) => (
-              <line
-                key={i}
-                x1="50"
-                y1="50"
-                x2="50"
-                y2="10"
-                stroke="currentColor"
-                strokeWidth="0.5"
-                transform={`rotate(${i * 30} 50 50)`}
-              />
-            ))}
-          </g>
-        </svg>
-      </div>
-
-      <div className="absolute bottom-20 right-20 w-40 h-40 opacity-15">
-        <svg viewBox="0 0 100 100" className="w-full h-full text-yellow-400">
-          <g>
-            {[...Array(16)].map((_, i) => (
-              <line
-                key={i}
-                x1="50"
-                y1="50"
-                x2="50"
-                y2="5"
-                stroke="currentColor"
-                strokeWidth="0.5"
-                transform={`rotate(${i * 22.5} 50 50)`}
-              />
-            ))}
-          </g>
-        </svg>
+        <div className="absolute inset-0 bg-linear-to-br from-gray-900/65 via-green-900/55 to-gray-900/65"></div>
       </div>
 
       {/* Main Content */}

@@ -175,10 +175,52 @@ export default function VotingForm() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+        const errorData = (await response.json().catch(() => ({}))) as {
+          message?: string;
+          error?: string;
+          categories?: string[];
+        };
+
+        if (
+          errorData.error === "already_voted_in_category" &&
+          Array.isArray(errorData.categories) &&
+          errorData.categories.length > 0
+        ) {
+          const isSingle = errorData.categories.length === 1;
+          toast.error(
+            <div className="flex flex-col gap-2">
+              <p className="font-bold text-sm leading-snug">
+                Duplicate vote — {isSingle ? "category" : "categories"} already
+                submitted
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                You have already voted in the following{" "}
+                {isSingle ? "category" : "categories"}:
+              </p>
+              <ul className="flex flex-col gap-1">
+                {errorData.categories.map((c) => (
+                  <li
+                    key={c}
+                    className="flex items-center gap-2 text-sm font-semibold text-red-700 dark:text-red-400 bg-red-50 border border-red-200 dark:border-red-800 rounded-md px-2.5 py-1.5"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+                    {c}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed pt-1 border-t border-gray-100 dark:border-gray-800">
+                Go back and remove{" "}
+                {isSingle ? "this category" : "these categories"} from your
+                selections before resubmitting.
+              </p>
+            </div>,
+            { duration: 12000 },
+          );
+          return;
+        }
+
         throw new Error(
-          (errorData as { message?: string }).message ||
-            "Something went wrong. Please try again.",
+          errorData.message || "Something went wrong. Please try again.",
         );
       }
 
@@ -245,6 +287,7 @@ export default function VotingForm() {
         categories={categories}
         selectedIds={selectedIds}
         selections={selections}
+        voterEmail={voter.email}
       />
     );
   }
