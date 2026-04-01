@@ -84,7 +84,11 @@ const Judges: React.FC = () => {
               brief supporting statement highlighting their key achievements,
               innovations, and contributions over the recent period. Following
               this, the iGaming in Africa Community will vote to select the
-              final winners from the shortlisted candidates.
+              final winners from the shortlisted candidates, after which
+              industry experts and thought leaders will review the submitted
+              supporting materials, consider the community’s sentiment, and make
+              the final selection from 11th to 18th April. The winners will be
+              announced on 4th May 2026.
             </p>
           </div>
 

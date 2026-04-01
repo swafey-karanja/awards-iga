@@ -32,7 +32,7 @@ const timelineData: TimelineItem[] = [
 
   {
     title: "Voting",
-    dates: "3 Apr 2026 – 10 Apr 2026",
+    dates: "1 Apr 2026 – 10 Apr 2026",
     description: "iGaming in Africa Community members vote for the winners.",
   },
   {
