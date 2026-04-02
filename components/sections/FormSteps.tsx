@@ -628,7 +628,7 @@ export function StepReview({
       </div>
 
       {/* ── Email verification disclaimer ── */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15, duration: 0.35 }}
@@ -652,7 +652,7 @@ export function StepReview({
             in the meantime.
           </p>
         </div>
-      </motion.div>
+      </motion.div> */}
 
       <div className="flex items-center justify-between gap-4">
         <button
@@ -702,12 +702,12 @@ export function SuccessScreen({
   voterEmail?: string;
 }) {
   const votes = categories.filter((c) => selectedIds.has(c.category_id));
-  const [modalOpen, setModalOpen] = useState(true);
+  // const [modalOpen, setModalOpen] = useState(true);
 
   return (
     <section className="min-h-screen py-20 px-4 flex items-center justify-center bg-gray-50 dark:bg-green-950">
       {/* ── Email verification modal ── */}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {modalOpen && (
           <motion.div
             key="email-modal-backdrop"
@@ -727,7 +727,7 @@ export function SuccessScreen({
               className="relative w-full max-w-md rounded-2xl bg-white dark:bg-green-950 border-2 border-amber-400 dark:border-amber-500 shadow-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal header */}
+              Modal header
               <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/50">
                 <div className="flex items-center gap-3">
                   <span className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/50 border-2 border-amber-400 dark:border-amber-500 flex items-center justify-center shrink-0">
@@ -749,7 +749,7 @@ export function SuccessScreen({
                 </button>
               </div>
 
-              {/* Modal body */}
+              Modal body
               <div className="px-6 py-5">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-snug">
                   Email verification is temporarily unavailable
@@ -769,7 +769,7 @@ export function SuccessScreen({
                   required from you right now.
                 </p>
 
-                {/* Steps */}
+                Steps
                 <ol className="space-y-2.5 mb-5">
                   {[
                     "Our team is working to resolve the issue as quickly as possible",
@@ -804,7 +804,7 @@ export function SuccessScreen({
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       {/* ── Page content ── */}
       <motion.div
@@ -816,9 +816,7 @@ export function SuccessScreen({
           <Trophy size={56} className="text-green-600" />
         </div>
         <h2 className="text-xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-          Votes Received! Please check the email that you provided to verify
-          your identity and allow us to tally your vote
-          {votes.length !== 1 ? "s" : ""}.
+          Votes Received!
         </h2>
         <p className="text-lg text-gray-400 dark:text-gray-500 mt-4">
           The results will be announced at the iGaming AFRIKA Summit — May 4,
@@ -826,7 +824,7 @@ export function SuccessScreen({
         </p>
 
         {/* ── Inline email reminder banner ── */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.35 }}
@@ -854,7 +852,7 @@ export function SuccessScreen({
               action is required from you right now.
             </p>
           </div>
-        </motion.div>
+        </motion.div> */}
 
         <div className="mt-8 rounded-2xl border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30 overflow-hidden">
           <p className="text-md font-bold uppercase tracking-widest text-green-700 dark:text-green-400 py-3 px-5 border-b border-green-200 dark:border-green-800">
