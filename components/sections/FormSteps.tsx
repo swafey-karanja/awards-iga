@@ -638,22 +638,18 @@ export function StepReview({
           <MailCheck size={18} className="text-amber-600 dark:text-amber-400" />
         </span>
         <div>
-          <p className="text-lg font-bold text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-1">
-            Action Required After Submission
+          <p className="text-sm font-bold text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-1">
+            Email Verification Temporarily Unavailable
           </p>
-          <p className="text-md text-amber-700 dark:text-amber-400 leading-relaxed">
-            A verification email will be sent to{" "}
-            <strong className="font-bold">{voter.email}</strong> immediately
-            after you submit. You{" "}
-            <strong className="font-bold">
-              must click the confirmation link
-            </strong>{" "}
-            in that email to validate your identity — your votes will not be
-            counted until you do so.
+          <p className="text-sm text-amber-700 dark:text-amber-400 leading-relaxed">
+            Our email verification system is currently experiencing an issue.
+            You may still submit your votes — a verification email will be sent
+            to <strong className="font-bold">{voter.email}</strong> once the
+            issue has been resolved.
           </p>
-          <p className="text-sm text-amber-600 dark:text-amber-500 mt-2 font-medium">
-            Please check your inbox (and spam/junk folder) straight after
-            submitting.
+          <p className="text-xs text-amber-600 dark:text-amber-500 mt-2 font-medium">
+            We apologise for the inconvenience. Please keep an eye on your inbox
+            in the meantime.
           </p>
         </div>
       </motion.div>
@@ -728,7 +724,7 @@ export function SuccessScreen({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 16 }}
               transition={{ type: "spring", stiffness: 320, damping: 28 }}
-              className="relative w-full max-w-lg rounded-2xl bg-white dark:bg-green-950 border-2 border-amber-400 dark:border-amber-500 shadow-2xl overflow-hidden"
+              className="relative w-full max-w-md rounded-2xl bg-white dark:bg-green-950 border-2 border-amber-400 dark:border-amber-500 shadow-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal header */}
@@ -740,8 +736,8 @@ export function SuccessScreen({
                       className="text-amber-600 dark:text-amber-400"
                     />
                   </span>
-                  <p className="text-lg font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300">
-                    Verify Your Votes
+                  <p className="text-sm font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300">
+                    Email Verification — Service Notice
                   </p>
                 </div>
                 <button
@@ -755,27 +751,30 @@ export function SuccessScreen({
 
               {/* Modal body */}
               <div className="px-6 py-5">
-                <h3 className="text-lg font-bold text-red-700 dark:text-white mb-2 leading-snug">
-                  Check your inbox — action required!
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-snug">
+                  Email verification is temporarily unavailable
                 </h3>
-                <p className="text-md text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-                  We&apos;ve sent a confirmation email to{" "}
-                  <strong className="font-bold text-gray-900 dark:text-white break-all">
-                    {voterEmail}
-                  </strong>
-                  . You{" "}
-                  <strong className="font-bold text-red-700 dark:text-red-700">
-                    must click the verification button
-                  </strong>{" "}
-                  inside that email to confirm your identity.
+                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                  Your votes have been received. However, our email verification
+                  system is currently experiencing an issue — the confirmation
+                  email to{" "}
+                  {voterEmail ? (
+                    <strong className="font-bold text-gray-900 dark:text-white break-all">
+                      {voterEmail}
+                    </strong>
+                  ) : (
+                    "the address you provided"
+                  )}{" "}
+                  will be sent once the issue has been resolved. No action is
+                  required from you right now.
                 </p>
 
                 {/* Steps */}
                 <ol className="space-y-2.5 mb-5">
                   {[
-                    "Open the email from iGaming AFRIKA Awards",
-                    "Click the 'Confirm All Votes' button",
-                    "Your votes will be confirmed and tallied",
+                    "Our team is working to resolve the issue as quickly as possible",
+                    "A verification email will be sent to you automatically once it is fixed",
+                    "Click the link in that email when it arrives to confirm your votes",
                   ].map((step, i) => (
                     <li
                       key={i}
@@ -789,20 +788,17 @@ export function SuccessScreen({
                   ))}
                 </ol>
 
-                <p className="text-sm text-gray-400 dark:text-gray-500 mb-5">
-                  Can&apos;t find the email? Check your{" "}
-                  <strong>
-                    spam or junk folder if you don&apos;t see it within a few
-                    minutes
-                  </strong>
-                  . Unverified votes will not be counted.
+                <p className="text-xs text-gray-400 dark:text-gray-500 mb-5">
+                  We apologise for the inconvenience. Your votes are safe and
+                  will be tallied once your identity has been verified via
+                  email.
                 </p>
 
                 <button
                   onClick={() => setModalOpen(false)}
                   className="w-full py-3 rounded-xl bg-green-600 hover:bg-green-600/90 dark:bg-green-700 dark:hover:bg-green-700/90 text-white text-sm font-bold tracking-wide transition-colors shadow-md shadow-green-200 dark:shadow-green-900/40"
                 >
-                  Got it — I&apos;ll check my email
+                  Understood — I&apos;ll wait for the email
                 </button>
               </div>
             </motion.div>
@@ -824,7 +820,7 @@ export function SuccessScreen({
           your identity and allow us to tally your vote
           {votes.length !== 1 ? "s" : ""}.
         </h2>
-        <p className="text-lg text-gray-400 dark:text-gray-400 mt-4">
+        <p className="text-lg text-gray-400 dark:text-gray-500 mt-4">
           The results will be announced at the iGaming AFRIKA Summit — May 4,
           2026 in Nairobi.
         </p>
@@ -840,21 +836,22 @@ export function SuccessScreen({
             <Mail size={16} className="text-amber-600 dark:text-amber-400" />
           </span>
           <div>
-            <p className="text-lg font-bold text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-1">
-              Don&apos;t forget to verify!
+            <p className="text-sm font-bold text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-1">
+              Email Verification is Temporarily Unavailable
             </p>
-            <p className="text-md text-amber-700 dark:text-amber-400 leading-relaxed">
-              A verification email has been sent to{" "}
-              <strong className="font-bold">{voterEmail}</strong>. Click the
-              link inside to confirm your votes —{" "}
-              <strong className="font-bold">
-                unverified votes will not be tallied
-              </strong>
-              .
+            <p className="text-sm text-amber-700 dark:text-amber-400 leading-relaxed">
+              Our email verification system is currently experiencing an issue.
+              A confirmation email will be sent to{" "}
+              {voterEmail ? (
+                <strong className="font-bold">{voterEmail}</strong>
+              ) : (
+                "your email address"
+              )}{" "}
+              automatically once the issue has been resolved.
             </p>
-            <p className="text-sm text-amber-600 dark:text-amber-500 mt-1.5 font-medium">
-              Check your spam/junk folder if you don&apos;t see it within a few
-              minutes.
+            <p className="text-xs text-amber-600 dark:text-amber-500 mt-1.5 font-medium">
+              We apologise for the inconvenience. Your votes are safe and no
+              action is required from you right now.
             </p>
           </div>
         </motion.div>
