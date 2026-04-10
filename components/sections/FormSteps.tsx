@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+// import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   AlertCircle,
   ArrowLeft,
@@ -10,11 +10,11 @@ import {
   Building,
   CheckCircle2,
   Mail,
-  MailCheck,
+  // MailCheck,
   Send,
   Trophy,
   User,
-  X,
+  // X,
 } from "lucide-react";
 import { AwardCategory, Nominees } from "@/lib/types";
 
@@ -694,7 +694,7 @@ export function SuccessScreen({
   categories,
   selectedIds,
   selections,
-  voterEmail,
+  // voterEmail,
 }: {
   categories: AwardCategory[];
   selectedIds: Set<number>;

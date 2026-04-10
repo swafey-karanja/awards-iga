@@ -277,11 +277,14 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
       {/* Background Image */}
       <div className="inset-0 absolute z-0">
         <Image
-          src="https://plus.unsplash.com/premium_photo-1738067044612-b9dff6e806a0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Awards Background"
+          className="relative"
+          src="/IGA-Award-design-final-22.png"
+          alt="IGA 2026 Event"
           fill
-          className="object-cover object-center md:object-[center_30%]"
+          sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 50vw"
+          style={{ objectFit: "contain" }}
           unoptimized
+          priority
           loading="eager"
         />
         {/* Dark overlay for better text readability */}
