@@ -146,7 +146,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                   <div>
                     <p className="text-xs sm:text-sm text-gray-400">Time</p>
                     <p className="text-white font-semibold text-sm sm:text-base">
-                      TBC
+                      21:30 PM to 23:30 PM
                     </p>
                   </div>
                 </div>
@@ -174,7 +174,7 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                   <div>
                     <p className="text-xs sm:text-sm text-gray-400">Venue</p>
                     <p className="text-white font-semibold text-sm sm:text-base">
-                      Nairobi, Kenya
+                      Hyatt Regency, Nairobi, Kenya
                     </p>
                   </div>
                 </div>

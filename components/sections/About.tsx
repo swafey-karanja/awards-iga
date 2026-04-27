@@ -81,7 +81,7 @@ export default function EventInformation() {
                       Venue Address:
                     </p>
                     <p className="text-gray-700 dark:text-gray-300 text-sm">
-                      TBC
+                      Hyatt Regency
                     </p>
                   </div>
                 </div>
@@ -137,7 +137,7 @@ export default function EventInformation() {
                       Dress code:
                     </p>
                     <p className="text-gray-700 dark:text-gray-300 text-sm">
-                      Smart Casual/Lounge Suites/Cocktail Dresses
+                      Awards dinner dress code - Black with a touch of Gold
                     </p>
                   </div>
                 </div>
@@ -146,7 +146,7 @@ export default function EventInformation() {
 
             <motion.div
               variants={fadeInUp}
-              className="hidden xl:block p-4 sm:p-6  "
+              className="hidden xl:block p-4 sm:p-6"
             >
               <h2 className="text-lg sm:text-3xl font-bold text-green-700 dark:text-green-500 mb-4">
                 Schedule
