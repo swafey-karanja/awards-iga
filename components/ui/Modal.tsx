@@ -1,9 +1,9 @@
 import React from "react";
 import { motion, Variants } from "framer-motion";
 import Button from "./Button";
-import { Award, Trophy, X } from "lucide-react";
+import { Award, Trophy, X, Crown, Star } from "lucide-react";
 import { AwardCategory } from "@/lib/types";
-// import Link from "next/link";
+import Image from "next/image";
 
 interface ModalProps {
   isOpen: boolean;
@@ -25,6 +25,17 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
     visible: { opacity: 1, transition: { duration: 0.3 } },
     exit: { opacity: 0, transition: { duration: 0.3 } },
   };
+
+  const winnerVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: 0.2 },
+    },
+  };
+
+  const hasWinner = award.winner && award.winner.name;
 
   return (
     <motion.div
@@ -79,47 +90,163 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
           </p>
         </div>
 
+        {/* ── WINNER SECTION ── */}
+        {hasWinner && (
+          <motion.div
+            className="mb-6 sm:mb-8"
+            variants={winnerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {/* Section label */}
+            <div className="flex items-center gap-2 mb-4">
+              <Crown size={18} className="text-amber-400" />
+              <h4 className="text-base sm:text-xl font-bold text-white">
+                Winner
+              </h4>
+            </div>
+
+            {/* Winner card */}
+            <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-linear-to-br from-amber-500/10 via-yellow-500/5 to-green-900/40 p-5 sm:p-6">
+              {/* Decorative glow */}
+              <div className="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-amber-400/10 blur-2xl" />
+              <div className="pointer-events-none absolute -bottom-6 -left-6 w-32 h-32 rounded-full bg-yellow-400/10 blur-2xl" />
+
+              <div className="relative flex flex-col sm:flex-row items-center sm:items-start gap-5">
+                {/* Winner image */}
+                <div className="shrink-0">
+                  <div className="relative w-62 h-24 ring-1 ring-green-400/50 ring-offset-1 ring-offset-transparent overflow-hidden bg-green-100">
+                    {award.winner?.image_url ? (
+                      <Image
+                        src={award.winner.image_url}
+                        alt={award.winner.name}
+                        fill
+                        className="object-contain"
+                        sizes="250px"
+                        quality={100}
+                      />
+                    ) : (
+                      /* Fallback avatar when no image is provided */
+                      <div className="w-full h-full flex items-center justify-center bg-amber-500/20">
+                        <Star
+                          size={36}
+                          className="text-amber-400 opacity-70"
+                          fill="currentColor"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Winner details */}
+                <div className="flex-1 text-center sm:text-left">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-amber-400/80 mb-1">
+                    🏆 Award Winner
+                  </p>
+                  <h5 className="text-2xl sm:text-3xl font-bold text-white mb-2 leading-tight">
+                    {award.winner?.name}
+                  </h5>
+
+                  {/* {award.winner?.name && (
+                    <p className="text-sm sm:text-base text-amber-300/80 font-medium mb-3">
+                      {award.winner.name}
+                    </p>
+                  )} */}
+                </div>
+              </div>
+            </div>
+
+            {/* Divider between winner and nominees */}
+            <div className="mt-6 flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/10" />
+              <span className="text-xs text-gray-500 font-medium uppercase tracking-widest">
+                Nominees
+              </span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+          </motion.div>
+        )}
+
         {/* Nominees */}
         {award.nominees && award.nominees.length > 0 && (
           <div className="mb-6 sm:mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Trophy size={18} className="text-green-400" />
-              <h4 className="text-base sm:text-xl font-bold text-white">
-                Shortlisted Nominees
-              </h4>
-              <span className="ml-auto text-xs text-gray-400 font-medium">
-                {award.nominees.length} nominees
-              </span>
-            </div>
+            {/* Only show the nominees header when there's no winner (winner section already has the divider) */}
+            {!hasWinner && (
+              <div className="flex items-center gap-2 mb-4">
+                <Trophy size={18} className="text-green-400" />
+                <h4 className="text-base sm:text-xl font-bold text-white">
+                  Shortlisted Nominees
+                </h4>
+                <span className="ml-auto text-xs text-gray-400 font-medium">
+                  {award.nominees.length} nominees
+                </span>
+              </div>
+            )}
+
+            {hasWinner && (
+              <div className="flex items-center gap-2 mb-4 mt-4">
+                <Trophy size={18} className="text-green-400" />
+                <h4 className="text-base sm:text-xl font-bold text-white">
+                  Shortlisted Nominees
+                </h4>
+                <span className="ml-auto text-xs text-gray-400 font-medium">
+                  {award.nominees.length} nominees
+                </span>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {award.nominees.map((nom, index) => (
-                <div
-                  key={nom.nominee_id}
-                  className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-green-500/40 rounded-xl px-4 py-3 transition-all duration-200 group"
-                >
-                  <span className="w-7 h-7 rounded-full bg-green-500/20 border border-green-500/30 text-green-400 text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-green-500/30 transition-colors">
-                    {index + 1}
-                  </span>
-                  <span className="text-lg text-gray-200 group-hover:text-white transition-colors leading-snug font-semibold">
-                    {nom.nominee}
-                  </span>
-                </div>
-              ))}
+              {award.nominees.map((nom, index) => {
+                const isWinner =
+                  hasWinner &&
+                  award.winner?.name.toLowerCase() ===
+                    nom.nominee.toLowerCase();
+
+                return (
+                  <div
+                    key={nom.nominee_id}
+                    className={`flex items-center gap-3 border rounded-xl px-4 py-3 transition-all duration-200 group ${
+                      isWinner
+                        ? "bg-amber-500/10 border-amber-500/40 hover:bg-amber-500/15"
+                        : "bg-white/5 hover:bg-white/10 border-white/10 hover:border-green-500/40"
+                    }`}
+                  >
+                    <span
+                      className={`w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center shrink-0 transition-colors ${
+                        isWinner
+                          ? "bg-amber-500/30 border border-amber-400/50 text-amber-300"
+                          : "bg-green-500/20 border border-green-500/30 text-green-400 group-hover:bg-green-500/30"
+                      }`}
+                    >
+                      {isWinner ? (
+                        <Crown size={12} fill="currentColor" />
+                      ) : (
+                        index + 1
+                      )}
+                    </span>
+                    <span
+                      className={`text-lg leading-snug font-semibold transition-colors ${
+                        isWinner
+                          ? "text-amber-200"
+                          : "text-gray-200 group-hover:text-white"
+                      }`}
+                    >
+                      {nom.nominee}
+                    </span>
+                    {isWinner && (
+                      <span className="ml-auto text-xs text-amber-400/80 font-medium">
+                        Winner
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/10 dark:border-gray-700/50">
-          {/* <Link href="/voting">
-            <Button
-              variant="primary"
-              className="w-full sm:w-auto order-2 sm:order-1"
-            >
-              Proceed to vote
-            </Button>
-          </Link> */}
           <Button
             variant="secondary"
             onClick={onClose}

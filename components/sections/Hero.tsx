@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { CalendarDropdown } from "../ui/Calendar";
+// import { CalendarDropdown } from "../ui/Calendar";
 // import Link from "next/link";
 // import Button from "../ui/Button";
 import { useEffect, useState } from "react";
@@ -179,11 +179,11 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
                   </div>
                 </div>
 
-                <div className="block md:hidden sm:col-span-2 lg:col-span-3 mt-4 sm:mt-6">
+                {/* <div className="block md:hidden sm:col-span-2 lg:col-span-3 mt-4 sm:mt-6">
                   <div className="flex justify-start">
                     <CalendarDropdown showText={true} />
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             {/* Countdown Timer */}
@@ -203,11 +203,11 @@ const Hero = ({ variant = "default", page = "home" }: HeroProps) => {
               ))}
             </div>
 
-            <div className="hidden md:block sm:col-span-2 lg:col-span-3 mt-6">
+            {/* <div className="hidden md:block sm:col-span-2 lg:col-span-3 mt-6">
               <div className="flex justify-center md:justify-start">
                 <CalendarDropdown showText={true} />
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Right Image Column */}

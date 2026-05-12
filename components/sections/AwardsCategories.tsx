@@ -5,10 +5,18 @@ import SectionHeader from "../ui/SectionHeader";
 import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import { ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { AwardCategory } from "@/lib/types";
 import { useAwardsCategories } from "@/app/hooks/useAwardsCategories";
+import { awardWinners } from "@/lib/Appdata";
+
+const winners = awardWinners;
+
+// Build a lookup map keyed by category_id (normalised to number) for O(1) access
+const winnersMap = new Map(winners.map((w) => [Number(w.category_id), w]));
+
+// ── Animation variants ───────────────────────────────────────────────────────
 
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
@@ -20,10 +28,40 @@ const staggerContainer: Variants = {
   },
 };
 
+// ── Component ────────────────────────────────────────────────────────────────
+
 const AwardsCategories: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedAwardsCategory, setSelectedAwardsCategory] =
     useState<AwardCategory | null>(null);
+
+  const {
+    categories,
+    isLoading,
+    error: fetchError,
+    refetch,
+  } = useAwardsCategories();
+
+  /**
+   * Merge winner data from the hardcoded list into each fetched category.
+   * The result is memoised so it only recalculates when `categories` changes.
+   */
+  const categoriesWithWinners: AwardCategory[] = useMemo(
+    () =>
+      categories.map((cat) => {
+        const winnerEntry = winnersMap.get(Number(cat.category_id));
+        if (!winnerEntry) return cat;
+
+        return {
+          ...cat,
+          winner: {
+            name: winnerEntry.winner,
+            image_url: winnerEntry.img,
+          },
+        };
+      }),
+    [categories],
+  );
 
   const handleCardClick = (awardsCategory: AwardCategory) => {
     setSelectedAwardsCategory(awardsCategory);
@@ -34,13 +72,6 @@ const AwardsCategories: React.FC = () => {
     setIsModalOpen(false);
     setSelectedAwardsCategory(null);
   };
-
-  const {
-    categories,
-    isLoading,
-    error: fetchError,
-    refetch,
-  } = useAwardsCategories();
 
   // ── Loading state ────────────────────────────────────────────────────────────
 
@@ -98,7 +129,7 @@ const AwardsCategories: React.FC = () => {
           />
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-            {categories.map((awardsCategory: AwardCategory) => (
+            {categoriesWithWinners.map((awardsCategory: AwardCategory) => (
               <Card
                 key={awardsCategory.category_id}
                 className="cursor-pointer"

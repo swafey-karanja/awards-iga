@@ -3,7 +3,11 @@ export interface AwardCategory {
   category_title: string;
   description: string;
   priority: number;
-  nominees: Nominees[];
+  nominees: { nominee_id: number; nominee: string }[];
+  winner?: {
+    name: string;
+    image_url?: string;
+  };
 }
 
 export interface Nominees {
