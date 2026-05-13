@@ -52,12 +52,8 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
       />
 
       {/* Modal Content */}
-      <motion.div
+      <div
         className="relative bg-green-900/95 dark:bg-green-950/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] overflow-y-auto border border-green-500/20 dark:border-green-600/30 shadow-2xl shadow-green-500/10 dark:shadow-green-600/20"
-        variants={modalVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -146,12 +142,6 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
                   <h5 className="text-2xl sm:text-3xl font-bold text-white mb-2 leading-tight">
                     {award.winner?.name}
                   </h5>
-
-                  {/* {award.winner?.name && (
-                    <p className="text-sm sm:text-base text-amber-300/80 font-medium mb-3">
-                      {award.winner.name}
-                    </p>
-                  )} */}
                 </div>
               </div>
             </div>
@@ -207,15 +197,15 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
                     key={nom.nominee_id}
                     className={`flex items-center gap-3 border rounded-xl px-4 py-3 transition-all duration-200 group ${
                       isWinner
-                        ? "bg-amber-500/10 border-amber-500/40 hover:bg-amber-500/15"
-                        : "bg-white/5 hover:bg-white/10 border-white/10 hover:border-green-500/40"
+                        ? "bg-amber-500/10 border-amber-500/40"
+                        : "bg-white/5 border-white/10"
                     }`}
                   >
                     <span
                       className={`w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center shrink-0 transition-colors ${
                         isWinner
                           ? "bg-amber-500/30 border border-amber-400/50 text-amber-300"
-                          : "bg-green-500/20 border border-green-500/30 text-green-400 group-hover:bg-green-500/30"
+                          : "bg-green-500/20 border border-green-500/30 text-green-400"
                       }`}
                     >
                       {isWinner ? (
@@ -226,9 +216,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
                     </span>
                     <span
                       className={`text-lg leading-snug font-semibold transition-colors ${
-                        isWinner
-                          ? "text-amber-200"
-                          : "text-gray-200 group-hover:text-white"
+                        isWinner ? "text-amber-200" : "text-gray-200"
                       }`}
                     >
                       {nom.nominee}
@@ -255,7 +243,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
             Close
           </Button>
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };

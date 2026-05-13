@@ -209,7 +209,7 @@ export const awardWinners = [
     category_id: "3",
     category_title: "Casino of the Year",
     winner: "Sun City Casino, South Africa",
-    img: "/awards/sun_city_casino.jpg",
+    img: "/awards/sun_city_casino.png",
   },
   {
     category_id: "13",
@@ -239,13 +239,13 @@ export const awardWinners = [
     category_id: "21",
     category_title: "iGaming AFRIKA Choice – Person of the Year (Female)",
     winner: "Lois Bright, Founder, Women in Gaming Africa",
-    img: "/awards/lois_bright.jpg",
+    img: "",
   },
   {
     category_id: "20",
     category_title: "iGaming AFRIKA Choice – Person of the Year (Male)",
     winner: "John Mutua, CEO, Association of Gaming Operators Kenya (AGOK)",
-    img: "/awards/john_mutua.jpg",
+    img: "",
   },
   {
     category_id: "14",
@@ -263,31 +263,31 @@ export const awardWinners = [
     category_id: "5",
     category_title: "Online Casino of the Year",
     winner: "Mozzart Casino",
-    img: "/awards/mozzartbet.jpg",
+    img: "/awards/mozzartbet.png",
   },
   {
     category_id: "6",
     category_title: "Online Slot of the Year",
     winner: "Wild Hot 40 by FAZI",
-    img: "/awards/wild_hot_40_FAZI.jpg",
+    img: "/awards/wild_hot_40_FAZI.webp",
   },
   {
     category_id: "7",
     category_title: "Online Slot Supplier of the Year",
     winner: "Amusnet",
-    img: "/awards/amusnet.jpg",
+    img: "/awards/amusnet.png",
   },
   {
     category_id: "18",
     category_title: "Overall Corporate Social Responsibility Award",
     winner: "SportPesa",
-    img: "/awards/sportpesa.jpg",
+    img: "/awards/sportpesa.png",
   },
   {
     category_id: "24",
     category_title: "Payment Service Provider of the Year",
     winner: "Flexifai",
-    img: "/awards/flexifai.jpg",
+    img: "/awards/flexifai.png",
   },
   {
     category_id: "10",
@@ -299,20 +299,20 @@ export const awardWinners = [
     category_id: "25",
     category_title: "Retail Provider of the Year",
     winner: "Stellar Bets",
-    img: "/awards/stellarbets.jpg",
+    img: "/awards/stellarbets.png",
   },
   {
     category_id: "17",
     category_title: "Rising Star in Responsible Gambling",
     winner:
       "Denis Mudene, CEO, National Lotteries and Gaming Regulatory Board (NLGRB)",
-    img: "/awards/dennis_mudene.jpg",
+    img: "",
   },
   {
     category_id: "11",
     category_title: "Service Provider of the Year",
     winner: "Sumsub",
-    img: "/awards/sumsub.jpg",
+    img: "/awards/sumsub.png",
   },
   {
     category_id: "1",
@@ -324,6 +324,6 @@ export const awardWinners = [
     category_id: "2",
     category_title: "Sports Betting Supplier of the Year",
     winner: "OddsMatrix by EveryMatrix",
-    img: "/awards/oddsmatrix_by_everymatrix.jpg",
+    img: "/awards/oddsmatrix_by_everymatrix.png",
   },
 ];
