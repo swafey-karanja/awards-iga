@@ -14,12 +14,6 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ onClose, award }) => {
   if (!award) return null;
 
-  const modalVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
-    exit: { opacity: 0, scale: 0.8, transition: { duration: 0.3 } },
-  };
-
   const backdropVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.3 } },
