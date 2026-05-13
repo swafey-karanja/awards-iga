@@ -12,10 +12,10 @@ import {
   SingleSelectField,
   FormErrors,
 } from "@/components/ui/MultistepForm";
-import { awardsCategories } from "@/lib/Appdata";
 import { SelectChangeEvent } from "@mui/material";
 import { fetchCSRFToken } from "@/app/services/api";
 import { toast } from "sonner";
+import { useAwardsCategories } from "@/app/hooks/useAwardsCategories";
 
 const TOTAL_PAGES = 2;
 
@@ -38,14 +38,16 @@ export default function NominationForm(): JSX.Element {
     award_category: null,
   });
 
+  const { categories } = useAwardsCategories();
+
   // Derived state: Get award category name from ID
   const getAwardCategoryName = (): string => {
     if (!formData.award_category) return "";
 
-    const category = awardsCategories.find(
-      (cat) => cat.id === formData.award_category,
+    const category = categories.find(
+      (cat) => cat.category_id === formData.award_category,
     );
-    return category?.title || "";
+    return category?.category_title || "";
   };
 
   const handleInputChange = (
@@ -469,7 +471,7 @@ export default function NominationForm(): JSX.Element {
                   name="awardCategory"
                   value={formData.award_category}
                   onChange={handleSingleSelectChange("award_category")}
-                  options={awardsCategories}
+                  options={categories}
                   error={errors.award_category}
                   disabled={isSubmitting}
                   required

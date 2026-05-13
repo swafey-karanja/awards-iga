@@ -20,17 +20,11 @@ import {
   ListItemText,
 } from "@mui/material";
 import { MuiTelInput, MuiTelInputProps } from "mui-tel-input";
+import { AwardCategory } from "@/lib/types";
 
 // ============================================================================
 // TYPES & INTERFACES
 // ============================================================================
-
-export interface AwardCategory {
-  id: number;
-  title: string;
-  description?: string;
-  focusAreas?: string[];
-}
 
 export interface CompanyType {
   value: string;
@@ -315,9 +309,11 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = ({
               return "Select award category";
             }
 
-            const selectedOption = options.find((opt) => opt.id === selected);
+            const selectedOption = options.find(
+              (opt) => opt.category_id === selected,
+            );
             return selectedOption
-              ? selectedOption.title
+              ? selectedOption.category_title
               : "Select award category";
           }}
           MenuProps={{
@@ -329,10 +325,10 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = ({
           }}
         >
           {options.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
+            <MenuItem key={option.category_id} value={option.category_id}>
               {/* Removed Checkbox for single select */}
               <ListItemText
-                primary={option.title}
+                primary={option.category_title}
                 secondary={option.description}
               />
             </MenuItem>
